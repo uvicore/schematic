@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "mreschke-wiki"
+version = "0.1.0"
+description = ""
+authors = ["Matthew Reschke <mail@mreschke.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+uvicore = {path = "../uvicore"}
+aiomysql = "^0.0.20"
+faker = "^4.1.2"
+asgiref = "^3.2.10"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
