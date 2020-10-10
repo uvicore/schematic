@@ -1,0 +1,14 @@
+#!/usr/bin/env python
+
+import uvicore
+from acme.app.services import bootstrap
+
+# Bootstrap the Uvicore application from the console entrypoint
+app = bootstrap.application(is_console=True)
+
+if __name__ == '__main__':
+    # Get the cli method from the IoC
+    cli = uvicore.ioc.make('Console')
+
+    # Instantiate the main asyncclick group
+    cli(_anyio_backend='asyncio')
