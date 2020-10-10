@@ -1,7 +1,9 @@
 from lib.console import *
 
+
 def h1(log):
     header(log, "=", LIGHTGREEN, WHITE, 80)
+
 
 def package_name():
     h1("Package Name")
@@ -17,6 +19,7 @@ eventually cause namespace colissions amoung developers.""")
     default = "acme.app"
     result = user_input("Package Name ({}): ".format(default))
     return result or default
+
 
 def friendly_name():
     h1("Friendly Name")
