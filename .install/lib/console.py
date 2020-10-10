@@ -17,29 +17,45 @@ YELLOW="\033[1;33m"
 WHITE="\033[1;37m"
 
 # Output helper methods
-def header(o, c1=BROWN, c2=GREEN):
-    print("{}:: {}{} {}::{}".format(c1, c2, o, c1, DEFAULT))
+def header(o, h="::", c1=BROWN, c2=GREEN, l=None):
+    if l:
+        dash = round((l - (len(o) + 2)) / 2)
+        # Max length for padding
+        print("{}{} {}{} {}{}{}".format(c1, h * dash, c2, o, c1, h * dash, DEFAULT))
+    else:
+        print("{}{} {}{} {}{}{}".format(c1, h, c2, o, c1, h, DEFAULT))
 
-def log(o, c1=DEFAULT):
+def log(o="", c1=DEFAULT):
     print("{}{}{}".format(c1, o, DEFAULT))
 
 def info(o, c1=WHITE):
     log(o, c1)
 
-def line(l='-', c1=GREEN):
-    print("{}{}{}".format(c1, l * 80, DEFAULT))
+def line(l="-", c1=GREEN, s=80):
+    print("{}{}{}".format(c1, l * s, DEFAULT))
 
-def item(o, b='  *', c1=BLUE, c2=DARKGRAY):
+def nl(c=1):
+    for x in range(0, c): print()
+
+def item(o, b="  *", c1=BLUE, c2=DARKGRAY):
     print("{}{} {}{}{}".format(c1, b, c2, o, DEFAULT))
 
-def message(o, w='MESSAGE', c1=BLUE, c2=WHITE):
+def message(o, w="MESSAGE", c1=BLUE, c2=WHITE):
     print("{}{}: {}{}{}".format(c1, w, c2, o, DEFAULT))
 
 def notice(o, c1=PURPLE, c2=WHITE):
-    message(o, 'NOTICE', c1, c2)
+    message(o, "NOTICE", c1, c2)
 
 def warning(o, c1=YELLOW, c2=WHITE):
-    message(o, 'WARNING', c1, c2)
+    message(o, "WARNING", c1, c2)
 
 def error(o, c1=LIGHTRED, c2=RED):
-    message(o, 'ERROR', c1, c2)
+    message(o, "ERROR", c1, c2)
+
+def user_input(o, c1=WHITE):
+    return input("{}{}{}".format(c1, o, DEFAULT))
+
+def user_confirm(o, c1=WHITE):
+    result = input("{}{} (y/N)? {}".format(c1, o, DEFAULT)).lower()
+    if result == 'y' or result == 'yes': return True
+    return False
