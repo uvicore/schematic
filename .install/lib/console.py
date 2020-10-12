@@ -56,6 +56,20 @@ def user_input(o, c1=WHITE):
     return input("{}{}{}".format(c1, o, DEFAULT))
 
 def user_confirm(o, c1=WHITE):
-    result = input("{}{} (y/N)? {}".format(c1, o, DEFAULT)).lower()
-    if result == 'y' or result == 'yes': return True
+    result = None
+    while result != 'y' and result != 'n':
+        result = input("{}{} (y/n)? {}".format(c1, o, DEFAULT)).lower()
+    if result == 'y': return True
     return False
+
+def user_select(o, selections, default, c1=BLUE, c2=WHITE):
+    i = 1
+    for k,v in selections.items():
+        item(str(k) + ' - ' + str(v), str(i) + ") ", c1, c2)
+        i += 1
+    nl()
+    result = 0
+    while result < 1 or result > len(selections):
+        result = user_input(o) or default
+        result = int(result)
+    return list(selections.keys())[result - 1]

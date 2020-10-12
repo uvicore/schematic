@@ -24,10 +24,13 @@ if __name__ == "__main__":
         'path': path,
         'package_name': questions.package_name(),
         'friendly_name': questions.friendly_name(),
+        'your_name': questions.your_name(),
+        'your_email': questions.your_email(),
+        'environment': questions.environment(),
     }
 
     # Confirm answers before install
-    line("#", LIGHTBLUE); nl()
+    nl(2); line("#", LIGHTBLUE); nl(2)
     info("You are are about to customize this blank uvicore package schema as follows:")
     for answer in answers.items(): item(answer)
     nl(); go = user_confirm("Continue"); nl()
