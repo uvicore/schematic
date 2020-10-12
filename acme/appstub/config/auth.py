@@ -1,0 +1,27 @@
+config = {
+    # --------------------------------------------------------------------------
+    # Database Connections
+    # --------------------------------------------------------------------------
+    'database': {
+        'connections': {
+            # SQLite Example
+            # 'auth': {
+            #     'driver': 'sqlite',
+            #     'database': ':memory',
+            #     'prefix': 'auth_',
+            # },
+
+            # MySQL Example
+            'auth': {
+                'driver': 'mysql',
+                'dialect': 'pymysql',
+                'host': '127.0.0.1',
+                'port': 3306,
+                'database': 'uvicore_appstub',
+                'username': 'root',
+                'password': 'techie',
+                'prefix': 'auth_',
+            },
+        },
+    },
+}

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import uvicore
-from acme.app.services import bootstrap
+from acme.appstub.services import bootstrap
 
 # Bootstrap the Uvicore application from the console entrypoint
 app = bootstrap.application(is_console=True)

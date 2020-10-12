@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "mreschke-wiki"
+name = "acme-appstub"
 version = "0.1.0"
 description = ""
 authors = ["Matthew Reschke <mail@mreschke.com>"]
@@ -8,8 +8,7 @@ authors = ["Matthew Reschke <mail@mreschke.com>"]
 python = "^3.8"
 uvicore = {path = "../uvicore"}
 aiomysql = "^0.0.20"
-faker = "^4.1.2"
-asgiref = "^3.2.10"
+aiosqlite = "^0.15.0"
 
 [tool.poetry.dev-dependencies]
 

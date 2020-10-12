@@ -22,11 +22,11 @@ if __name__ == "__main__":
     # Schema designers can customze this section to ask more questions
     answers = {
         'path': path,
-        'package_name': questions.package_name(),
-        'friendly_name': questions.friendly_name(),
-        'your_name': questions.your_name(),
-        'your_email': questions.your_email(),
-        'environment': questions.environment(),
+        'package_name': questions.package_name(default='acme.appstub'),
+        'friendly_name': questions.friendly_name(default="Acme Test App"),
+        'your_name': questions.your_name(default="Artisan Smith"),
+        'your_email': questions.your_email(default="smith@example.com"),
+        'environment': questions.environment(default='Poetry'),
     }
 
     # Confirm answers before install
