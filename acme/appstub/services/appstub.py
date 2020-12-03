@@ -1,9 +1,8 @@
 import uvicore
-from uvicore import log
 from uvicore.package import ServiceProvider
-from uvicore.support.dumper import dump, dd
 
 
+@uvicore.provider()
 class Appstub(ServiceProvider):
 
     def register(self) -> None:
@@ -14,8 +13,6 @@ class Appstub(ServiceProvider):
         is very early in the bootstraping process and most internal processes are not
         instantiated yet."""
 
-        #log('wiki provider.register()')
-
         # Register configs
         # If config key already exists items will be deep merged allowing
         # you to override small peices of other package configs
@@ -25,7 +22,6 @@ class Appstub(ServiceProvider):
 
             # Override uvicore.auth config to customize the auth database connection
             {'key': 'uvicore.auth', 'module': 'acme.appstub.config.auth.config'},
-
         ])
 
     def boot(self) -> None:
@@ -95,11 +91,10 @@ class Appstub(ServiceProvider):
     def load_commands(self) -> None:
         """Define CLI commands to be added to the ./uvicore command line interface"""
 
-        group = 'appstub'
         self.commands([
             {
                 'group': {
-                    'name': group,
+                    'name': 'appstub',
                     'parent': 'root',
                     'help': 'Appstub Commands',
                 },

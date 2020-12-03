@@ -1,5 +1,4 @@
-from uvicore.http.routing import WebRouter, Routes
-from uvicore.http import Request, response
+from uvicore.http import Request, response, WebRouter, Routes
 from uvicore.support.dumper import dump, dd
 from uvicore import app, config
 

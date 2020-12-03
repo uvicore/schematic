@@ -1,4 +1,4 @@
-from uvicore.http.routing import ApiRouter, Routes
+from uvicore.http import ApiRouter, Routes
 from uvicore.support.dumper import dump, dd
 
 
