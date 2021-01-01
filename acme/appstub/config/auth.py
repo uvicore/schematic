@@ -17,7 +17,7 @@ config = {
                 'dialect': 'pymysql',
                 'host': '127.0.0.1',
                 'port': 3306,
-                'database': 'uvicore_appstub',
+                'database': 'appstub',
                 'username': 'root',
                 'password': 'techie',
                 'prefix': 'auth_',

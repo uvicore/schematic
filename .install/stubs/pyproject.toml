@@ -2,13 +2,11 @@
 name = "acme-appstub"
 version = "0.1.0"
 description = ""
-authors = ["Matthew Reschke <mail@mreschke.com>"]
+authors = ["Artisan Smith <smith@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-uvicore = {path = "../uvicore", develop = true}
-aiomysql = "^0.0.20"
-aiosqlite = "^0.15.0"
+uvicore = "*"
 
 [tool.poetry.dev-dependencies]
 

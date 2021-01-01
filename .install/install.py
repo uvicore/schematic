@@ -1,7 +1,7 @@
 import os
 from lib.console import *
 from lib import questions
-from lib.install import install_now
+from lib.installer import Installer
 
 """
 Uvicore installer
@@ -9,10 +9,14 @@ mReschke 2020-10-10
 
 Note to schema designers and developers:
 Ensure this installer does not use any 3rd party modules, stdlib only.
-You can customize questions by adding new ones to install/questions.py
+You can customize questions by adding new ones to lib/questions.py
 and firing them off in the answers{} below.  Be sure to customize the
-install/install.py to handle the new answers properly.
+lib/installer.py to handle the new answers properly.
 """
+
+# Test run over and over!
+# rsync -vaP --delete /home/mreschke/Code/mreschke/python/uvicore/app/ . && python .install/install.py
+
 
 if __name__ == "__main__":
     # New packages full path
@@ -20,12 +24,20 @@ if __name__ == "__main__":
 
     # Ask questions and record answers
     # Schema designers can customze this section to ask more questions
+    # answers = {
+    #     'path': path,
+    #     'package_name': questions.package_name(default='acme.appstub'),
+    #     'friendly_name': questions.friendly_name(default="Acme Test App"),
+    #     'your_name': questions.your_name(default="Artisan Smith"),
+    #     'your_email': questions.your_email(default="smith@example.com"),
+    #     'environment': questions.environment(default='Poetry'),
+    # }
     answers = {
         'path': path,
-        'package_name': questions.package_name(default='acme.appstub'),
-        'friendly_name': questions.friendly_name(default="Acme Test App"),
-        'your_name': questions.your_name(default="Artisan Smith"),
-        'your_email': questions.your_email(default="smith@example.com"),
+        'package_name': questions.package_name(default='mreschke.wiki'),
+        'friendly_name': questions.friendly_name(default="mReschke Wiki"),
+        'your_name': questions.your_name(default="Matthew Reschke"),
+        'your_email': questions.your_email(default="mreschke@example.com"),
         'environment': questions.environment(default='Poetry'),
     }
 
@@ -36,7 +48,9 @@ if __name__ == "__main__":
     nl(); go = user_confirm("Continue"); nl()
 
     # Install package with question answers
-    if go: install_now(answers)
+    if go:
+        installer = Installer(answers)
+        installer.handle()
 
     # User cancelled, abort installation
     if not go:

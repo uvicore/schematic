@@ -117,12 +117,21 @@ config = {
             'enabled': env.bool('LOG_CONSOLE_ENABLED', True),
             'level': env('LOG_CONSOLE_LEVEL', 'INFO'),
             'colors': env.bool('LOG_CONSOLE_COLORS', True),
+            'filters': [],
+            'exclude': [
+                'uvicore',
+                'databases',
+            ],
         },
         'file': {
             'enabled': env.bool('LOG_FILE_ENABLED', True),
             'level': env('LOG_FILE_LEVEL', 'INFO'),
-            #'file': config.LOG_PATH + '/' + date.today().strftime('%Y-%m-%d') + '_permits.log',
             'file': '/tmp/acme.appstub.log',
+            'when': 'midnight',
+            'interval': 1,
+            'backup_count': 7,
+            'filters': [],
+            'exclude': [],
         }
     },
 }

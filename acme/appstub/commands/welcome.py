@@ -1,4 +1,3 @@
-#import typer
 import uvicore
 from uvicore.console import command
 
