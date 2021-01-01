@@ -53,6 +53,7 @@ class Installer:
     def delete_test_files(self):
         nl(); header("Deleting unused test files and folders")
         self.delete([
+            ".git",
             ".env",
             "poetry.lock",
             "/pyproject.toml",
