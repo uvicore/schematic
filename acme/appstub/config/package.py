@@ -2,7 +2,7 @@ from collections import OrderedDict
 
 # Package configuration is not meant to be overridden when used inside other
 # apps.  This information is always unchanged and consistent.  The main
-# aoostubpy configuration however is meant to be overridden per use case.
+# config/appstub.py however is meant to be overridden per use case.
 # This is merged inside the main appstub.py and accessible at
 # config('acme.appstub.package')
 
@@ -28,7 +28,7 @@ config = {
         'uvicore.foundation': {
             'provider': 'uvicore.foundation.services.Foundation',
         },
-        # 'uvicore.database': {
+        # 'uvicore.database': {calc
         #     'provider': 'uvicore.database.services.Database',
         # },
         # 'uvicore.orm': {
