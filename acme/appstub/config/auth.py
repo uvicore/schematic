@@ -1,3 +1,6 @@
+# Example of overriding the uvicore.auth package config to adjust
+# the auth database connection and prefix
+
 config = {
     # --------------------------------------------------------------------------
     # Database Connections

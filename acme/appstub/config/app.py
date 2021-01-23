@@ -1,4 +1,4 @@
-from collections import OrderedDict
+from uvicore.typing import OrderedDict
 from uvicore.configuration import env
 
 # This config only applies if this package is running as the main application.
@@ -35,6 +35,7 @@ config = {
     # OpenAPI Auto API Doc Configuration
     #
     # Configure the OpenAPI endpoints and displayed title
+    # To disable the OpenAPI docs, set url: None
     # --------------------------------------------------------------------------
     'openapi': {
         'title': 'Acme Test App API Docs',
@@ -104,6 +105,19 @@ config = {
 
 
     # --------------------------------------------------------------------------
+    # Path Overrides
+    #
+    # Override the default paths for your packages items (views, models,
+    # tables, routes...).  All paths relative to your uvicore packages
+    # PYTHON module root, not the actual package root. If item is not defined,
+    # defaults will be assumed.
+    # --------------------------------------------------------------------------
+    'paths': {
+        #
+    },
+
+
+    # --------------------------------------------------------------------------
     # Logging Configuration
     #
     # The uvicore.logger packages does NOT provide its own config because it
@@ -134,4 +148,15 @@ config = {
             'exclude': [],
         }
     },
+
+
+    # --------------------------------------------------------------------------
+    # Pretty Printer Configuration
+    #
+    # Default width if not defined is 120
+    # --------------------------------------------------------------------------
+    # 'dump': {
+    #     'width': 110
+    # },
+
 }
