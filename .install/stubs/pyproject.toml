@@ -5,7 +5,7 @@ description = ""
 authors = ["Artisan Smith <smith@example.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = ">=3.7,<4.0"
 uvicore = "*"
 
 [tool.poetry.dev-dependencies]

@@ -1,4 +1,4 @@
-from uvicore.http import ApiRouter, Routes
+from uvicore.http import Routes, ApiRouter, ModelRouter
 from uvicore.support.dumper import dump, dd
 
 
@@ -9,6 +9,9 @@ class Api(Routes[ApiRouter]):
     def register(self):
         # Available instance variables:
         # self.app, self.package, self.Router, self.prefix
+
+        # Automatic API Model Router
+        self.include(ModelRouter().routes())
 
         # If you defined a self.endpoints you can use string based module lookup
         self.include('welcome', tags=['Welcome'])

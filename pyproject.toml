@@ -5,7 +5,7 @@ description = ""
 authors = ["Matthew Reschke <mail@mreschke.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = ">=3.7,<4.0"
 uvicore = {path = "../uvicore", develop = true}
 aiomysql = "^0.0.20"
 aiosqlite = "^0.15.0"
