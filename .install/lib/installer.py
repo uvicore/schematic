@@ -98,6 +98,7 @@ class Installer:
             self.replace([
                 "uvicore",
                 "pyproject.toml",
+                ".env-example",
             ])
 
     def rename_files(self):
