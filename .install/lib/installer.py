@@ -29,6 +29,7 @@ class Installer:
             ("acme.appstub", self.package),
             ("appstub", self.app),
             ("Appstub", helpers.studly(self.app)),
+            ("APPSTUB", self.app.upper()),
             ("Acme Test App", self.friendly_name),
             ("Artisan Smith", self.your_name),
             ("<smith@example.com>", "<" + self.your_email + ">"),
