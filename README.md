@@ -3,6 +3,19 @@
 This repository is used by the uvicore installer tool when creating a new uvicore application/package.
 
 
+# Bugs
+
+During installer a ' in app name causes the app.py config to error.  Need to trim all invalid characters.
+
+no vendor in package, just a name, makes wrong dir, it double does the vendor as the package name.  creating ./myapp/myapp still, should be just ./myapp if no vendor
+
+OR just force the installer to require a vendor.package style
+Though not sure how it would handle multiple.vendor.name.things
+
+
+maybe a note when done stating they have to install their own env
+
+
 
 # Below is JUNK NOTES to remove
 

@@ -7,8 +7,8 @@ authors = ["Matthew Reschke <mail@mreschke.com>"]
 [tool.poetry.dependencies]
 python = ">=3.7,<4.0"
 uvicore = {path = "../uvicore", develop = true}
-aiomysql = "^0.0.20"
-aiosqlite = "^0.15.0"
+aiomysql = "0.0.*"
+aiosqlite = "0.15.*"
 
 [tool.poetry.dev-dependencies]
 

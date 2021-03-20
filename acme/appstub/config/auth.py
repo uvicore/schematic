@@ -1,3 +1,5 @@
+from uvicore.configuration import env
+
 # Example of overriding the uvicore.auth package config to adjust
 # the auth database connection and prefix
 
@@ -18,12 +20,12 @@ config = {
             'auth': {
                 'driver': 'mysql',
                 'dialect': 'pymysql',
-                'host': '127.0.0.1',
-                'port': 3306,
-                'database': 'appstub',
-                'username': 'root',
-                'password': 'techie',
-                'prefix': 'auth_',
+                'host': env('MYSQL_AUTH_HOST', '127.0.0.1'),
+                'port': env.int('MYSQL_AUTH_PORT', 3306),
+                'database': env('MYSQL_AUTH_DB', 'appstub'),
+                'username': env('MYSQL_AUTH_USER', 'root'),
+                'password': env('MYSQL_AUTH_PASSWORD', 'techie'),
+                'prefix': env('MYSQL_AUTH_PREFIX', 'auth_'),
             },
         },
     },

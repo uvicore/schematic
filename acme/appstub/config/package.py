@@ -1,3 +1,4 @@
+from uvicore.configuration import env
 from uvicore.typing import OrderedDict
 
 # This is the main appstub config.  All items here can be overridden
@@ -6,13 +7,21 @@ from uvicore.typing import OrderedDict
 config = {
 
     # --------------------------------------------------------------------------
-    # Route Configuration
+    # Web Configuration
+    #
+    # prefix: All web routes will be prefixed with this URI. Ex: '' or '/wiki'
     # --------------------------------------------------------------------------
-    # Or like so, no underscores, so in dot notation config('blog.route.prefix')
-    # have to do deep merges
-    'route': {
-        'web_prefix': '',
-        'api_prefix': '/api',
+    'web': {
+        'prefix': '',
+    },
+
+    # --------------------------------------------------------------------------
+    # Api Configuration
+    #
+    # prefix: All web routes will be prefixed with this URI. Ex: '' or '/wiki'
+    # --------------------------------------------------------------------------
+    'api': {
+        'prefix': '',
     },
 
 
@@ -20,7 +29,7 @@ config = {
     # Database Connections
     # --------------------------------------------------------------------------
     'database': {
-        'default': 'appstub',
+        'default': env('DATABASE_DEFAULT', 'appstub'),
         'connections': {
             # SQLite Example
             # 'appstub': {
@@ -33,12 +42,34 @@ config = {
             'appstub': {
                 'driver': 'mysql',
                 'dialect': 'pymysql',
-                'host': '127.0.0.1',
-                'port': 3306,
-                'database': 'appstub',
-                'username': 'root',
-                'password': 'techie',
-                'prefix': None,
+                'host': env('MYSQL_APPSTUB_HOST', '127.0.0.1'),
+                'port': env.int('MYSQL_APPSTUB_PORT', 3306),
+                'database': env('MYSQL_APPSTUB_DB', 'appstub'),
+                'username': env('MYSQL_APPSTUB_USER', 'root'),
+                'password': env('MYSQL_APPSTUB_PASSWORD', 'techie'),
+                'prefix': env('MYSQL_APPSTUB_PREFIX', None),
+            },
+        },
+    },
+
+
+    # --------------------------------------------------------------------------
+    # Redis Connections
+    # --------------------------------------------------------------------------
+    'redis': {
+        'default': env('REDIS_DEFAULT', 'appstub'),
+        'connections': {
+            'appstub': {
+                'host': env('REDIS_APPSTUB_HOST', '127.0.0.1'),
+                'port': env.int('REDIS_APPSTUB_PORT', 6379),
+                'database': env.int('REDIS_APPSTUB_DB', 0),
+                'password': env('REDIS_APPSTUB_PASSWORD', None),
+            },
+            'cache': {
+                'host': env('REDIS_CACHE_HOST', '127.0.0.1'),
+                'port': env.int('REDIS_CACHE_PORT', 6379),
+                'database': env.int('REDIS_CACHE_DB', 9),
+                'password': env('REDIS_CACHE_PASSWORD', None),
             },
         },
     },
@@ -70,8 +101,8 @@ config = {
     # the uvicore.foundation package is required.  The foundation is very
     # minimal and only depends on configuratino, logging and console itself.
     # You must add other core services built into uvicore only if your package
-    # requires them.  Services like uvicore.database, uvicore.orm, uvicore.http
-    # uvicore.auth...
+    # requires them.  Services like uvicore.database, uvicore.orm, uvicore.auth
+    # uvicore.http, etc...
     # --------------------------------------------------------------------------
     'dependencies': OrderedDict({
         'uvicore.foundation': {

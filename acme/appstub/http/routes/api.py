@@ -1,36 +1,32 @@
-from uvicore.http import Routes, ApiRouter, ModelRouter
-from uvicore.support.dumper import dump, dd
+import uvicore
+from uvicore.http.routing import Routes, ApiRouter, ModelRouter
 
 
-class Api(Routes[ApiRouter]):
+@uvicore.routes()
+class Api(Routes):
 
-    endpoints: str = 'acme.appstub.http.api'
+    # Apply scopes to all routes and children controllers
+    #scopes = ['authenticated', 'employee']
 
-    def register(self):
-        # Available instance variables:
-        # self.app, self.package, self.Router, self.prefix
+    def register(self, route: ApiRouter):
+        """Register API Route Endpoints"""
 
-        # Automatic API Model Router
-        self.include(ModelRouter().routes())
+        # Define controller base path
+        route.controllers = 'acme.appstub.http.api'
 
-        # If you defined a self.endpoints you can use string based module lookup
-        self.include('welcome', tags=['Welcome'])
+        # Include dynamic model CRUD API endpoints (the "auto API")!
+        @route.group()
+        def autoapi():
+        #def autoapi(scopes=['authenticated']):
+            route.include(ModelRouter)
 
-        # Or just import the module and pass in the route directly
-        #from mreschke.wiki.http.endpoints import user
-        #self.include(user.route, tags=['Users'])
+        # Public Routes
+        route.controller('welcome')
 
-        # If you really want to define inline routes, do it like this
-        # route = self.Router()
-        # @route.get('/hello')
-        # async def hello():
-        #     return {"hello":"world"}
-        # self.include(route, tags=['extra'])
+        # Example of Private Routes
+        # @route.group(scopes=['authenticated'])
+        # def private_routes():
+        #     route.controller('private_controller')
 
-        # Example adding a second router to define different tags
-        # Simply make a new Router() and another self.include()
-        # route = self.Router()
-        # @route.get('/hello2')
-        # async def hello2():
-        #     return {"hello":"world2"}
-        # self.include(route, tags=['extra2'])
+        # Return router
+        return route

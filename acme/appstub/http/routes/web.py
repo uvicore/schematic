@@ -1,23 +1,26 @@
-from uvicore.http import Request, response, WebRouter, Routes
-from uvicore.support.dumper import dump, dd
-from uvicore import app, config
+import uvicore
+from uvicore.http.routing import Routes, WebRouter
 
 
-class Web(Routes[WebRouter]):
+@uvicore.routes()
+class Web(Routes):
 
-    endpoints: str = 'acme.appstub.http.controllers'
+    # Apply scopes to all routes and children controllers
+    #scopes = ['authenticated', 'employee']
 
-    def register(self):
-        # String style
-        self.include('welcome')
+    def register(self, route: WebRouter):
+        """Register Web Route Endpoints"""
 
-        # Import style
-        #from mreschke.wiki.http.controllers import about
-        #self.include(about.route)
+        # Define controller base path
+        route.controllers = 'acme.appstub.http.controllers'
 
-        # Define inline routes
-        # route = self.Router()
-        # @route.get('/welcome-text')
-        # async def about(request: Request):
-        #     return response.Text('Welcome in plain text')
-        # self.include(route)
+        # Public Routes
+        route.controller('welcome')
+
+        # Example of Private Routes
+        # @route.group(scopes=['authenticated'])
+        # def private_routes():
+        #     route.controller('private_controller')
+
+        # Return router
+        return route

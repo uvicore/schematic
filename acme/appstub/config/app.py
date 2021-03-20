@@ -1,6 +1,7 @@
-from uvicore.typing import OrderedDict
 from uvicore.configuration import env
+from uvicore.typing import OrderedDict
 
+# Running application configuration.
 # This config only applies if this package is running as the main application.
 # Accessible at config('app')
 
@@ -12,9 +13,9 @@ config = {
     # name: The human readable name of this package/app.  Like 'Matts Wiki'
     # main: The package name to run when this app is served/executed
     # --------------------------------------------------------------------------
-    'name': 'Acme Test App',
+    'name': env('APP_NAME', 'Appstub Test App'),
     'main': 'acme.appstub',
-    'debug': False,
+    'debug': env('DEBUG', False),
 
 
     # --------------------------------------------------------------------------
@@ -32,16 +33,291 @@ config = {
 
 
     # --------------------------------------------------------------------------
-    # OpenAPI Auto API Doc Configuration
+    # Web HTTP Server
     #
-    # Configure the OpenAPI endpoints and displayed title
-    # To disable the OpenAPI docs, set url: None
+    # Web endpoint specific configuration and middleware
+    # Middleware is fully defined from the running application only.  Packages
+    # Do not define their own middleware as the running app should dictate all.
     # --------------------------------------------------------------------------
-    'openapi': {
-        'title': 'Acme Test App API Docs',
-        'url': '/openapi.json',
-        'docs_url': '/docs',
-        'redoc_url': '/redoc',
+    'web': {
+        'prefix': '',
+
+        # Static Assets
+        # Leaving all blank uses the served apps host and defailt /assets path.
+        # Setting only a path uses the served apps host with a custom path.
+        # Setting both overrides the entire url completely.  Usefull when your
+        # assets are on a separate server or being hosted from a webpack hot reload.
+        # The actual folder in your package that holds these assets is defined in your
+        # packages service provider in the Http mixin using self.assets() method.
+        'asset': {
+            'host': env('ASSET_HOST', None),
+            'path': env('ASSET_PATH', '/assets'),
+        },
+
+        'middleware': OrderedDict({
+            # Only allow this site to be hosted from these domains
+            'TrustedHost': {
+                'module': 'uvicore.http.middleware.TrustedHost',
+                'options': {
+                    'allowed_hosts': ['127.0.0.1', 'localhost'],
+                    'www_redirect': True,
+                }
+            },
+
+            # Detect one or more authentication mechanisms and load valid or anonymous user into request.user
+            # 'Authentication': {
+            #     # All options are configured in the 'auth' section of this app config
+            #     'module': 'uvicore.http.middleware.Authentication',
+            #     'options': {
+            #         'route_type': 'web',  # web or api only
+            #     }
+            # },
+
+            # If you have a loadbalancer with SSL termination in front of your web
+            # app, don't use this redirection to enforce HTTPS as it is always HTTP internally.
+            # 'HTTPSRedirect': {
+            #     'module': 'uvicore.http.middleware.HTTPSRedirect',
+            # },
+            # Not needed if your loadbalancer or web server handles gzip itself.
+            # 'GZip': {
+            #     'module': 'uvicore.http.middleware.Gzip',
+            #     'options': {
+            #         # Do not GZip responses that are smaller than this minimum size in bytes. Defaults to 500
+            #         'minimum_size': 500
+            #     }
+            # },
+        }),
+    },
+
+
+    # --------------------------------------------------------------------------
+    # API HTTP Server
+    #
+    # API endpoint specific configuration and middleware
+    # --------------------------------------------------------------------------
+    'api': {
+        'prefix': '/api',
+        'openapi': {
+            'title': env('OPENAPI_TITLE', 'Appstub API Docs'),
+            'url': '/openapi.json',
+            'docs_url': '/docs',
+            'redoc_url': '/redoc',
+        },
+        'middleware': OrderedDict({
+            # Only allow this site to be hosted from these domains
+            'TrustedHost': {
+                'module': 'uvicore.http.middleware.TrustedHost',
+                'options': {
+                    'allowed_hosts': ['127.0.0.1', 'localhost'],
+                    'www_redirect': True,
+                }
+            },
+
+            # Only allow these domains to access routes
+            'CORS': {
+                'module': 'uvicore.http.middleware.CORS',
+                'options': {
+                    'allow_origins': ['127.0.0.1', 'localhost'],
+                    'allow_methods': ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+                    'allow_headers': [],
+                    'allow_credentials': False,
+                    'allow_origin_regex': None,
+                    'expose_headers': [],
+                    'max_age': 600,
+                }
+            },
+
+            # Detect one or more authentication mechanisms and load valid or anonymous user into request.user
+            # 'Authentication': {
+            #     # All options are configured in the 'auth' section of this app config
+            #     'module': 'uvicore.http.middleware.Authentication',
+            #     'options': {
+            #         'route_type': 'api',  # web or api only
+            #     }
+            # },
+
+        }),
+    },
+
+
+    # --------------------------------------------------------------------------
+    # HTTP Authentication Middleware Configuration
+    #
+    # Both web and api routes can have their own authentication middleware.
+    # Configuration for each is provided below in the 'web' and 'api' sections.
+    # Multiple authenticators may be used.  For example, API routes may
+    # authenticate using JWT, Digest or Basic auth while web routes may
+    # only authenticate with Session auth. Each of these authenticators has
+    # various options and user providers which are generally the same when
+    # applied to multiple authenticators. The 'default_options' and 'providers'
+    # Dict allows deep merging of default options to eliminate config duplication.
+    # --------------------------------------------------------------------------
+    'auth': {
+
+        # Web route authenticators and user providers
+        'web': {
+            # Default provider used for anonymous retrieval and for authenticators that do not specify their own
+            'default_provider': 'user_model',
+
+            # Unauthenticated handler
+            'unauthenticated_handler': {
+                # If redirect defined, redirect to this URL on authentication or authorization failures.
+                # If '/' found in redirect it will use the redirect as a URL.  If no / and a . is found
+                # it will be used as a route name.  Referer ?referer=page automatically added
+                'redirect': 'appstub.login',
+
+                # If no redirect defined a PermissionDenied or NotAuthenticated exception is thrown
+                # You can specify custom headers to be thwon with those exceptions.  Useful for Basic Auth
+                # WWW-Authenticate headers to prompt a brower based login prompt.
+                'exception': {
+                    'headers': {
+                        'WWW-Authenticate': 'Basic realm="Appstub Web Realm"'
+                    },
+                },
+            },
+
+            # Authenticators, multiples allow many forms of authentication
+            'authenticators': {
+                # 'jwt': {
+                #     # Deep merge default options from 'options' Dictionary below.
+                #     # Can override any default options by specifying them here
+                #     'default_options': 'jwt',
+                # },
+
+                'basic': {
+                    # Deep merge default options from 'options' Dictionary below.
+                    # Can override any default options by specifying them here
+                    'default_options': 'basic',
+                },
+            },
+        },
+
+        # Api route authenticators and user providers
+        'api': {
+            # Default provider used for anonymous retrieval and for authenticators that do not specify their own
+            'default_provider': 'user_model',
+
+            # Authenticators, multiples allow many forms of authentication
+            'authenticators': {
+                'jwt': {
+                    # Deep merge default options from 'options' Dictionary below.
+                    # Can override any default options by specifying them here
+                    'default_options': 'jwt',
+                    #'provider': 'jwt',
+                },
+                'basic': {
+                    # Deep merge default options from 'options' Dictionary below.
+                    # Can override any default options by specifying them here
+                    'default_options': 'basic',
+                },
+            },
+        },
+
+        # User repository providers
+        'providers': {
+            'user_model': {
+                'module': 'uvicore.auth.user_providers.Orm',
+                # Options are passed as parameters into the UserProvider retrieve methods
+                'options': {
+                    'includes': ['roles', 'roles.permissions', 'groups', 'groups.roles', 'groups.roles.permissions'],
+                },
+                # Anonymous options are MERGED with options to get the anonymous user only with not authenticated
+                'anonymous_options': {
+                    'username': 'anonymous',
+                    'anonymous': True,
+                },
+            },
+            'jwt': {
+                'module': 'uvicore.auth.user_providers.Jwt',
+                'options': {
+                    # Map JWT keys into User attrributes. User to build user object from JWT.
+                    'jwt_mapping': {
+                        # FusionAuth JWT Mappings
+                        'id': lambda jwt: jwt['sub'],
+                        'uuid': lambda jwt: jwt['sub'],
+                        'username': lambda jwt: jwt['email'],
+                        'email': lambda jwt: jwt['email'],
+                        'first_name': lambda jwt: jwt['name'].split('|')[0],
+                        'last_name': lambda jwt: jwt['name'].split('|')[1],
+                        'roles': lambda jwt: jwt['roles'],
+                        'permissions': lambda jwt: jwt['roles'],
+                        'superadmin': lambda jwt: 'Administrator' in jwt['roles'],
+                    },
+                    # If role_permission_map is defined, map user 'permissions' into
+                    # user 'roles' matching these rules Dictionary.  Used for stateless static
+                    # User roles (from JWT) to user permission mapping.
+                    # 'role_permission_map': {
+                    #     'Anonymous': [
+                    #         'anonymous',
+                    #     ],
+                    #     'Employee': [
+                    #         'posts.read',
+                    #     ],
+                    # },
+                },
+                'anonymous_options': {
+                    'anonymous': True,
+                    'username': 'anonymous',
+                    'anonymous_user': {
+                        'id': 1,
+                        'uuid': 'anon-from-config',
+                        'username': 'anonymous',
+                        'email': 'anonymous@example.com',
+                        'first_name': 'Anonymous',
+                        'last_name': 'User',
+                        'title': 'Anonymous',
+                        'avatar': '',
+                        'groups': [],
+                        'roles': ['Anonymous'],
+                        'permissions': [],
+                        'superadmin': False,
+                    }
+                },
+            },
+        },
+
+        # Authenticator default options
+        'default_options': {
+            'basic': {
+                #'module': 'uvicore.auth.middleware.Basic',
+                'module': 'uvicore.auth.authenticators.Basic',
+                #'provider': 'user_model',  # Or use the default_provider
+                'return_www_authenticate_header': True,
+            },
+            'jwt': {
+                'module': 'uvicore.auth.authenticators.Jwt',
+                #'provider': 'user_model',  # Or use the default_provider
+
+                # Settings used when there is an API gateway upstream from this API
+                'anonymous_header': 'x-anonymous-consumer',  # Set to None to skip header checks
+
+                # Settings used when the user auth and JWT did not originate from this app itself
+                # but from an external Identity Provider
+                'auto_create_user': True,
+                'auto_create_user_jwt_mapping': {
+                    # FusionAuth JWT Mappings
+                    'uuid': lambda jwt: jwt['sub'],
+                    'username': lambda jwt: jwt['email'],
+                    'email': lambda jwt: jwt['email'],
+                    'first_name': lambda jwt: jwt['name'].split('|')[0],
+                    'last_name': lambda jwt: jwt['name'].split('|')[1],
+                    'title': '',
+                    'avatar': '',
+                    'creator_id': 1,
+                    'groups': lambda jwt: jwt['roles'],
+                },
+                # Sync users scopes (rules/groups) form JWT with user provider
+                # Does not sync on every request but is buffered with the default cache TTL seconds.
+                'sync_scopes': True,
+
+                # JWT Validation
+                'verify_signature': True,  # False only if a local upstream API gateway has already pre-validated
+                'audience': 'd409b432-5edc-45c7-8721-4cf123473c67',  # External IDP App ID
+                'algorithms': ['RS256'],
+                #'secret': '-----BEGIN PUBLIC KEY-----\nMIIB...AQAB\n-----END PUBLIC KEY-----',
+
+            },
+        },
     },
 
 
@@ -118,6 +394,22 @@ config = {
 
 
     # --------------------------------------------------------------------------
+    # Cache Configuration
+    # --------------------------------------------------------------------------
+    'cache': {
+        'default': env('CACHE_STORE', 'redis'),
+        'stores': {
+            'redis': {
+                'driver': 'uvicore.cache.backends.Redis',
+                'connection': 'cache',
+                'prefix': 'appstub::cache/',
+                'seconds': env('CACHE_EXPIRE', 600),  # 0=forever
+            },
+        },
+    },
+
+
+    # --------------------------------------------------------------------------
     # Logging Configuration
     #
     # The uvicore.logger packages does NOT provide its own config because it
@@ -140,10 +432,10 @@ config = {
         'file': {
             'enabled': env.bool('LOG_FILE_ENABLED', True),
             'level': env('LOG_FILE_LEVEL', 'INFO'),
-            'file': '/tmp/acme.appstub.log',
-            'when': 'midnight',
-            'interval': 1,
-            'backup_count': 7,
+            'file': env('LOG_FILE_PATH', '/tmp/acme.appstub.log'),
+            'when': env('LOG_ROTATE_WHEN', 'midnight'),
+            'interval': env.int('LOG_ROTATE_INTERVAL', 1),
+            'backup_count': env.int('LOG_ROTATE_BACKUP_COUNT', 7),
             'filters': [],
             'exclude': [],
         }

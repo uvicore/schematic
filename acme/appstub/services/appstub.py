@@ -2,12 +2,13 @@ import uvicore
 from uvicore.package import ServiceProvider
 from uvicore.http.provider import Http
 from uvicore.database.provider import Db
+from uvicore.redis.provider import Redis
 from uvicore.console.provider import Cli
 from uvicore.support.dumper import dump, dd
 
 
 @uvicore.provider()
-class Appstub(ServiceProvider, Cli, Db, Http):
+class Appstub(ServiceProvider, Cli, Db, Redis, Http):
 
     def register(self) -> None:
         """Register package into the uvicore framework.
@@ -42,8 +43,14 @@ class Appstub(ServiceProvider, Cli, Db, Http):
 
         # Define Database Connections
         self.connections(
-            config=self.package.config.database.connections,
+            connections=self.package.config.database.connections,
             default=self.package.config.database.default
+        )
+
+        # Define Redis Connections
+        self.redis_connections(
+            connections=self.package.config.redis.connections,
+            default=self.package.config.redis.default
         )
 
         # Define all tables or models
@@ -80,10 +87,11 @@ class Appstub(ServiceProvider, Cli, Db, Http):
         # Define view paths
         self.views(['acme.appstub.http.views'])
 
+        # Define public paths
+        self.public(['acme.appstub.http.public'])
+
         # Define asset paths
-        self.assets([
-            'acme.appstub.http.static',
-        ])
+        self.assets(['acme.appstub.http.public.assets'])
 
         # Define custom template options
         # self.template({
@@ -109,13 +117,15 @@ class Appstub(ServiceProvider, Cli, Db, Http):
         # Define web routes
         self.web_routes(
             module='acme.appstub.http.routes.web.Web',
-            prefix=self.package.config.route.web_prefix
+            prefix=self.package.config.web.prefix,
+            #name_prefix=None,
         )
 
         # Define api routes
         self.api_routes(
             module='acme.appstub.http.routes.api.Api',
-            prefix=self.package.config.route.api_prefix
+            prefix=self.package.config.api.prefix,
+            #name_prefix='api',
         )
 
     def define_commands(self) -> None:

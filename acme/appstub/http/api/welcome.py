@@ -1,8 +1,15 @@
-from typing import List
-from uvicore.http.routing import ApiRouter
+import uvicore
+from uvicore.http.routing import ApiRouter, Controller
 
-route = ApiRouter()
 
-@route.get('/welcome')
-async def welcome():
-    return {'welcome': 'to uvicore API!'}
+@uvicore.controller()
+class Welcome(Controller):
+
+    def register(self, route: ApiRouter):
+
+        @route.get('/welcome', tags=['Welcome'])
+        async def welcome():
+            return {'welcome': 'to uvicore API!'}
+
+        # Return router
+        return route
