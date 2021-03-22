@@ -14,9 +14,11 @@ alias or company name.  Examples of what to enter here:""")
     item("yourname.blog")
     item("companyname.themes")
     log("""Please do not skip the namespace and create root packages as they will
-eventually cause namespace collisions amoung developers.""")
+eventually cause namespace collisions amoung developers.  All dashes will be
+converted to underscores.""")
     nl()
     result = user_input("Package Name ({}): ".format(default))
+    result = result.replace('"', "").replace("'", "").replace("-", "_")
 
     # NO
     # good = False
@@ -37,6 +39,7 @@ def friendly_name(default):
     log("""Friendly name of this package, for example: Wiki, Acme Blog, Reporting Suite...""")
     nl()
     result = user_input("Friendly Name ({}): ".format(default))
+    result = result.replace('"', "").replace("'", "")
     return result or default
 
 
@@ -46,6 +49,7 @@ def your_name(default):
 config type files.""")
     nl()
     result = user_input("Your Full Name ({}): ".format(default))
+    result = result.replace('"', "").replace("'", "").replace("-", "_")
     return result or default
 
 
