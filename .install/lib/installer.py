@@ -147,6 +147,8 @@ class Installer:
         item("If you will be using a database (MySQL, Postgres or SQLite) install uvicore[database] extras")
         item("If you will be using web and api install uvicore[web] extras")
         item("Install dependencies in your environment provided by the uvicore installer")
+        item("Modify the LICENSE file and license listed in your build file (Pipfile, pyproject.toml...)")
+        item("Add code to git or other source control provider")
         item("Run ./uvicore")
 
     ############################################################################
