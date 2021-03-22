@@ -108,7 +108,7 @@ config = {
         'uvicore.foundation': {
             'provider': 'uvicore.foundation.services.Foundation',
         },
-        # 'uvicore.database': {calc
+        # 'uvicore.database': {
         #     'provider': 'uvicore.database.services.Database',
         # },
         # 'uvicore.orm': {

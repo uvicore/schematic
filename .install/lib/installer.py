@@ -126,9 +126,11 @@ class Installer:
 
     def done(self):
         nl();
-        info('Uvicore installer complete!  You must now MANUALLY:')
+        notice('Uvicore installer complete!  You must now MANUALLY:')
         item('cd {}'.format(self.path))
         item('Initialize your preferred environment (venv, virtualenv, pyenv, poetry...)')
+        item('If you will be using a database (MySQL, Postgres or SQLite) install uvicore[database] extras')
+        item('If you will be using web and api install uvicore[web] extras')
         item('Install dependencies in your environment provided by the uvicore installer')
         item('Run ./uvicore')
 
