@@ -1,14 +1,17 @@
 import uvicore
 from uvicore.package import ServiceProvider
-from uvicore.http.provider import Http
-from uvicore.database.provider import Db
+
 from uvicore.redis.provider import Redis
 from uvicore.console.provider import Cli
 from uvicore.support.dumper import dump, dd
 
+# If using database and http import these and add the mixins to class Appstub(Db, Http)
+#from uvicore.database.provider import Db
+#from uvicore.http.provider import Http
+
 
 @uvicore.provider()
-class Appstub(ServiceProvider, Cli, Db, Redis, Http):
+class Appstub(ServiceProvider, Cli, Redis):
 
     def register(self) -> None:
         """Register package into the uvicore framework.
@@ -42,16 +45,16 @@ class Appstub(ServiceProvider, Cli, Db, Redis, Http):
         self.registers(self.package.config.registers)
 
         # Define Database Connections
-        self.connections(
-            connections=self.package.config.database.connections,
-            default=self.package.config.database.default
-        )
+        # self.connections(
+        #     connections=self.package.config.database.connections,
+        #     default=self.package.config.database.default
+        # )
 
         # Define Redis Connections
-        self.redis_connections(
-            connections=self.package.config.redis.connections,
-            default=self.package.config.redis.default
-        )
+        # self.redis_connections(
+        #     connections=self.package.config.redis.connections,
+        #     default=self.package.config.redis.default
+        # )
 
         # Define all tables or models
         # The goal is to load up all SQLAlchemy tables for complete metedata definitions.
@@ -60,9 +63,9 @@ class Appstub(ServiceProvider, Cli, Db, Redis, Http):
         # Order does not matter as they are sorted topologically for ForeignKey dependencies
         # If you don't have an __init__.py index in your tables or models you can use
         # wildcard imports self.models(['myapp.models.*])
-        self.models([
-            'acme.appstub.models',
-        ])
+        # self.models([
+        #     'acme.appstub.models',
+        # ])
         # self.tables([
         #     'acme.appstub.database.tables',
         # ])
@@ -73,10 +76,10 @@ class Appstub(ServiceProvider, Cli, Db, Redis, Http):
         # ])
 
         # Define view and asset paths and configure the templating system
-        self.define_views()
+        #self.define_views()
 
         # Define Web and API routes and prefixes
-        self.define_routes()
+        #self.define_routes()
 
         # Define CLI commands to be added to the ./uvicore command line interface
         self.define_commands()

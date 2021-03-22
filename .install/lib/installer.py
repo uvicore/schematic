@@ -125,11 +125,11 @@ class Installer:
         ])
 
     def done(self):
-        nl(); header('Done')
-        info('Uvicore installer complete.  You must now MANUALLY:')
+        nl();
+        info('Uvicore installer complete!  You must now MANUALLY:')
         item('cd {}'.format(self.path))
-        item('Initialize your preferred environment (venv, virtualenv, pyenv, poetry...')
-        item('Install dependencies in your environment')
+        item('Initialize your preferred environment (venv, virtualenv, pyenv, poetry...)')
+        item('Install dependencies in your environment provided by the uvicore installer')
         item('Run ./uvicore')
 
     ############################################################################
