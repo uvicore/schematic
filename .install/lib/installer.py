@@ -35,7 +35,7 @@ class Installer:
             ("Acme Test App", self.friendly_name),
             ("Artisan Smith", self.your_name),
             ("<smith@example.com>", "<" + self.your_email + ">"),
-            ("<year>", datetime.now().year),
+            ("<year>", str(datetime.now().year)),
         ]
 
     def handle(self):
@@ -65,6 +65,7 @@ class Installer:
         self.delete([
             ".git",
             ".env",
+            ".coverage",
             "poetry.lock",
             "pyproject.toml",
             ".python-version",
