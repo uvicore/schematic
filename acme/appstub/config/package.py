@@ -117,9 +117,9 @@ config = {
         # 'uvicore.auth': {
         #     'provider': 'uvicore.auth.services.Auth',
         # },
-        'uvicore.http': {
-            'provider': 'uvicore.http.services.Http',
-        },
+        # 'uvicore.http': {
+        #     'provider': 'uvicore.http.services.Http',
+        # },
     }),
 
 }
