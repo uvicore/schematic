@@ -11,5 +11,12 @@ class Welcome(Controller):
         async def welcome():
             return {'welcome': 'to uvicore API!'}
 
+        # @route.get('/posts', tags=['Post'])
+        # async def posts() -> List[Post]:
+        #     return await Post.query().get()
+
+        # @route.get('/post/{id}', tags=['Post'])
+        # async def post(id: int) -> Post:
+
         # Return router
         return route

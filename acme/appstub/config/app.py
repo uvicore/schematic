@@ -13,7 +13,7 @@ config = {
     # name: The human readable name of this package/app.  Like 'Matts Wiki'
     # main: The package name to run when this app is served/executed
     # --------------------------------------------------------------------------
-    'name': env('APP_NAME', 'Appstub Test App'),
+    'name': env('APP_NAME', 'Appstub App'),
     'main': 'acme.appstub',
     'debug': env('DEBUG', False),
 
@@ -22,6 +22,7 @@ config = {
     # Uvicorn Development Server
     #
     # Configure the dev server when you run `./uvicore http serve`
+    # Dev server only, in production use gunicorn or uvicorn manually
     # --------------------------------------------------------------------------
     'server': {
         'app': 'acme.appstub.http.server:http',
@@ -35,7 +36,7 @@ config = {
     # --------------------------------------------------------------------------
     # Web HTTP Server
     #
-    # Web endpoint specific configuration and middleware
+    # Web endpoint specific configuration and middleware.
     # Middleware is fully defined from the running application only.  Packages
     # Do not define their own middleware as the running app should dictate all.
     # --------------------------------------------------------------------------
@@ -93,7 +94,7 @@ config = {
     # --------------------------------------------------------------------------
     # API HTTP Server
     #
-    # API endpoint specific configuration and middleware
+    # API endpoint specific configuration and middleware.
     # --------------------------------------------------------------------------
     'api': {
         'prefix': '/api',
@@ -255,6 +256,7 @@ config = {
                     #     ],
                     # },
                 },
+                # If user is not logged in, use these options in the user provider retrieve methods
                 'anonymous_options': {
                     'anonymous': True,
                     'username': 'anonymous',
@@ -402,7 +404,7 @@ config = {
             'redis': {
                 'driver': 'uvicore.cache.backends.Redis',
                 'connection': 'cache',
-                'prefix': 'appstub::cache/',
+                'prefix': 'acme.appstub::cache/',
                 'seconds': env('CACHE_EXPIRE', 600),  # 0=forever
             },
         },

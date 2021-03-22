@@ -69,13 +69,13 @@ class Appstub(ServiceProvider, Cli, Db, Redis, Http):
 
         # Define data seeders
         # self.seeders([
-        #     'acme.appstub.database.seeders.seeders.seed',
+        #     'acme.appstub.database.seeders.seed',
         # ])
 
         # Define view and asset paths and configure the templating system
         self.define_views()
 
-        # Define Web and API routers
+        # Define Web and API routes and prefixes
         self.define_routes()
 
         # Define CLI commands to be added to the ./uvicore command line interface
@@ -112,7 +112,7 @@ class Appstub(ServiceProvider, Cli, Db, Redis, Http):
         #app.jinja.env.globals['whatever'] = somefunc
 
     def define_routes(self) -> None:
-        """Define Web and API router"""
+        """Define Web and API routes and prefixes"""
 
         # Define web routes
         self.web_routes(

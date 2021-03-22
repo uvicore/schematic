@@ -68,7 +68,7 @@ config = {
             'cache': {
                 'host': env('REDIS_CACHE_HOST', '127.0.0.1'),
                 'port': env.int('REDIS_CACHE_PORT', 6379),
-                'database': env.int('REDIS_CACHE_DB', 9),
+                'database': env.int('REDIS_CACHE_DB', 2),
                 'password': env('REDIS_CACHE_PASSWORD', None),
             },
         },
