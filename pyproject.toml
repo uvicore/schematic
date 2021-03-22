@@ -1,17 +1,21 @@
 [tool.poetry]
 name = "acme-appstub"
 version = "0.1.0"
-description = ""
+license = "MIT"
 authors = ["Matthew Reschke <mail@mreschke.com>"]
+description = "Uvicore Install Application Stub"
+readme = "README.md"
+include = ["LICENSE"]
 
 [tool.poetry.dependencies]
 python = ">=3.7,<4.0"
 uvicore = {path = "../uvicore", develop = true}
-aiomysql = "0.0.*"
-aiosqlite = "0.15.*"
 
 [tool.poetry.dev-dependencies]
+pytest = "6.2.*"
+pytest-cov = "2.11.*"
+pytest-asyncio = "0.14.*"
 
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry_core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

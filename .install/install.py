@@ -15,7 +15,7 @@ lib/installer.py to handle the new answers properly.
 """
 
 # Test run over and over!
-# rsync -vaP --delete /home/mreschke/Code/mreschke/python/uvicore/app/ . && python .install/install.py
+# rsync -vaP --delete ~/Code/mreschke/python/uvicore/app/ . && python .install/install.py
 
 
 if __name__ == "__main__":

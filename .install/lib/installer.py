@@ -5,6 +5,8 @@ from os.path import realpath
 from lib.console import *
 from lib import helpers
 from pathlib import Path
+from datetime import datetime
+
 
 class Installer:
 
@@ -33,6 +35,7 @@ class Installer:
             ("Acme Test App", self.friendly_name),
             ("Artisan Smith", self.your_name),
             ("<smith@example.com>", "<" + self.your_email + ">"),
+            ("<year>", datetime.now().year),
         ]
 
     def handle(self):
@@ -48,6 +51,9 @@ class Installer:
         # Rename files
         self.rename_files()
 
+        # Move package
+        self.move_package()
+
         # Cleanup
         self.cleanup()
 
@@ -60,9 +66,9 @@ class Installer:
             ".git",
             ".env",
             "poetry.lock",
-            "/pyproject.toml",
-            "/.python-version",
-            "/.vscode",
+            "pyproject.toml",
+            ".python-version",
+            ".vscode",
         ])
 
     def copy_stubs(self):
@@ -103,9 +109,11 @@ class Installer:
                 "uvicore",
                 "pyproject.toml",
                 ".env-example",
+                "LICENSE",
             ])
 
     def rename_files(self):
+        nl(); header("Renaming files to new package name")
         self.rename([
             ("acme/appstub/config/appstub.py", "acme/appstub/config/" + self.app.lower() + ".py"),
             ("acme/appstub/http/views/appstub", "acme/appstub/http/views/" + self.app.lower()),
@@ -113,26 +121,32 @@ class Installer:
 
             # Env
             (".env-example", ".env"),
-
-            # These must be last
-            ("acme/appstub", "acme/" + self.app.lower()),
-            ("acme", self.vendor.lower()),
         ])
+
+    def move_package(self):
+        nl(); header("Moving package folder to new package name")
+        paths = self.package.split(".")
+        full_path = ''
+        for path in paths:
+            full_path += "/" + path
+            os.mkdir(self.path + full_path)
+        self.rename([("acme/appstub", self.package.replace('.', '/'))])
 
     def cleanup(self):
         self.delete([
-            '.install'
+            "acme",
+            ".install",
         ])
 
     def done(self):
         nl();
-        notice('Uvicore installer complete!  You must now MANUALLY:')
-        item('cd {}'.format(self.path))
-        item('Initialize your preferred environment (venv, virtualenv, pyenv, poetry...)')
-        item('If you will be using a database (MySQL, Postgres or SQLite) install uvicore[database] extras')
-        item('If you will be using web and api install uvicore[web] extras')
-        item('Install dependencies in your environment provided by the uvicore installer')
-        item('Run ./uvicore')
+        notice("Uvicore installer complete!  You must now MANUALLY:")
+        item("cd {}".format(self.path))
+        item("Initialize your preferred environment (venv, virtualenv, pyenv, poetry...)")
+        item("If you will be using a database (MySQL, Postgres or SQLite) install uvicore[database] extras")
+        item("If you will be using web and api install uvicore[web] extras")
+        item("Install dependencies in your environment provided by the uvicore installer")
+        item("Run ./uvicore")
 
     ############################################################################
     ############################################################################

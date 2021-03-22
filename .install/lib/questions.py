@@ -18,6 +18,17 @@ eventually cause namespace collisions amoung developers.""")
     nl()
     result = user_input("Package Name ({}): ".format(default))
 
+    # NO
+    # good = False
+    # while not good:
+    #     result = user_input("Package Name ({}): ".format(default))
+    #     # Check for reserved package names
+    #     name = result.split(".")[-1]
+    #     exclude = ["config", "event", "gen", "ioc", "package"]
+    #     if name in exclude:
+    #         error("Package name cannot be one of {}".format(exclude))
+    #     else:
+    #         good = True
     return result or default
 
 
