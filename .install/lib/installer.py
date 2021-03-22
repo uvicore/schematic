@@ -75,10 +75,13 @@ class Installer:
     def copy_stubs(self):
         nl(); header("Copying stubed files")
 
+        # Copy virtual environment file
         if self.env == "poetry":
-            self.copy([
-                (".install/stubs/pyproject.toml", "pyproject.toml"),
-            ])
+            self.copy([(".install/stubs/pyproject.toml", "pyproject.toml")])
+        elif self.env == "pipenv":
+            self.copy([(".install/stubs/Pipfile", "Pipfile")])
+        elif self.env == "requirements.txt":
+            self.copy([(".install/stubs/requirements.txt", "requirements.txt")])
 
         self.copy([
             (".install/stubs/README.md", "README.md")
