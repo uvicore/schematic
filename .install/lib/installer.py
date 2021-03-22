@@ -51,6 +51,9 @@ class Installer:
         # Cleanup
         self.cleanup()
 
+        # Done
+        self.done()
+
     def delete_test_files(self):
         nl(); header("Deleting unused test files and folders")
         self.delete([
@@ -120,6 +123,14 @@ class Installer:
         self.delete([
             '.install'
         ])
+
+    def done(self):
+        nl(); header('Done')
+        info('Uvicore installer complete.  You must now MANUALLY:')
+        item('cd {}'.format(self.path))
+        item('Initialize your preferred environment (venv, virtualenv, pyenv, poetry...')
+        item('Install dependencies in your environment')
+        item('Run ./uvicore')
 
     ############################################################################
     ############################################################################

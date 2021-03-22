@@ -8,7 +8,7 @@ def h1(log):
 def package_name(default):
     nl(2); h1("Package Name")
     log("""Package name is the actual "python package" compatible name. Most uvicore
-packages should be given a single namespace, preferably your name, developer
+packages should be given a vendor.package style namespace, preferably your name, developer
 alias or company name.  Examples of what to enter here:""")
     item("mreschke.wiki")
     item("yourname.blog")
