@@ -18,6 +18,10 @@ lib/installer.py to handle the new answers properly.
 # rsync -vaP --delete ~/Code/mreschke/python/uvicore/app/ . && python .install/install.py
 
 
+# Uvicore Version of this appstub Branch
+__version__ = '0.1'
+
+
 if __name__ == "__main__":
     # New packages full path
     path = os.path.realpath(__file__ + "../../../")
@@ -49,7 +53,7 @@ if __name__ == "__main__":
 
     # Install package with question answers
     if go:
-        installer = Installer(answers)
+        installer = Installer(answers, __version__)
         installer.handle()
 
     # User cancelled, abort installation

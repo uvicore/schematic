@@ -10,7 +10,7 @@ from datetime import datetime
 
 class Installer:
 
-    def __init__(self, options):
+    def __init__(self, options, version):
         # Extract options for easier access
         self.options = options
         self.path = options.get("path")
@@ -19,6 +19,7 @@ class Installer:
         self.your_name = options.get("your_name")
         self.your_email = options.get("your_email")
         self.env = options.get("environment").lower()
+        self.version = version
 
         # Derived options
         self.vendor = self.package.split(".")[0]
@@ -73,7 +74,7 @@ class Installer:
         ])
 
     def copy_stubs(self):
-        nl(); header("Copying stubed files")
+        nl(); header("Copying stubbed files")
 
         # Copy virtual environment file
         if self.env == "poetry":
@@ -108,13 +109,12 @@ class Installer:
         self.replace(files)
 
         # Replace additional files
-        if self.env == "poetry":
-            self.replace([
-                "uvicore",
-                "pyproject.toml",
-                ".env-example",
-                "LICENSE",
-            ])
+        self.replace([
+            "uvicore",
+            ".env-example",
+            "LICENSE",
+        ])
+        if self.env == "poetry": self.replace(["pyproject.toml"])
 
     def rename_files(self):
         nl(); header("Renaming files to new package name")
@@ -137,22 +137,55 @@ class Installer:
         self.rename([("acme/appstub", self.package.replace('.', '/'))])
 
     def cleanup(self):
+        nl(); header("Cleaning up")
         self.delete([
             "acme",
             ".install",
         ])
 
     def done(self):
+        nl(2); line("#", LIGHTBLUE); nl(2)
+        #info("Uvicore installer complete!  You must now MANUALLY:", BROWN)
+        header("Uvicore installation complete!  You must now MANUALLY perform the following:", h="!!", c1=RED, c2=BROWN)
+        item("cd {}".format(self.path), c2=WHITE)
+
+        # Poetry
+        if self.env == "poetry":
+            item("poetry shell", c2=WHITE)
+            item("poetry install", c2=WHITE)
+            info("    [OPTIONAL] If you need database and/or web and api support run: poetry add uvicore[database,web]", CYAN)
+
+        if self.env == "pipenv":
+            item("pipenv shell", c2=WHITE)
+            item("pipenv install", c2=WHITE)
+            info("    [OPTIONAL] If you need database and/or web and api support run: pipenv install uvicore[database,web]=={}.*".format(self.version), CYAN)
+            #pipenv install uvicore[database,web]==0.1.*
+
+        if self.env == "requirements.txt":
+            item("python -m venv env", c2=WHITE)
+            item("source ./env/bin/activate", c2=WHITE)
+            info("    [OPTIONAL] If you need database and/or web and api support edit requirements.txt like so: uvicore[database,web] == {}.*".format(self.version), CYAN)
+            item("pip install -r requirements.txt", c2=WHITE)
+
+        #item("Initialize your preferred environment (venv, virtualenv, pyenv, poetry...)")
+        #item("If you will be using a database (MySQL, Postgres or SQLite) install uvicore[database] extras")
+        #item("If you will be using web and api install uvicore[web] extras")
+        #item("Install dependencies in your environment provided by the uvicore installer")
+
+        item("Modify the LICENSE file to your liking", c2=WHITE)
+        if self.env == "poetry": item("Modify the license listed in your pyproject.toml file", c2=WHITE)
+        item("Modify .gitignore and .editorconfig to your liking", c2=WHITE)
+        item("Add code to git or other source control provider", c2=WHITE)
+        item("Run ./uvicore and enjoy!", c2=WHITE)
+
         nl();
-        notice("Uvicore installer complete!  You must now MANUALLY:")
-        item("cd {}".format(self.path))
-        item("Initialize your preferred environment (venv, virtualenv, pyenv, poetry...)")
-        item("If you will be using a database (MySQL, Postgres or SQLite) install uvicore[database] extras")
-        item("If you will be using web and api install uvicore[web] extras")
-        item("Install dependencies in your environment provided by the uvicore installer")
-        item("Modify the LICENSE file and license listed in your build file (Pipfile, pyproject.toml...)")
-        item("Add code to git or other source control provider")
-        item("Run ./uvicore")
+        notice("""If you want database and or web support, install the optional dependencies listed above
+and edit your services/{}.py Service Provider to import Db and Http mixins and uncomment self.connections(),
+self.seeders(), self.models(), self.define_views(), self.define_routes() etc...""".format(self.app))
+
+        nl();
+        info("Thanks for using Uvicore!", LIGHTBLUE)
+
 
     ############################################################################
     ############################################################################
