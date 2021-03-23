@@ -405,7 +405,7 @@ config = {
                 'driver': 'uvicore.cache.backends.Redis',
                 'connection': 'cache',
                 'prefix': 'acme.appstub::cache/',
-                'seconds': env('CACHE_EXPIRE', 600),  # 0=forever
+                'seconds': env.int('CACHE_EXPIRE', 600),  # 0=forever
             },
         },
     },
