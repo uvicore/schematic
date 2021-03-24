@@ -26,7 +26,7 @@ class Appstub(ServiceProvider, Cli, Redis, Db, Http):
             {'key': self.name, 'module': 'acme.appstub.config.package.config'},
 
             # Override uvicore.auth config to customize the auth database connection
-            {'key': 'uvicore.auth', 'module': 'acme.appstub.config.auth.config'},
+            {'key': 'uvicore.auth', 'module': 'acme.appstub.config.overrides.auth.config'},
         ])
 
     def boot(self) -> None:
