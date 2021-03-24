@@ -16,8 +16,8 @@ class Api(Routes):
 
         # Include dynamic model CRUD API endpoints (the "auto API")!
         @route.group()
+        #@route.group(scopes=['authenticated'])
         def autoapi():
-        #def autoapi(scopes=['authenticated']):
             route.include(ModelRouter)
 
         # Public Routes

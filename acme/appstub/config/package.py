@@ -108,18 +108,18 @@ config = {
         'uvicore.foundation': {
             'provider': 'uvicore.foundation.services.Foundation',
         },
-        # 'uvicore.database': {
-        #     'provider': 'uvicore.database.services.Database',
-        # },
-        # 'uvicore.orm': {
-        #     'provider': 'uvicore.orm.services.Orm',
-        # },
-        # 'uvicore.auth': {
-        #     'provider': 'uvicore.auth.services.Auth',
-        # },
-        # 'uvicore.http': {
-        #     'provider': 'uvicore.http.services.Http',
-        # },
+        'uvicore.database': {
+            'provider': 'uvicore.database.services.Database',
+        },
+        'uvicore.orm': {
+            'provider': 'uvicore.orm.services.Orm',
+        },
+        'uvicore.auth': {
+            'provider': 'uvicore.auth.services.Auth',
+        },
+        'uvicore.http': {
+            'provider': 'uvicore.http.services.Http',
+        },
     }),
 
 }

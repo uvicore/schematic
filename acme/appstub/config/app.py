@@ -60,7 +60,7 @@ config = {
             'TrustedHost': {
                 'module': 'uvicore.http.middleware.TrustedHost',
                 'options': {
-                    'allowed_hosts': ['127.0.0.1', 'localhost'],
+                    'allowed_hosts': env.list('WEB_TRUSTED_HOSTS', ['127.0.0.1', 'localhost']),
                     'www_redirect': True,
                 }
             },
@@ -109,7 +109,7 @@ config = {
             'TrustedHost': {
                 'module': 'uvicore.http.middleware.TrustedHost',
                 'options': {
-                    'allowed_hosts': ['127.0.0.1', 'localhost'],
+                    'allowed_hosts': env.list('API_TRUSTED_HOSTS', ['127.0.0.1', 'localhost']),
                     'www_redirect': True,
                 }
             },
@@ -118,8 +118,8 @@ config = {
             'CORS': {
                 'module': 'uvicore.http.middleware.CORS',
                 'options': {
-                    'allow_origins': ['127.0.0.1', 'localhost'],
-                    'allow_methods': ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+                    'allow_origins': env.list('CORS_ALLOW_ORIGINS', ['127.0.0.1', 'localhost']),
+                    'allow_methods': env.list('CORS_ALLOW_METHODS', ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']),
                     'allow_headers': [],
                     'allow_credentials': False,
                     'allow_origin_regex': None,
@@ -308,13 +308,13 @@ config = {
                     'creator_id': 1,
                     'groups': lambda jwt: jwt['roles'],
                 },
-                # Sync users scopes (rules/groups) form JWT with user provider
+                # Periodically sync user info, roles and groups from the JWT
                 # Does not sync on every request but is buffered with the default cache TTL seconds.
-                'sync_scopes': True,
+                'sync_user': True,
 
                 # JWT Validation
                 'verify_signature': True,  # False only if a local upstream API gateway has already pre-validated
-                'audience': 'd409b432-5edc-45c7-8721-4cf123473c67',  # External IDP App ID
+                'audience': env('JWT_AUDIENCE', 'xyz'),  # External IDP App ID
                 'algorithms': ['RS256'],
                 #'secret': '-----BEGIN PUBLIC KEY-----\nMIIB...AQAB\n-----END PUBLIC KEY-----',
 

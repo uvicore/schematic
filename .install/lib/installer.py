@@ -147,24 +147,25 @@ class Installer:
         nl(2); line("#", LIGHTBLUE); nl(2)
         #info("Uvicore installer complete!  You must now MANUALLY:", BROWN)
         header("Uvicore installation complete!  You must now MANUALLY perform the following:", h="!!", c1=RED, c2=BROWN)
+
         item("cd {}".format(self.path), c2=WHITE)
 
         # Poetry
         if self.env == "poetry":
             item("poetry shell", c2=WHITE)
             item("poetry install", c2=WHITE)
-            info("    [OPTIONAL] If you need database and/or web and api support run: poetry add uvicore[database,web]", CYAN)
+            #info("    [OPTIONAL] If you need database and/or web and api support run: poetry add uvicore[database,web]", CYAN)
 
         if self.env == "pipenv":
             item("pipenv shell", c2=WHITE)
             item("pipenv install", c2=WHITE)
-            info("    [OPTIONAL] If you need database and/or web and api support run: pipenv install uvicore[database,web]=={}.*".format(self.version), CYAN)
+            #info("    [OPTIONAL] If you need database and/or web and api support run: pipenv install uvicore[database,web]=={}.*".format(self.version), CYAN)
             #pipenv install uvicore[database,web]==0.1.*
 
         if self.env == "requirements.txt":
             item("python -m venv env", c2=WHITE)
             item("source ./env/bin/activate", c2=WHITE)
-            info("    [OPTIONAL] If you need database and/or web and api support edit requirements.txt like so: uvicore[database,web] == {}.*".format(self.version), CYAN)
+            #info("    [OPTIONAL] If you need database and/or web and api support edit requirements.txt like so: uvicore[database,web] == {}.*".format(self.version), CYAN)
             item("pip install -r requirements.txt", c2=WHITE)
 
         #item("Initialize your preferred environment (venv, virtualenv, pyenv, poetry...)")
@@ -176,12 +177,11 @@ class Installer:
         if self.env == "poetry": item("Modify the license listed in your pyproject.toml file", c2=WHITE)
         item("Modify .gitignore and .editorconfig to your liking", c2=WHITE)
         item("Add code to git or other source control provider", c2=WHITE)
-        item("Run ./uvicore and enjoy!", c2=WHITE)
-
-        nl();
-        notice("""If you want database and or web support, install the optional dependencies listed above
-and edit your services/{}.py Service Provider to import Db and Http mixins and uncomment self.connections(),
-self.seeders(), self.models(), self.define_views(), self.define_routes() etc...""".format(self.app))
+        item("Run ./uvicore", c2=WHITE)
+        item("Run ./uvicore {} welcome".format(self.app), c2=WHITE)
+        item("Run ./uvicore http serve", c2=WHITE)
+        item("Visit http://127.0.0.1:5000", c2=WHITE)
+        item("Visit http://127.0.0.1:5000/api/docs", c2=WHITE)
 
         nl();
         info("Thanks for using Uvicore!", LIGHTBLUE)

@@ -4,7 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [packages]
-uvicore = "==0.1.*"
+uvicore = {version = "==0.1.*", extras = ["database", "web"]}
 
 [dev-packages]
 pytest = "==6.2.*"
