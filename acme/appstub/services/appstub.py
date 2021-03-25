@@ -25,8 +25,8 @@ class Appstub(ServiceProvider, Cli, Redis, Db, Http):
             # Here self.name is your packages name (ie: acme.appstub).
             {'key': self.name, 'module': 'acme.appstub.config.package.config'},
 
-            # Override uvicore.auth config to customize the auth database connection
-            {'key': 'uvicore.auth', 'module': 'acme.appstub.config.overrides.auth.config'},
+            # Example of how to override another packages config with your own.
+            #{'key': 'uvicore.auth', 'module': 'acme.appstub.config.overrides.auth.config'},
         ])
 
     def boot(self) -> None:

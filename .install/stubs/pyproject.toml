@@ -6,6 +6,9 @@ authors = ["Artisan Smith <smith@example.com>"]
 description = ""
 readme = "README.md"
 include = ["LICENSE"]
+packages = [
+    { include = "acme/appstub" },
+]
 
 [tool.poetry.dependencies]
 python = ">=3.7,<4.0"

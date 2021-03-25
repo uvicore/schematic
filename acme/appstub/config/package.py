@@ -27,6 +27,10 @@ config = {
 
     # --------------------------------------------------------------------------
     # Database Connections
+    #
+    # Database doesn't just mean a local relational DB connection.  Uvicore
+    # ORM can also query remote APIs, CSVs, JSON files and smash them all
+    # together as if from a local database join!
     # --------------------------------------------------------------------------
     'database': {
         'default': env('DATABASE_DEFAULT', 'appstub'),
@@ -40,15 +44,23 @@ config = {
 
             # MySQL Example
             'appstub': {
-                'driver': 'mysql',
-                'dialect': 'pymysql',
-                'host': env('MYSQL_APPSTUB_HOST', '127.0.0.1'),
-                'port': env.int('MYSQL_APPSTUB_PORT', 3306),
-                'database': env('MYSQL_APPSTUB_DB', 'appstub'),
-                'username': env('MYSQL_APPSTUB_USER', 'root'),
-                'password': env('MYSQL_APPSTUB_PASSWORD', 'techie'),
-                'prefix': env('MYSQL_APPSTUB_PREFIX', None),
+                'driver': env('APPSTUB_DB_DRIVER', 'mysql'),
+                'dialect': env('APPSTUB_DB_DIALECT', 'pymysql'),
+                'host': env('APPSTUB_DB_HOST', '127.0.0.1'),
+                'port': env.int('APPSTUB_DB_PORT', 3306),
+                'database': env('APPSTUB_DB_DB', 'appstub'),
+                'username': env('APPSTUB_DB_USER', 'root'),
+                'password': env('APPSTUB_DB_PASSWORD', 'techie'),
+                'prefix': env('APPSTUB_DB_PREFIX', None),
             },
+
+            # Example of ORM over Remote Uvicore API
+            # 'appstub': {
+            #     'driver': 'api',
+            #     'dialect': 'uvicore',
+            #     'url': 'https://appstub.example.com/api',
+            #     'prefix': None
+            # },
         },
     },
 
