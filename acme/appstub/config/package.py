@@ -15,6 +15,7 @@ config = {
         'prefix': '',
     },
 
+
     # --------------------------------------------------------------------------
     # Api Configuration
     #
@@ -105,6 +106,7 @@ config = {
     #     'tables': False,
     #     'seeders': False,
     # },
+
 
     # --------------------------------------------------------------------------
     # Package Dependencies (Service Providers)

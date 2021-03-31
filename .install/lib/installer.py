@@ -30,6 +30,7 @@ class Installer:
         self.replacements = [
             ("acme-appstub", self.package.replace(".", "-").replace("_", "-")),
             ("acme.appstub", self.package),
+            ("acme/appstub", self.package.replace(".", "/")),
             ("appstub", self.app),
             ("Appstub", helpers.studly(self.app)),
             ("APPSTUB", self.app.upper()),
