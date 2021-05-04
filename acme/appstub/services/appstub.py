@@ -25,6 +25,9 @@ class Appstub(ServiceProvider, Cli, Redis, Db, Http):
             # Here self.name is your packages name (ie: acme.appstub).
             {'key': self.name, 'module': 'acme.appstub.config.package.config'},
 
+            # Example of splitting out the app config into multiple files per section
+            #{'key': self.name, 'module': 'acme.appstub.config.database.config'},
+
             # Example of how to override another packages config with your own.
             #{'key': 'uvicore.auth', 'module': 'acme.appstub.config.overrides.auth.config'},
         ])
@@ -94,6 +97,25 @@ class Appstub(ServiceProvider, Cli, Redis, Db, Http):
         self.assets(['acme.appstub.http.public.assets'])
 
         # Define custom template options
+        # def url_method(context: dict, name: str, **path_params: any) -> str:
+        #     request = context["request"]
+        #     return request.url_for(name, **path_params)
+
+        # def up_filter(input):
+        #     return input.upper()
+
+        # def up_filter2(context, input):
+        #     return input.upper()
+
+        # def is_prime(n):
+        #     import math
+        #     if n == 2:
+        #         return True
+        #     for i in range(2, int(math.ceil(math.sqrt(n))) + 1):
+        #         if n % i == 0:
+        #             return False
+        #     return True
+
         # self.template({
         #     'context_functions': {
         #         'url2': url_method,

@@ -19,7 +19,7 @@ config = {
     # --------------------------------------------------------------------------
     # Api Configuration
     #
-    # prefix: All web routes will be prefixed with this URI. Ex: '' or '/wiki'
+    # prefix: All api routes will be prefixed with this URI. Ex: '' or '/wiki'
     # --------------------------------------------------------------------------
     'api': {
         'prefix': '',
@@ -45,14 +45,14 @@ config = {
 
             # MySQL Example
             'appstub': {
-                'driver': env('APPSTUB_DB_DRIVER', 'mysql'),
-                'dialect': env('APPSTUB_DB_DIALECT', 'pymysql'),
-                'host': env('APPSTUB_DB_HOST', '127.0.0.1'),
-                'port': env.int('APPSTUB_DB_PORT', 3306),
-                'database': env('APPSTUB_DB_DB', 'appstub'),
-                'username': env('APPSTUB_DB_USER', 'root'),
-                'password': env('APPSTUB_DB_PASSWORD', 'techie'),
-                'prefix': env('APPSTUB_DB_PREFIX', None),
+                'driver': env('DB_APPSTUB_DRIVER', 'mysql'),
+                'dialect': env('DB_APPSTUB_DIALECT', 'pymysql'),
+                'host': env('DB_APPSTUB_HOST', '127.0.0.1'),
+                'port': env.int('DB_APPSTUB_PORT', 3306),
+                'database': env('DB_APPSTUB_DB', 'appstub'),
+                'username': env('DB_APPSTUB_USER', 'root'),
+                'password': env('DB_APPSTUB_PASSWORD', 'techie'),
+                'prefix': env('DB_APPSTUB_PREFIX', None),
             },
 
             # Example of ORM over Remote Uvicore API
