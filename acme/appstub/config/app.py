@@ -41,7 +41,7 @@ config = {
     # Do not define their own middleware as the running app should dictate all.
     # --------------------------------------------------------------------------
     'web': {
-        'prefix': '',
+        'prefix': env('WEB_PREFIX', ''),
 
         # Static Assets
         # Leaving all blank uses the served apps host and defailt /assets path.
@@ -57,13 +57,13 @@ config = {
 
         'middleware': OrderedDict({
             # Only allow this site to be hosted from these domains
-            'TrustedHost': {
-                'module': 'uvicore.http.middleware.TrustedHost',
-                'options': {
-                    'allowed_hosts': env.list('WEB_TRUSTED_HOSTS', ['127.0.0.1', 'localhost']),
-                    'www_redirect': True,
-                }
-            },
+            # 'TrustedHost': {
+            #     'module': 'uvicore.http.middleware.TrustedHost',
+            #     'options': {
+            #         'allowed_hosts': env.list('WEB_TRUSTED_HOSTS', ['127.0.0.1', 'localhost']),
+            #         'www_redirect': True,
+            #     }
+            # },
 
             # Detect one or more authentication mechanisms and load valid or anonymous user into request.user
             # 'Authentication': {
@@ -97,12 +97,18 @@ config = {
     # API endpoint specific configuration and middleware.
     # --------------------------------------------------------------------------
     'api': {
-        'prefix': '/api',
+        'prefix': env('API_PREFIX', '/api'),
         'openapi': {
-            'title': env('OPENAPI_TITLE', 'Appstub API Docs'),
-            'url': '/openapi.json',
-            'docs_url': '/docs',
-            'redoc_url': '/redoc',
+            'title': env('OPENAPI_TITLE', 'Wiki API Docs'),
+            'path': '/openapi.json',
+            'docs': {
+                'path': '/docs',
+                'favicon_url': 'data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=',
+                'js_url': 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.47.1/swagger-ui-bundle.js',
+                'css_url': 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.47.1/swagger-ui.min.css',
+            },
+            # If oauth2 is enabled, edit app.auth.oauth2 configuration below
+            'oauth2_enabled': True,
         },
         'middleware': OrderedDict({
             # Only allow this site to be hosted from these domains
@@ -154,6 +160,16 @@ config = {
     # Dict allows deep merging of default options to eliminate config duplication.
     # --------------------------------------------------------------------------
     'auth': {
+
+        # Oauth2 configuration
+        # Mainly used for OpenAPI doc authentication if app.api.openapi.oauth2_enabled=True
+        # but may be used elsewhere in your app if needed.
+        'oauth2': {
+            'client_id': env('AUTH_OAUTH2_CLIENT_ID', 'xyz'),
+            'base_url': env('AUTH_OAUTH2_BASE_URL', 'https://my_fusionauth_gluu_keycloke_auth0_okta.com'),
+            'authorize_path': env('AUTH_OAUTH2_AUTHORIZE_URI', '/oauth2/authorize'),
+            'token_path': env('AUTH_OAUTH2_TOKEN_URI', '/oauth2/token'),
+        },
 
         # Web route authenticators and user providers
         'web': {
@@ -313,11 +329,11 @@ config = {
                 'sync_user': True,
 
                 # JWT Validation
-                'verify_signature': True,  # False only if a local upstream API gateway has already pre-validated
-                'audience': env('JWT_AUDIENCE', 'xyz'),  # External IDP App ID
-                'algorithms': ['RS256'],
-                #'secret': '-----BEGIN PUBLIC KEY-----\nMIIB...AQAB\n-----END PUBLIC KEY-----',
-
+                'verify_signature': env.bool('API_JWT_VERIFY_SIGNATURE', True),  # False only if a local upstream API gateway has already pre-validated
+                'audience': env('API_JWT_AUDIENCE', 'xyz'),  # External IDP App ID
+                'algorithms': env.list('API_JWT_ALGORITHMS', ['RS256']),
+                # Secret only required if verify_sugnature=True
+                'secret': env('API_JWT_SECRET', '-----BEGIN PUBLIC KEY-----\nMIIB...AQAB\n-----END PUBLIC KEY-----'),
             },
         },
     },
@@ -392,6 +408,31 @@ config = {
     # --------------------------------------------------------------------------
     'paths': {
         #
+    },
+
+
+    # --------------------------------------------------------------------------
+    # Mail Configuration
+    # --------------------------------------------------------------------------
+    'mail': {
+        'default': env('MAIL_DRIVER', 'mailgun'),
+        'mailers': {
+            'mailgun': {
+                'driver': 'uvicore.mail.backends.Mailgun',
+                'domain': env('MAIL_MAILGUN_DOMAIN', ''),
+                'secret': env('MAIL_MAILGUN_SECRET', ''),
+            },
+            'smtp': {
+                'driver': 'uvicore.mail.backends.smtp',
+                'server': env('MAIL_SMTP_SERVER', ''),
+                'port': env.int('MAIL_SMTP_PORT', 587),
+                'username': env('MAIL_SMTP_USERNAME', ''),
+                'password': env('MAIL_SMTP_PASSWORD', ''),
+                'ssl': env.bool('MAIL_SMTP_SSL', False),
+            }
+        },
+        'from_name': env('MAIL_FROM_NAME', 'Appstub'),
+        'from_address': env('MAIL_FROM_ADDRESS', 'appstub@example.com'),
     },
 
 
