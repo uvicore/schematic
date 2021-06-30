@@ -1,5 +1,5 @@
 # Production Dependencies
-uvicore[database,web] == 0.1.*
+uvicore[database,redis,web] == 0.1.*
 
 
 # Development Dependencies
