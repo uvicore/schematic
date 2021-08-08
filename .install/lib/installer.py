@@ -129,9 +129,7 @@ class Installer:
         ])
 
         # Detect if vendor=uvicore, if so, have to rename our uvicore script to uvicore-cli
-        print(self.vendor)
         if (self.vendor.lower() == 'uvicore'):
-            print('x')
             self.rename([('uvicore', 'uvicore-cli')])
 
     def move_package(self):
