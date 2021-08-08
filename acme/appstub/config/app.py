@@ -441,7 +441,7 @@ config = {
     # If no cache config defined, the default of 'array' caching will be used
     # --------------------------------------------------------------------------
     'cache': {
-        'default': env('CACHE_STORE', 'array'),  # redis, array, disabled
+        'default': env('CACHE_STORE', 'array'),  # redis, array
         'stores': {
             'redis': {
                 'driver': 'uvicore.cache.backends.redis.Redis',

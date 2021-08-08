@@ -1,5 +1,4 @@
-# mReschke Python .gitignore file standard
-# mReschke 2020-11-17
+# Uvicore Framework .gitignore
 
 # NOTES:
 # Folders should be denoted with a trailing /
@@ -53,12 +52,6 @@ eggs/
 develop-eggs/
 __pycache__/
 .pytest_cache/
-
-# Django Files
-#
-
-# Django Folders
-/static/
 
 # JavaScript Files
 npm-debug.log

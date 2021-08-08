@@ -1,4 +1,5 @@
 # EditorConfig is awesome: http://EditorConfig.org
+# Crafted for the uvicore python framework
 
 # Top-most EditorConfig file
 root = true
@@ -13,13 +14,8 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 
 # Ensure 2 space indent
-[*.{rb,ru,yaml,yml}]
+[*.{yaml,yml}]
 indent_size = 2
-indent_style = space
-
-# Ensure 4 spaces
-[*.{py,php,html,htm,css,scss,sass,js,ts,json,markdown,md}]
-indent_size = 4
 indent_style = space
 
 # Ensure 4 tabs
