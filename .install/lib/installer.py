@@ -123,10 +123,10 @@ class Installer:
             ("acme/appstub/config/appstub.py", "acme/appstub/config/" + self.app.lower() + ".py"),
             ("acme/appstub/http/views/appstub", "acme/appstub/http/views/" + self.app.lower()),
             ("acme/appstub/services/appstub.py", "acme/appstub/services/" + self.app.lower() + ".py"),
-
-            # Env
-            (".env-example", ".env"),
         ])
+
+        # Copy (not rename) .env-example to .env
+        self.copy([(".env-example", ".env")])
 
         # Detect if vendor=uvicore, if so, have to rename our uvicore script to uvicore-cli
         if (self.vendor.lower() == 'uvicore'):
