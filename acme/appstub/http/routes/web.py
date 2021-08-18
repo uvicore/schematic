@@ -23,4 +23,6 @@ class Web(Routes):
         #     route.controller('private_controller')
 
         # Return router
+        # Must always return the router at the end of every controller and routes file
+        # as this is one infinitely recursive nested router configuration.
         return route

@@ -181,7 +181,7 @@ config = {
                 # If redirect defined, redirect to this URL on authentication or authorization failures.
                 # If '/' found in redirect it will use the redirect as a URL.  If no / and a . is found
                 # it will be used as a route name.  Referer ?referer=page automatically added
-                'redirect': 'appstub.login',
+                #'redirect': 'appstub.login',
 
                 # If no redirect defined a PermissionDenied or NotAuthenticated exception is thrown
                 # You can specify custom headers to be thwon with those exceptions.  Useful for Basic Auth
