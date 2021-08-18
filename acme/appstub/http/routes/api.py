@@ -1,6 +1,13 @@
 import uvicore
 from uvicore.http.routing import Routes, ApiRouter, ModelRouter
 
+# Extra
+# from uvicore.auth import UserInfo
+# from uvicore.http.routing import Guard
+# from uvicore.typing import Dict, List, Optional
+# from uvicore.http.exceptions import HTTPException
+# from uvicore.http.params import Path, Query, Header, Cookie, Body, Form, File, Depends, Security
+
 
 @uvicore.routes()
 class Api(Routes):
