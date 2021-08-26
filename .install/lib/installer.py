@@ -123,6 +123,7 @@ class Installer:
         self.rename([
             ("acme/appstub/config/appstub.py", "acme/appstub/config/" + self.app.lower() + ".py"),
             ("acme/appstub/http/views/appstub", "acme/appstub/http/views/" + self.app.lower()),
+            ("acme/appstub/http/public/assets/appstub", "acme/appstub/http/public/assets/" + self.app.lower()),
             ("acme/appstub/services/appstub.py", "acme/appstub/services/" + self.app.lower() + ".py"),
         ])
 

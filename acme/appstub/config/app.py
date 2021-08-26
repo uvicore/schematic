@@ -169,6 +169,7 @@ config = {
             'base_url': env('AUTH_OAUTH2_BASE_URL', 'https://my_fusionauth_gluu_keycloke_auth0_okta.com'),
             'authorize_path': env('AUTH_OAUTH2_AUTHORIZE_PATH', '/oauth2/authorize'),
             'token_path': env('AUTH_OAUTH2_TOKEN_PATH', '/oauth2/token'),
+            'jwks_path': env('AUTH_OAUTH2_JWKS_PATH', '/.well-known/jwks.json'),
         },
 
         # Web route authenticators and user providers
@@ -310,7 +311,8 @@ config = {
                 'anonymous_header': 'x-anonymous-consumer',  # Set to None to skip header checks
 
                 # Settings used when the user auth and JWT did not originate from this app itself
-                # but from an external Identity Provider
+                # but from an external Identity Provider. We want to create and sync the external IDP
+                # user to uvicore's internal user/group/roles tables.
                 'auto_create_user': True,
                 'auto_create_user_jwt_mapping': {
                     # FusionAuth JWT Mappings
@@ -324,16 +326,36 @@ config = {
                     'creator_id': 1,
                     'groups': lambda jwt: jwt['roles'],
                 },
-                # Periodically sync user info, roles and groups from the JWT
-                # Does not sync on every request but is buffered with the default cache TTL seconds.
-                'sync_user': True,
 
-                # JWT Validation
-                'verify_signature': env.bool('API_JWT_VERIFY_SIGNATURE', True),  # False only if a local upstream API gateway has already pre-validated
-                'audience': env('API_JWT_AUDIENCE', 'xyz'),  # External IDP App ID
-                'algorithms': env.list('API_JWT_ALGORITHMS', ['RS256']),
-                # Secret only required if verify_sugnature=True
-                'secret': env('API_JWT_SECRET', '-----BEGIN PUBLIC KEY-----\nMIIB...AQAB\n-----END PUBLIC KEY-----'),
+                # Periodically sync user info, roles and groups from the JWT
+                # Does not sync on every request but is buffered with the TTL seconds.
+                'sync_user': True,
+                'sync_user_ttl': env.int('API_JWT_SYNC_USER_TTL', 600),
+
+                # Validate JWT Signature
+                # Set to False only if an upstream API gateway (like Kong) has already pre-validated the JWT
+                'verify_signature': env.bool('API_JWT_VERIFY_SIGNATURE', True),
+                'verify_signature_method': env('API_JWT_VERIFY_SIGNATURE_METHOD', 'secret'),  # secret, jwks
+                'jwks_query_cache_ttl': env.int('API_JWT_JWKS_QUERY_CACHE_TTL', 300),
+
+                # Validate JWT audience (aud) claim
+                # Set to False only if an upstream API gateway (like Kong) has already pre-validated the JWT
+                # Only applies if verify_signature is False, uvicore may still verify audience.
+                'verify_audience': env.bool('API_JWT_VERIFY_AUDIENCE', True),
+
+                # Allowed consumers
+                # List of all oauth2 consumers allowed to access this API.  Verification only performed
+                # by uvicore if 'verify_signature' is True.  Verification method can be direct secret or
+                # jwks lookups.  If 'verify_signature' if False, but 'verify_audience' is true
+                # this dictionary only needs the 'aud' keys defined.
+                'consumers': {
+                    # 'web-app1': {
+                    #     'aud': 'appId, clientId, aud claim',
+                    #     #'jwks_url': 'optional override per consumer from default in oauth2 config above',
+                    #     'algorithms': ['RS256'],
+                    #     'secret': env('API_JWT_CONSUMER_WEB_APP1_SECRET', 'begin public key...used if method is secret'),
+                    # },
+                },
             },
         },
     },
@@ -461,6 +483,7 @@ config = {
     # override the logger config in the usual way of deep merging with the same
     # config key.  This is the one and only location of logging config as it
     # only applies to the running app (deep merge of all packages not needed).
+    # Possible levels: DEBUG, INFO, WARNING, ERROR, CRITICAL
     # --------------------------------------------------------------------------
     'logger': {
         'console': {
@@ -469,8 +492,11 @@ config = {
             'colors': env.bool('LOG_CONSOLE_COLORS', True),
             'filters': [],
             'exclude': [
-                'uvicore',
+                # 'uvicore.orm',
+                # 'uvicore.http',
+                # 'uvicore.auth',
                 'databases',
+                'aioredis',
             ],
         },
         'file': {
