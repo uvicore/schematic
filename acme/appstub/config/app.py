@@ -492,9 +492,9 @@ config = {
             'colors': env.bool('LOG_CONSOLE_COLORS', True),
             'filters': [],
             'exclude': [
-                # 'uvicore.orm',
-                # 'uvicore.http',
-                # 'uvicore.auth',
+                'uvicore.orm',
+                'uvicore.http',
+                'uvicore.auth',
                 'databases',
                 'aioredis',
             ],
@@ -507,7 +507,13 @@ config = {
             'interval': env.int('LOG_ROTATE_INTERVAL', 1),
             'backup_count': env.int('LOG_ROTATE_BACKUP_COUNT', 7),
             'filters': [],
-            'exclude': [],
+            'exclude': [
+                'uvicore.orm',
+                'uvicore.http',
+                'uvicore.auth',
+                'databases',
+                'aioredis',
+            ],
         }
     },
 
