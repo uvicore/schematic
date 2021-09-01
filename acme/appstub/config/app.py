@@ -60,7 +60,8 @@ config = {
             # 'TrustedHost': {
             #     'module': 'uvicore.http.middleware.TrustedHost',
             #     'options': {
-            #         'allowed_hosts': env.list('WEB_TRUSTED_HOSTS', ['127.0.0.1', 'localhost']),
+            #         # Host testserver is for automated unit tests
+            #         'allowed_hosts': env.list('WEB_TRUSTED_HOSTS', ['127.0.0.1', '0.0.0.0', 'localhost', 'testserver']),
             #         'www_redirect': True,
             #     }
             # },
@@ -115,7 +116,8 @@ config = {
             'TrustedHost': {
                 'module': 'uvicore.http.middleware.TrustedHost',
                 'options': {
-                    'allowed_hosts': env.list('API_TRUSTED_HOSTS', ['127.0.0.1', 'localhost']),
+                    # Host testserver is for automated unit tests
+                    'allowed_hosts': env.list('API_TRUSTED_HOSTS', ['127.0.0.1', '0.0.0.0', 'localhost', 'testserver']),
                     'www_redirect': True,
                 }
             },
@@ -124,7 +126,8 @@ config = {
             'CORS': {
                 'module': 'uvicore.http.middleware.CORS',
                 'options': {
-                    'allow_origins': env.list('CORS_ALLOW_ORIGINS', ['127.0.0.1', 'localhost']),
+                    # Allow origins are full protocol://domain:port, ie: http://127.0.0.1:5000
+                    'allow_origins': env.list('CORS_ALLOW_ORIGINS', ['http://127.0.0.1:5000', 'http://0.0.0.0:5000', 'http://localhost:5000']),
                     'allow_methods': env.list('CORS_ALLOW_METHODS', ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']),
                     'allow_headers': [],
                     'allow_credentials': False,
