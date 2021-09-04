@@ -47,7 +47,7 @@ class Api(Routes):
 
         # Include dynamic model CRUD API endpoints (the "auto API")!
         # These routes are automatically protected by model.crud style permissions.
-        route.include(ModelRouter)
+        route.include(ModelRouter, options=uvicore.config.acme.appstub.api.auto_api)
 
 
 

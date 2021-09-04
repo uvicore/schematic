@@ -67,13 +67,13 @@ config = {
             # },
 
             # Detect one or more authentication mechanisms and load valid or anonymous user into request.user
-            # 'Authentication': {
-            #     # All options are configured in the 'auth' section of this app config
-            #     'module': 'uvicore.http.middleware.Authentication',
-            #     'options': {
-            #         'route_type': 'web',  # web or api only
-            #     }
-            # },
+            'Authentication': {
+                # All options are configured in the 'auth' section of this app config
+                'module': 'uvicore.http.middleware.Authentication',
+                'options': {
+                    'route_type': 'web',  # web or api only
+                }
+            },
 
             # If you have a loadbalancer with SSL termination in front of your web
             # app, don't use this redirection to enforce HTTPS as it is always HTTP internally.
@@ -138,13 +138,13 @@ config = {
             },
 
             # Detect one or more authentication mechanisms and load valid or anonymous user into request.user
-            # 'Authentication': {
-            #     # All options are configured in the 'auth' section of this app config
-            #     'module': 'uvicore.http.middleware.Authentication',
-            #     'options': {
-            #         'route_type': 'api',  # web or api only
-            #     }
-            # },
+            'Authentication': {
+                # All options are configured in the 'auth' section of this app config
+                'module': 'uvicore.http.middleware.Authentication',
+                'options': {
+                    'route_type': 'api',  # web or api only
+                }
+            },
 
         }),
     },
@@ -226,11 +226,11 @@ config = {
                     'default_options': 'jwt',
                     #'provider': 'jwt',
                 },
-                'basic': {
-                    # Deep merge default options from 'options' Dictionary below.
-                    # Can override any default options by specifying them here
-                    'default_options': 'basic',
-                },
+                # 'basic': {
+                #     # Deep merge default options from 'options' Dictionary below.
+                #     # Can override any default options by specifying them here
+                #     'default_options': 'basic',
+                # },
             },
         },
 
@@ -496,10 +496,11 @@ config = {
             'filters': [],
             'exclude': [
                 'uvicore.orm',
-                'uvicore.http',
-                'uvicore.auth',
+                #'uvicore.http',
+                #'uvicore.auth',
                 'databases',
                 'aioredis',
+                'faker.factory',
             ],
         },
         'file': {
@@ -512,10 +513,11 @@ config = {
             'filters': [],
             'exclude': [
                 'uvicore.orm',
-                'uvicore.http',
-                'uvicore.auth',
+                #'uvicore.http',
+                #'uvicore.auth',
                 'databases',
                 'aioredis',
+                'faker.factory',
             ],
         }
     },
