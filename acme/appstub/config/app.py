@@ -98,12 +98,16 @@ config = {
     # API endpoint specific configuration and middleware.
     # --------------------------------------------------------------------------
     'api': {
+        # Web prefix for all api endpoints
         'prefix': env('API_PREFIX', '/api'),
+
+        # OpenAPI docs site configuration
         'openapi': {
             'title': env('OPENAPI_TITLE', 'Wiki API Docs'),
             'path': '/openapi.json',
             'docs': {
                 'path': '/docs',
+                'expansion': 'list',  # list none full
                 'favicon_url': 'data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=',
                 'js_url': 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.47.1/swagger-ui-bundle.js',
                 'css_url': 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.47.1/swagger-ui.min.css',
@@ -111,6 +115,8 @@ config = {
             # If oauth2 is enabled, edit app.auth.oauth2 configuration below
             'oauth2_enabled': True,
         },
+
+        # API Middleware
         'middleware': OrderedDict({
             # Only allow this site to be hosted from these domains
             'TrustedHost': {
@@ -145,8 +151,41 @@ config = {
                     'route_type': 'api',  # web or api only
                 }
             },
-
         }),
+
+        # Automatic Model CRUD API Configuration
+        'auto_api': {
+            # Override the automatic CRUD scopes with a List.  This sets the
+            # scopes for all endpoints and verbs.  Setting to [] opens all auto
+            # endpoints up to the public (no permissions).
+            #'scopes': [],
+
+            # Override the automatic CRUD scopes with a Dictionary.  This sets
+            # the scopes for all endpoints but taylored per HTTP verb.
+            #'scopes': {
+            #    'create': 'autoapi.create',
+            #    'read': 'autoapi.read',
+            #    'update': 'autoapi.update',
+            #    'delete': 'autoapi.delete',
+            #},
+
+            # Include only these models in the auto api model router.
+            # Accepts wildcards, *.models.user.User because if a model is
+            # overridden in another package, we still want to find that model.
+            'include': [
+                #'acme.appstub.models.*'
+                #'*.models.hashtag.*',
+            ],
+
+            # Exclude these models from the auto api model router.
+            # Accepts wildcards, *.models.user.User because if a model is
+            # overridden in another package, we still want to find that model.
+            'exclude': [
+                #'uvicore.auth.*',
+                #'*.models.user.*',
+            ],
+        },
+
     },
 
 

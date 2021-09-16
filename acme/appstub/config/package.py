@@ -23,39 +23,6 @@ config = {
     # --------------------------------------------------------------------------
     'api': {
         'prefix': '',
-
-        # Automatic Model CRUD Api Configuration
-        'auto_api': {
-            # Override the automatic CRUD scopes with a List.  This sets the
-            # scopes for all endpoints and verbs.  Setting to [] opens all auto
-            # endpoints up to the public (no permissions).
-            #'scopes': [],
-
-            # Override the automatic CRUD scopes with a Dictionary.  This sets
-            # the scopes for all endpoints but taylored per HTTP verb.
-            #'scopes': {
-            #    'create': 'autoapi.create',
-            #    'read': 'autoapi.read',
-            #    'update': 'autoapi.update',
-            #    'delete': 'autoapi.delete',
-            #},
-
-            # Include only these models in the auto api model router.
-            # Accepts wildcards, *.models.user.User because if a model is
-            # overridden in another package, we still want to find that model.
-            'include': [
-                #'acme.appstub.models.*'
-                #'*.models.hashtag.*',
-            ],
-
-            # Exclude these models from the auto api model router.
-            # Accepts wildcards, *.models.user.User because if a model is
-            # overridden in another package, we still want to find that model.
-            'exclude': [
-                #'uvicore.auth.*',
-                #'*.models.user.*',
-            ],
-        },
     },
 
 
