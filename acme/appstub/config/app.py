@@ -55,6 +55,12 @@ config = {
             'path': env('ASSET_PATH', '/assets'),
         },
 
+        # Web exception handlers
+        'exception': {
+            'handler': 'uvicore.http.exceptions.handlers.web'
+        },
+
+        # Web middleware
         'middleware': OrderedDict({
             # Only allow this site to be hosted from these domains
             # 'TrustedHost': {
@@ -116,7 +122,12 @@ config = {
             'oauth2_enabled': True,
         },
 
-        # API Middleware
+        # API exception handlers
+        'exception': {
+            'handler': 'uvicore.http.exceptions.handlers.api',
+        },
+
+        # API middleware
         'middleware': OrderedDict({
             # Only allow this site to be hosted from these domains
             'TrustedHost': {
