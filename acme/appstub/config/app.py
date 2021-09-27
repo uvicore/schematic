@@ -41,6 +41,7 @@ config = {
     # Do not define their own middleware as the running app should dictate all.
     # --------------------------------------------------------------------------
     'web': {
+        # URL prefix for all Web endpoints
         'prefix': env('WEB_PREFIX', ''),
 
         # Static Assets
@@ -104,7 +105,7 @@ config = {
     # API endpoint specific configuration and middleware.
     # --------------------------------------------------------------------------
     'api': {
-        # Web prefix for all api endpoints
+        # URL prefix for all API endpoints
         'prefix': env('API_PREFIX', '/api'),
 
         # OpenAPI docs site configuration
