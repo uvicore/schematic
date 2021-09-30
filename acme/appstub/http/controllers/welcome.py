@@ -41,7 +41,7 @@ class Welcome(Controller):
 
         @route.get('/', name='welcome')
         async def welcome(request: Request):
-            return response.View('appstub/welcome.j2', {
+            return await response.View('appstub/welcome.j2', {
                 'request': request
             })
 
@@ -56,7 +56,7 @@ class Welcome(Controller):
         #     # All web routes require request: Request
         #     # All template views require the request be piped through
         #     # To see all route details run ./uvicore package list
-        #     return response.View('xx_appname/template.j2', {
+        #     return await response.View('xx_appname/template.j2', {
         #         'request': request,
         #         'id': id,
         #     })
