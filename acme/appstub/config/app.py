@@ -108,6 +108,10 @@ config = {
         # URL prefix for all API endpoints
         'prefix': env('API_PREFIX', '/api'),
 
+        # Page Size
+        'page_size': 25,
+        'page_size_max': 100,
+
         # OpenAPI docs site configuration
         'openapi': {
             'title': env('OPENAPI_TITLE', 'Wiki API Docs'),

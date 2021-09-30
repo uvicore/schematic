@@ -90,9 +90,15 @@ class Appstub(ServiceProvider, Cli, Redis, Db, Http):
         # Define view paths
         self.views(['acme.appstub.http.views'])
 
-        # Define view composers
+        # Define view composers - multiple calls to self.composers() are appended
         #self.composers('appstub/*', 'acme.appstub.http.composers.layout.Layout')
         #self.composers(['appstub/home', 'appstub/about'], 'acme.appstub.http.composers.layout.Layout')
+
+        # You can also define view composers as a dict
+        # self.composers({
+        #     'acme.appstub.http.composers.layout.Layout': 'appstub/*',
+        #     'acme.appstub.http.composers.layout.Layout': ['appstub/home', 'appstub/about'],
+        # })
 
         # Define public paths
         self.public(['acme.appstub.http.public'])

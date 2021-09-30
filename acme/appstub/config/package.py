@@ -7,6 +7,22 @@ from uvicore.typing import OrderedDict
 config = {
 
     # --------------------------------------------------------------------------
+    # Package Custom Configuration
+    #
+    # Your custom package specific configs go here
+    # --------------------------------------------------------------------------
+    # 'example': 'accessible at acme.appstub.example',
+
+
+    # --------------------------------------------------------------------------
+    # Package Information
+    #
+    # Most other info like name, short_name, vendor are derived automatically
+    # --------------------------------------------------------------------------
+    'version': '0.1.0',
+
+
+    # --------------------------------------------------------------------------
     # Web Configuration
     #
     # prefix: All web routes will be prefixed with this URI. Ex: '' or '/wiki'
