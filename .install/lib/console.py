@@ -73,5 +73,8 @@ def user_select(o, selections, default, c1=BLUE, c2=WHITE):
     result = 0
     while result < 1 or result > len(selections):
         result = user_input(o.format(default_int)) or default_int
-        result = int(result)
+        try:
+            result = int(result)
+        except:
+            result = 999999
     return list(selections.keys())[result - 1]

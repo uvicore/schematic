@@ -34,10 +34,11 @@ class Installer:
         self.replacements = [
             # These are complex replacements build from the "extras" chosen during install
             # Must be first as complex output even uses acme-appstub, which should be later merged
-            ("<package-dependencies>", self.package_dependencies()),
-            ("<provider-imports>", self.provider_imports()),
-            ("<provider-class>", self.provider_class()),
-            ("<provider-db-connections>", self.provider_db_connections()),
+            ("<package-dependencies>", self.template_package_dependencies()),
+            ("<provider-imports>", self.template_provider_imports()),
+            ("<provider-class>", self.template_provider_class()),
+            ("<provider-db-connections>", self.template_provider_db_connections()),
+            ("<pyproject-uvicore>", self.template_pyproject_uvicore()),
 
             # Comment things based on extras
             ("self.define_views()", 'self.define_views()' if self.extra_web else '#self.define_views()'),
@@ -56,98 +57,6 @@ class Installer:
             ("<smith@example.com>", "<" + self.your_email + ">"),
             ("<year>", str(datetime.now().year))
         ]
-
-    def provider_db_connections(self):
-        results = ""
-
-        if self.extra_redis: results += """
-        # Define Redis Connections
-        self.redis_connections(
-            connections=self.package.config.redis.connections,
-            default=self.package.config.redis.default
-        )
-"""
-
-        if self.extra_db: results += """
-        # Define Database Connections
-        self.connections(
-            connections=self.package.config.database.connections,
-            default=self.package.config.database.default
-        )
-
-        # Define all tables or models
-        # The goal is to load up all SQLAlchemy tables for complete metedata definitions.
-        # If you separate tables vs models use self.tables(['myapp.database.tables])
-        # If you use models only, or models with inline tables then use self.models(['myapp.models])
-        # Order does not matter as they are sorted topologically for ForeignKey dependencies
-        # If you don't have an __init__.py index in your tables or models you can use
-        # wildcard imports self.models(['myapp.models.*])
-        self.models([
-            'acme.appstub.models',
-        ])
-        # self.tables([
-        #     'acme.appstub.database.tables',
-        # ])
-
-        # Define data seeders
-        self.seeders([
-            'acme.appstub.database.seeders.seed',
-        ])
-"""
-        return results
-
-    def provider_class(self):
-        results = ""
-        if (self.extra_redis): results += ", Redis"
-        if (self.extra_db): results += ", Db"
-        if (self.extra_web): results += ", Http"
-        return results
-
-    def provider_imports(self):
-        results = ""
-        if (self.extra_web): results += "from uvicore.http.provider import Http\n"
-        if (self.extra_redis): results += "from uvicore.redis.provider import Redis\n"
-        if (self.extra_db): results += "from uvicore.database.provider import Db\n"
-        return results
-
-    def package_dependencies(self):
-        results = ""
-        if (self.extra_redis):
-            results += """
-        # Redis provides redis access and redis caching if enabled in your app config
-        'uvicore.redis': {
-            'provider': 'uvicore.redis.services.Redis',
-        },
-"""
-        if (self.extra_db):
-            results += """
-        # Database is required for database queries and the ORM.  Disable if your project
-        # does not require database or models
-        'uvicore.database': {
-            'provider': 'uvicore.database.services.Database',
-        },
-
-        # ORM provides an object relationional mapper between your databse tables
-        # and your ORM models.  Disable if your project does not require Models.
-        # Even without the ORM, you can still use the database with the db query builder.
-        'uvicore.orm': {
-            'provider': 'uvicore.orm.services.Orm',
-        },
-"""
-
-        if (self.extra_web):
-            results += """
-        # Auth provides all of the auth middleware, user providers, authenticators and guards
-        'uvicore.auth': {
-            'provider': 'uvicore.auth.services.Auth',
-        },
-
-        # HTTP provides API and WEB endpoints, assets, templates.  A full webserver.
-        'uvicore.http': {
-            'provider': 'uvicore.http.services.Http',
-        },
-"""
-        return results
 
     def handle(self):
 
@@ -309,6 +218,7 @@ class Installer:
     ############################################################################
     ############################################################################
 
+
     def delete(self, files):
         for filename in files:
             file = realpath(self.path + "/" + filename)
@@ -346,3 +256,115 @@ class Installer:
                 item("Renaming {} to {}".format(file[0], file[1]))
                 os.rename(src, dest)
 
+
+    ############################################################################
+    ############################################################################
+    ############################################################################
+
+
+    def template_provider_db_connections(self):
+        results = ""
+
+        if self.extra_redis: results += """
+        # Define Redis Connections
+        self.redis_connections(
+            connections=self.package.config.redis.connections,
+            default=self.package.config.redis.default
+        )
+"""
+
+        if self.extra_db: results += """
+        # Define Database Connections
+        self.connections(
+            connections=self.package.config.database.connections,
+            default=self.package.config.database.default
+        )
+
+        # Define all tables or models
+        # The goal is to load up all SQLAlchemy tables for complete metedata definitions.
+        # If you separate tables vs models use self.tables(['myapp.database.tables])
+        # If you use models only, or models with inline tables then use self.models(['myapp.models])
+        # Order does not matter as they are sorted topologically for ForeignKey dependencies
+        # If you don't have an __init__.py index in your tables or models you can use
+        # wildcard imports self.models(['myapp.models.*])
+        self.models([
+            'acme.appstub.models',
+        ])
+        # self.tables([
+        #     'acme.appstub.database.tables',
+        # ])
+
+        # Define data seeders
+        self.seeders([
+            'acme.appstub.database.seeders.seed',
+        ])
+"""
+        return results
+
+    def template_provider_class(self):
+        results = ""
+        if (self.extra_redis): results += ", Redis"
+        if (self.extra_db): results += ", Db"
+        if (self.extra_web): results += ", Http"
+        return results
+
+    def template_provider_imports(self):
+        results = ""
+        if (self.extra_web): results += "from uvicore.http.provider import Http\n"
+        if (self.extra_redis): results += "from uvicore.redis.provider import Redis\n"
+        if (self.extra_db): results += "from uvicore.database.provider import Db\n"
+        return results
+
+    def template_package_dependencies(self):
+        results = ""
+        if (self.extra_redis):
+            results += """
+        # Redis provides redis access and redis caching if enabled in your app config
+        'uvicore.redis': {
+            'provider': 'uvicore.redis.services.Redis',
+        },
+"""
+        if (self.extra_db):
+            results += """
+        # Database is required for database queries and the ORM.  Disable if your project
+        # does not require database or models
+        'uvicore.database': {
+            'provider': 'uvicore.database.services.Database',
+        },
+
+        # ORM provides an object relationional mapper between your databse tables
+        # and your ORM models.  Disable if your project does not require Models.
+        # Even without the ORM, you can still use the database with the db query builder.
+        'uvicore.orm': {
+            'provider': 'uvicore.orm.services.Orm',
+        },
+"""
+
+        if (self.extra_web):
+            results += """
+        # Auth provides all of the auth middleware, user providers, authenticators and guards
+        'uvicore.auth': {
+            'provider': 'uvicore.auth.services.Auth',
+        },
+
+        # HTTP provides API and WEB endpoints, assets, templates.  A full webserver.
+        'uvicore.http': {
+            'provider': 'uvicore.http.services.Http',
+        },
+"""
+        return results
+
+    def template_pyproject_uvicore(self):
+        results = "uvicore = {version = \"0.1.*\""
+        # , extras = ["database", "redis", "web"]}
+        extra = []
+        if (self.extra_db): extra.append("database")
+        if (self.extra_redis): extra.append("redis")
+        if (self.extra_web): extra.append("web")
+        if (self.extra_themes): extra.append("themes")
+        if extra:
+            results += ', extras = ["' + '", "'.join(extra) + '"]'
+        else:
+            results += ', extras = []'
+        results += "}"
+        return results

@@ -12,7 +12,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.7,<4.0"
-uvicore = {version = "0.1.*", extras = ["database", "redis", "web"]}
+<pyproject-uvicore>
 
 [tool.poetry.dev-dependencies]
 pytest = "6.2.*"
