@@ -15,7 +15,7 @@ lib/installer.py to handle the new answers properly.
 """
 
 # Test run over and over!
-# rsync -vaP --delete ~/Code/mreschke/python/uvicore/app/ . && python .install/install.py
+# rsync -vaP --delete ~/Code/uvicore/app/ . && python .install/install.py
 
 
 # Uvicore Version of this appstub Branch
@@ -42,12 +42,16 @@ if __name__ == "__main__":
         'friendly_name': questions.friendly_name(default="mReschke Wiki"),
         'your_name': questions.your_name(default="Matthew Reschke"),
         'your_email': questions.your_email(default="mreschke@example.com"),
+        'extra_db': questions.extra_db(default=True),
+        'extra_redis': questions.extra_redis(default=True),
+        'extra_web': questions.extra_web(default=True),
+        'extra_themes': questions.extra_themes(default=True),
         'environment': questions.environment(default='Poetry'),
     }
 
     # Confirm answers before install
     nl(2); line("#", LIGHTBLUE); nl(2)
-    info("You are are about to customize this blank uvicore package schema as follows:")
+    info("You are are about to customize this fresh uvicore application according to these specs::")
     for answer in answers.items(): item(answer)
     nl(); go = user_confirm("Continue"); nl()
 
@@ -63,5 +67,5 @@ if __name__ == "__main__":
         info("You can manually re-run:")
         info("  python ./.install/install.py", DARKGRAY)
         info("Or you can go ahead and delete this {}".format(path))
-        info("folder and start over with the 'uvicore-new-app' command. Bye.")
+        info("folder and start over with the 'uvicore-installer' command. Bye.")
         error("Installation aborted.")

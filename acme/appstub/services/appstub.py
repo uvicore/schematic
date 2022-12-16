@@ -1,14 +1,11 @@
 import uvicore
-from uvicore.http.provider import Http
-from uvicore.redis.provider import Redis
-from uvicore.database.provider import Db
 from uvicore.console.provider import Cli
 from uvicore.package import ServiceProvider
 from uvicore.support.dumper import dump, dd
-
+<provider-imports>
 
 @uvicore.provider()
-class Appstub(ServiceProvider, Cli, Redis, Db, Http):
+class Appstub(ServiceProvider, Cli<provider-class>):
 
     def register(self) -> None:
         """Register package into the uvicore framework.
@@ -43,38 +40,7 @@ class Appstub(ServiceProvider, Cli, Redis, Db, Http):
 
         # Define Service Provider Registrations
         self.registers(self.package.config.registers)
-
-        # Define Database Connections
-        self.connections(
-            connections=self.package.config.database.connections,
-            default=self.package.config.database.default
-        )
-
-        # Define Redis Connections
-        self.redis_connections(
-            connections=self.package.config.redis.connections,
-            default=self.package.config.redis.default
-        )
-
-        # Define all tables or models
-        # The goal is to load up all SQLAlchemy tables for complete metedata definitions.
-        # If you separate tables vs models use self.tables(['myapp.database.tables])
-        # If you use models only, or models with inline tables then use self.models(['myapp.models])
-        # Order does not matter as they are sorted topologically for ForeignKey dependencies
-        # If you don't have an __init__.py index in your tables or models you can use
-        # wildcard imports self.models(['myapp.models.*])
-        self.models([
-            'acme.appstub.models',
-        ])
-        # self.tables([
-        #     'acme.appstub.database.tables',
-        # ])
-
-        # Define data seeders
-        self.seeders([
-            'acme.appstub.database.seeders.seed',
-        ])
-
+        <provider-db-connections>
         # Define view and asset paths and configure the templating system
         self.define_views()
 

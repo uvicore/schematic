@@ -8,8 +8,9 @@ def h1(log):
 def package_name(default):
     nl(2); h1("Package Name")
     log("""Package name is the actual "python package" compatible name. Most uvicore
-packages should be given a vendor.package style namespace, preferably your name, developer
-alias or company name.  Examples of what to enter here:""")
+packages should be given a vendor.package style namespace, preferably your
+name, developer alias or company name.  Examples of what to enter here:
+""")
     item("mreschke.wiki")
     item("yourname.blog")
     item("companyname.themes")
@@ -60,6 +61,28 @@ config type files.""")
     nl()
     result = user_input("Your Email ({}): ".format(default))
     return result or default
+
+
+def extra_db(default):
+    nl(2); h1("Extra Packages")
+    log("""By default uvicore is a minimal install providing just enough Foundation to
+build uvicore CLI applications.  This minimal install assume you require no
+database access, no HTTP Web/API serving, no Redis or caching needs etc...
+If you require these other features, please select them below:
+""")
+    return user_confirm("Install 'database' extra providing SQLAlchemy and ORM features")
+
+
+def extra_redis(default):
+    return user_confirm("Install 'redis' extra providing for Redis features")
+
+
+def extra_web(default):
+    return user_confirm("Install 'web' extra providing HTTP serving for Web and APIs")
+
+
+def extra_themes(default):
+    return user_confirm("Install 'themes' extra providing Uvicore Built-In themes for rapid Web UIs")
 
 
 def environment(default):

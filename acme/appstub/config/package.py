@@ -141,39 +141,11 @@ config = {
             'provider': 'uvicore.foundation.services.Foundation',
         },
 
-        # Redis provides redis access and redis caching if enabled in your app config
-        # 'uvicore.redis': {
-        #     'provider': 'uvicore.redis.services.Redis',
-        # },
-
-        # Database is required for database queries and the ORM.  Disable if your project
-        # does not require database or models
-        'uvicore.database': {
-            'provider': 'uvicore.database.services.Database',
+        # HTTP async client based on aiohttp.
+        'uvicore.http_client': {
+            'provider': 'uvicore.http_client.services.HttpClient',
         },
-
-        # ORM provides an object relationional mapper between your databse tables
-        # and your ORM models.  Disable if your project does not require Models.
-        # Even without the ORM, you can still use the database with the db query builder.
-        'uvicore.orm': {
-            'provider': 'uvicore.orm.services.Orm',
-        },
-
-        # Auth provides all of the auth middleware, user providers, authenticators and guards
-        'uvicore.auth': {
-            'provider': 'uvicore.auth.services.Auth',
-        },
-
-        # HTTP provides API and WEB endpoints, assets, templates.  A full webserver.
-        'uvicore.http': {
-            'provider': 'uvicore.http.services.Http',
-        },
-
-        # HTTP async client based on aiohttp.  Enable this package if you need
-        # to query other HTTP endpoints in your package.
-        # 'uvicore.http_client': {
-        #     'provider': 'uvicore.http_client.services.HttpClient',
-        # },
+        <package-dependencies>
     }),
 
 }
