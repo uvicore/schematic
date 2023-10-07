@@ -355,7 +355,7 @@ class Installer:
         return results
 
     def template_pyproject_uvicore(self):
-        results = "uvicore = {version = \"0.1.*\""
+        results = "uvicore = {version = \"0.2.*\""
         # , extras = ["database", "redis", "web"]}
         extra = []
         if (self.extra_db): extra.append("database")
