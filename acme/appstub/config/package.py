@@ -1,9 +1,17 @@
 from uvicore.configuration import env
+from .database import database, redis
 from uvicore.typing import OrderedDict
+from .dependencies import dependencies
 
-# This is the main appstub config.  All items here can be overridden
-# when used inside other applications.  Accessible at config('acme.appstub')
 
+# --------------------------------------------------------------------------
+# Package Configuration
+#
+# This is the packages configuration.  A package can RUN as an app or be
+# used as a library inside another app.  The package config is always
+# referenced regardless if the package is running as an APP or library.
+# Accessible at config('acme.appstub.version')
+# --------------------------------------------------------------------------
 config = {
 
     # --------------------------------------------------------------------------
@@ -43,109 +51,63 @@ config = {
 
 
     # --------------------------------------------------------------------------
-    # Database Connections
-    #
-    # Database doesn't just mean a local relational DB connection.  Uvicore
-    # ORM can also query remote APIs, CSVs, JSON files and smash them all
-    # together as if from a local database join!
-    # --------------------------------------------------------------------------
-    'database': {
-        'default': env('DATABASE_DEFAULT', 'appstub'),
-        'connections': {
-            # SQLite Example
-            # 'appstub': {
-            #     'driver': 'sqlite',
-            #     'database': ':memory',
-            #     'prefix': None,
-            # },
-
-            # MySQL Example
-            'appstub': {
-                'driver': env('DB_APPSTUB_DRIVER', 'mysql'),
-                'dialect': env('DB_APPSTUB_DIALECT', 'pymysql'),
-                'host': env('DB_APPSTUB_HOST', '127.0.0.1'),
-                'port': env.int('DB_APPSTUB_PORT', 3306),
-                'database': env('DB_APPSTUB_DB', 'appstub'),
-                'username': env('DB_APPSTUB_USER', 'root'),
-                'password': env('DB_APPSTUB_PASSWORD', 'techie'),
-                'prefix': env('DB_APPSTUB_PREFIX', None),
-            },
-
-            # Example of ORM over Remote Uvicore API
-            # 'appstub': {
-            #     'driver': 'api',
-            #     'dialect': 'uvicore',
-            #     'url': 'https://appstub.example.com/api',
-            #     'prefix': None
-            # },
-        },
-    },
-
-
-    # --------------------------------------------------------------------------
-    # Redis Connections
-    # --------------------------------------------------------------------------
-    'redis': {
-        'default': env('REDIS_DEFAULT', 'appstub'),
-        'connections': {
-            'appstub': {
-                'host': env('REDIS_APPSTUB_HOST', '127.0.0.1'),
-                'port': env.int('REDIS_APPSTUB_PORT', 6379),
-                'database': env.int('REDIS_APPSTUB_DB', 0),
-                'password': env('REDIS_APPSTUB_PASSWORD', None),
-            },
-            'cache': {
-                'host': env('REDIS_CACHE_HOST', '127.0.0.1'),
-                'port': env.int('REDIS_CACHE_PORT', 6379),
-                'database': env.int('REDIS_CACHE_DB', 2),
-                'password': env('REDIS_CACHE_PASSWORD', None),
-            },
-        },
-    },
-
-
-    # --------------------------------------------------------------------------
     # Registration Control
-    # --------------------------------------------------------------------------
+    #
     # This lets you control the service provider registrations.  If this app
     # is used as a package inside another app you might not want some things
     # registered in that context.  Use config overrides in your app to change
     # registrations
-    # 'registers': {
-    #     'web_routes': False,
-    #     'api_routes': False,
-    #     'middleware': False,
-    #     'views': False,
-    #     'assets': False,
-    #     'commands': False,
-    #     'models': False,
-    #     'tables': False,
-    #     'seeders': False,
-    # },
+    # --------------------------------------------------------------------------
+    'registers': {
+        # 'web_routes': True,
+        # 'api_routes': True,
+        # 'middleware': True,
+        # 'views': True,
+        # 'assets': True,
+        # 'commands': True,
+        # 'models': True,
+        # 'tables': True,
+        # 'seeders': True,
+    },
 
 
     # --------------------------------------------------------------------------
-    # Package Dependencies (Service Providers)
+    # Path Overrides
     #
-    # Define all the packages that this package depends on.  At a minimum, only
-    # the uvicore.foundation package is required.  The foundation is very
-    # minimal and only depends on configuration, logging and console itself.
-    # You must add other core services built into uvicore only if your package
-    # requires them.  Services like uvicore.database, uvicore.orm, uvicore.auth
-    # uvicore.http, etc...
+    # Override the default paths for your packages items (views, models,
+    # tables, routes...).  All paths relative to your uvicore packages
+    # PYTHON module root, not the actual package root. If item is not defined,
+    # defaults will be assumed.  This is mainly used to "generate" schematics
+    # like adding new controllers, commands and models from './uvicore gen' CLI
     # --------------------------------------------------------------------------
-    'dependencies': OrderedDict({
-        # Foundation is the core of uvicore and is required as the first dependency.
-        # Foundation itself relys on configuration, logging, console, cache and more.
-        'uvicore.foundation': {
-            'provider': 'uvicore.foundation.services.Foundation',
-        },
+    'paths': {
+        #'commands': 'commands',
+        # 'config': 'config',
+        # 'database': 'database',
+        # 'migrations': 'database/migrations',
+        # 'seeders': 'database/seeders',
+        # 'tables': 'database/tables',
+        # 'events': 'events',
+        # 'http': 'http',
+        # 'api': 'http/api',
+        # 'assets': 'http/assets',
+        # 'controllers': 'http/controllers',
+        # 'routes': 'http/routes',
+        # 'static': 'http/static',
+        # 'views': 'http/views',
+        # 'view_composers': 'http/composers',
+        # 'jobs': 'jobs',
+        # 'listeners': 'listeners',
+        # 'models': 'models',
+    },
 
-        # HTTP async client based on aiohttp.
-        'uvicore.http_client': {
-            'provider': 'uvicore.http_client.services.HttpClient',
-        },
-        <package-dependencies>
-    }),
 
+    # --------------------------------------------------------------------------
+    # Include All Other Package Level Configs
+    #
+    # Broken out into multiple files for a better user experience
+    # --------------------------------------------------------------------------
+    'database': database,
+    'redis': redis,
+    'dependencies': dependencies,
 }

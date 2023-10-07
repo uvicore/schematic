@@ -3,10 +3,10 @@
 import os
 import sys
 import uvicore
-from acme.appstub.services import bootstrap
+from acme.appstub.package import bootstrap
 
 # Bootstrap the Uvicore application from the console entrypoint
-app = bootstrap.application(is_console=True)
+app = bootstrap.Application(is_console=True)()
 
 if __name__ == '__main__':
     try:

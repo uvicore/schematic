@@ -1,11 +1,11 @@
 import uvicore
-from uvicore.console.provider import Cli
-from uvicore.package import ServiceProvider
+from uvicore.package import Provider
 from uvicore.support.dumper import dump, dd
+from uvicore.console.package.registers import Cli
 <provider-imports>
 
 @uvicore.provider()
-class Appstub(ServiceProvider, Cli<provider-class>):
+class Appstub(Provider, Cli<provider-class>):
 
     def register(self) -> None:
         """Register package into the uvicore framework.
@@ -20,7 +20,8 @@ class Appstub(ServiceProvider, Cli<provider-class>):
         # you to override granular aspects of other package configs
         self.configs([
             # Here self.name is your packages name (ie: acme.appstub).
-            {'key': self.name, 'module': 'acme.appstub.config.package.config'},
+            {'key': self.name, 'value': self.package_config},
+            #{'key': self.name, 'module': 'acme.appstub.config.package.config'},
 
             # Example of splitting out the app config into multiple files per section
             #{'key': self.name, 'module': 'acme.appstub.config.database.config'},

@@ -1,7 +1,7 @@
-from acme.appstub.services import bootstrap
+from acme.appstub.package import bootstrap
 
 # Bootstrap the Uvicore application
-app = bootstrap.application(is_console=False)
+app = bootstrap.Application(is_console=False)()
 
 # Http entrypoint for uvicorn or gunicorn
 # uvicorn --port 5000 acme.appstub.http.server:http --reload

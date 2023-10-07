@@ -310,9 +310,9 @@ class Installer:
 
     def template_provider_imports(self):
         results = ""
-        if (self.extra_web): results += "from uvicore.http.provider import Http\n"
-        if (self.extra_redis): results += "from uvicore.redis.provider import Redis\n"
-        if (self.extra_db): results += "from uvicore.database.provider import Db\n"
+        if (self.extra_web): results += "from uvicore.http.package.registers import Http\n"
+        if (self.extra_redis): results += "from uvicore.redis.package.registers import Redis\n"
+        if (self.extra_db): results += "from uvicore.database.package.registers import Db\n"
         return results
 
     def template_package_dependencies(self):
@@ -321,7 +321,7 @@ class Installer:
             results += """
         # Redis provides redis access and redis caching if enabled in your app config
         'uvicore.redis': {
-            'provider': 'uvicore.redis.services.Redis',
+            'provider': 'uvicore.redis.package.provider.Redis',
         },
 """
         if (self.extra_db):
@@ -329,14 +329,14 @@ class Installer:
         # Database is required for database queries and the ORM.  Disable if your project
         # does not require database or models
         'uvicore.database': {
-            'provider': 'uvicore.database.services.Database',
+            'provider': 'uvicore.database.package.provider.Database',
         },
 
         # ORM provides an object relationional mapper between your databse tables
         # and your ORM models.  Disable if your project does not require Models.
         # Even without the ORM, you can still use the database with the db query builder.
         'uvicore.orm': {
-            'provider': 'uvicore.orm.services.Orm',
+            'provider': 'uvicore.orm.package.provider.Orm',
         },
 """
 
@@ -344,12 +344,12 @@ class Installer:
             results += """
         # Auth provides all of the auth middleware, user providers, authenticators and guards
         'uvicore.auth': {
-            'provider': 'uvicore.auth.services.Auth',
+            'provider': 'uvicore.auth.package.provider.Auth',
         },
 
         # HTTP provides API and WEB endpoints, assets, templates.  A full webserver.
         'uvicore.http': {
-            'provider': 'uvicore.http.services.Http',
+            'provider': 'uvicore.http.package.provider.Http',
         },
 """
         return results
