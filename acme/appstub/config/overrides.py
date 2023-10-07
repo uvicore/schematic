@@ -18,7 +18,7 @@ overrides = {
     # Example
     # Shows how to override the entire uvicore.logging package.
     # 'uvicore.logging': {
-    #     'provider': 'mreschke.wiki.overrides.services.logging.Logging',
+    #     'provider': 'acme.appstub.overrides.services.logging.Logging',
     # },
     # --------------------------------------------------------------------------
     'providers': {
@@ -38,11 +38,11 @@ overrides = {
     #
     # Examples
     # Low level core uvicore libraries (too early to override in a service provider, must be done here)
-    # 'uvicore.foundation.application.Application': 'app1.overrides.application.Application',
+    # 'uvicore.foundation.application.Application': 'acme.appstub.overrides.application.Application',
     #
     # Note about ModelRouter
     # This is the only class that must be completely re-implimented, extension is NOT allowed.
-    # 'uvicore.http.routing.model_router.ModelRoute': 'app1.overrides.http.model_router.ModelRoute',
+    # 'uvicore.http.routing.model_router.ModelRoute': 'acme.appstub.overrides.http.model_router.ModelRoute',
     # --------------------------------------------------------------------------
     'ioc_bindings': {
         #

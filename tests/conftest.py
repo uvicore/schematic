@@ -17,8 +17,8 @@ async def appstub(event_loop):
     # Setup Tests
     ############################################################################
     # Bootstrap uvicore application
-    from acme.appstub.services import bootstrap
-    bootstrap.application(is_console=False)
+    from acme.appstub.package import bootstrap
+    app = bootstrap.Application(is_console=True)()
 
     # Register a PytestStartup event (uvicore.console.events.command.PytestStartup)
     # Which is listened to by database/db.py to connect to all dbs
