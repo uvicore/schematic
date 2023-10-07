@@ -343,9 +343,9 @@ class Installer:
         if (self.extra_web):
             results += """
         # Auth provides all of the auth middleware, user providers, authenticators and guards
-        'uvicore.auth': {
-            'provider': 'uvicore.auth.package.provider.Auth',
-        },
+        # 'uvicore.auth': {
+        #     'provider': 'uvicore.auth.package.provider.Auth',
+        # },
 
         # HTTP provides API and WEB endpoints, assets, templates.  A full webserver.
         'uvicore.http': {

@@ -16,12 +16,12 @@ dependencies = OrderedDict({
     # Foundation is the core of uvicore and is required as the first dependency.
     # Foundation itself relys on configuration, logging, console, cache and more.
     'uvicore.foundation': {
-        'provider': 'uvicore.foundation.services.Foundation',
+        'provider': 'uvicore.foundation.package.provider.Foundation',
     },
 
     # HTTP async client based on aiohttp.
     'uvicore.http_client': {
-        'provider': 'uvicore.http_client.services.HttpClient',
+        'provider': 'uvicore.http_client.package.provider.HttpClient',
     },
     <package-dependencies>
 })

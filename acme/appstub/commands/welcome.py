@@ -12,7 +12,7 @@ async def cli():
         print("""Welcome to a Uvicore Example CLI Command!
 
 This command lives in your commands/welcome.py file and is registered with the CLI
-in your services/appstub.py boot() method.  Create as many CLI commands as needed
+in your package/provider.py boot() method.  Create as many CLI commands as needed
 and be sure to checkout the commands included with the uvicore packages.
 
 ~mReschke""")

@@ -81,7 +81,7 @@ config = {
     # like adding new controllers, commands and models from './uvicore gen' CLI
     # --------------------------------------------------------------------------
     'paths': {
-        #'commands': 'commands',
+        # 'commands': 'commands',
         # 'config': 'config',
         # 'database': 'database',
         # 'migrations': 'database/migrations',
