@@ -4,7 +4,7 @@ import uvicore
 from uvicore.support.dumper import dump, dd
 
 
-@pytest.yield_fixture(scope='session')
+@pytest.fixture(scope='session')
 def event_loop(request):
     loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop
@@ -19,6 +19,11 @@ async def appstub(event_loop):
     # Bootstrap uvicore application
     from acme.appstub.services import bootstrap
     bootstrap.application(is_console=False)
+
+    # Register a PytestStartup event (uvicore.console.events.command.PytestStartup)
+    # Which is listened to by database/db.py to connect to all dbs
+    from uvicore.console.events import command as ConsoleEvents
+    await ConsoleEvents.PytestStartup().codispatch()
 
     # Drop/Create and Seed SQLite In-Memory Database
     # from acme.appstub.database.seeders import seed
@@ -38,3 +43,5 @@ async def appstub(event_loop):
     ############################################################################
     #metadata.drop_all(engine)
 
+    # Register a PytestShutdown event (uvicore.console.events.command.PytestShutdown) to disconnect from all DBs
+    await ConsoleEvents.PytestShutdown().codispatch()
