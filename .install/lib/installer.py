@@ -319,38 +319,38 @@ class Installer:
         results = ""
         if (self.extra_redis):
             results += """
-        # Redis provides redis access and redis caching if enabled in your app config
-        'uvicore.redis': {
-            'provider': 'uvicore.redis.package.provider.Redis',
-        },
+    # Redis provides redis access and redis caching if enabled in your app config
+    'uvicore.redis': {
+        'provider': 'uvicore.redis.package.provider.Redis',
+    },
 """
         if (self.extra_db):
             results += """
-        # Database is required for database queries and the ORM.  Disable if your project
-        # does not require database or models
-        'uvicore.database': {
-            'provider': 'uvicore.database.package.provider.Database',
-        },
+    # Database is required for database queries and the ORM.  Disable if your project
+    # does not require database or models
+    'uvicore.database': {
+        'provider': 'uvicore.database.package.provider.Database',
+    },
 
-        # ORM provides an object relationional mapper between your databse tables
-        # and your ORM models.  Disable if your project does not require Models.
-        # Even without the ORM, you can still use the database with the db query builder.
-        'uvicore.orm': {
-            'provider': 'uvicore.orm.package.provider.Orm',
-        },
+    # ORM provides an object relationional mapper between your databse tables
+    # and your ORM models.  Disable if your project does not require Models.
+    # Even without the ORM, you can still use the database with the db query builder.
+    'uvicore.orm': {
+        'provider': 'uvicore.orm.package.provider.Orm',
+    },
 """
 
         if (self.extra_web):
             results += """
-        # Auth provides all of the auth middleware, user providers, authenticators and guards
-        # 'uvicore.auth': {
-        #     'provider': 'uvicore.auth.package.provider.Auth',
-        # },
+    # Auth provides all of the auth middleware, user providers, authenticators and guards
+    # 'uvicore.auth': {
+    #     'provider': 'uvicore.auth.package.provider.Auth',
+    # },
 
-        # HTTP provides API and WEB endpoints, assets, templates.  A full webserver.
-        'uvicore.http': {
-            'provider': 'uvicore.http.package.provider.Http',
-        },
+    # HTTP provides API and WEB endpoints, assets, templates.  A full webserver.
+    'uvicore.http': {
+        'provider': 'uvicore.http.package.provider.Http',
+    },
 """
         return results
 
