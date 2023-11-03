@@ -267,7 +267,7 @@ class Installer:
 
         if self.extra_redis: results += """
         # Define Redis Connections
-        self.redis_connections(
+        self.register_redis_connections(
             connections=self.package.config.redis.connections,
             default=self.package.config.redis.default
         )
@@ -275,7 +275,7 @@ class Installer:
 
         if self.extra_db: results += """
         # Define Database Connections
-        self.connections(
+        self.register_db_connections(
             connections=self.package.config.database.connections,
             default=self.package.config.database.default
         )
@@ -287,15 +287,15 @@ class Installer:
         # Order does not matter as they are sorted topologically for ForeignKey dependencies
         # If you don't have an __init__.py index in your tables or models you can use
         # wildcard imports self.models(['myapp.models.*])
-        self.models([
+        self.register_db_models([
             'acme.appstub.models',
         ])
-        # self.tables([
+        # self.register_db_tables([
         #     'acme.appstub.database.tables',
         # ])
 
         # Define data seeders
-        self.seeders([
+        self.register_db_seeders([
             'acme.appstub.database.seeders.seed',
         ])
 """
@@ -346,6 +346,11 @@ class Installer:
     # 'uvicore.auth': {
     #     'provider': 'uvicore.auth.package.provider.Auth',
     # },
+
+    # Templating engine for HTTP Web Routes
+    'uvicore.templating': {
+        'provider': 'uvicore.templating.package.provider.Templating',
+    },
 
     # HTTP provides API and WEB endpoints, assets, templates.  A full webserver.
     'uvicore.http': {

@@ -37,41 +37,41 @@ class Appstub(Provider, Cli<provider-class>):
         configuration. This is where you register, connections, models,
         views, assets, routes, commands...  If you need to perform work after ALL
         packages have booted, use the event system and listen to the booted event:
-        self.events.listen('uvicore.foundation.events.app.Booted, self.booted')"""
+        self.events.listen('uvicore.foundation.events.app.Booted', self.booted)"""
 
-        # Define Service Provider Registrations
+        # Define Provider Registrations
         self.registers(self.package.config.registers)
         <provider-db-connections>
         # Define view and asset paths and configure the templating system
-        self.define_views()
+        self.register_views()
 
         # Define Web and API routes and prefixes
-        self.define_routes()
+        self.register_routes()
 
         # Define CLI commands to be added to the ./uvicore command line interface
-        self.define_commands()
+        self.register_commands()
 
-    def define_views(self) -> None:
-        """Define view and asset paths and configure the templating system"""
+    def register_views(self) -> None:
+        """Register HTTP view and asset paths and configure the Web templating system"""
 
         # Define view paths
-        self.views(['acme.appstub.http.views'])
+        self.register_http_views(['acme.appstub.http.views'])
 
         # Define view composers - multiple calls to self.composers() are appended
-        #self.composers('acme.appstub.http.composers.layout.Layout', 'appstub/*')
-        #self.composers('acme.appstub.http.composers.layout.Layout', ['appstub/home', 'appstub/about'])
+        #self.register_http_view_composers('acme.appstub.http.composers.layout.Layout', 'appstub/*')
+        #self.register_http_view_composers('acme.appstub.http.composers.layout.Layout', ['appstub/home', 'appstub/about'])
 
         # You can also define view composers as a dict
-        # self.composers({
+        # self.register_http_view_composers({
         #     'acme.appstub.http.composers.layout.Layout': 'appstub/*',
         #     'acme.appstub.http.composers.layout.Layout': ['appstub/home', 'appstub/about'],
         # })
 
         # Define public paths
-        self.public(['acme.appstub.http.public'])
+        self.register_http_public(['acme.appstub.http.public'])
 
         # Define asset paths
-        self.assets(['acme.appstub.http.public.assets'])
+        self.register_http_assets(['acme.appstub.http.public.assets'])
 
         # Define custom template options
         # def url_method(context: dict, name: str, **path_params: any) -> str:
@@ -93,7 +93,7 @@ class Appstub(Provider, Cli<provider-class>):
         #             return False
         #     return True
 
-        # self.template({
+        # self.register_http_view_context_processors({
         #     'context_functions': {
         #         'url2': url_method,
         #     },
@@ -110,25 +110,25 @@ class Appstub(Provider, Cli<provider-class>):
         # Optionally, hack jinja to add anything possible like so
         #app.jinja.env.globals['whatever'] = somefunc
 
-    def define_routes(self) -> None:
-        """Define Web and API routes and prefixes"""
+    def register_routes(self) -> None:
+        """Register Web and API routes and prefixes"""
 
         # Define web routes
-        self.web_routes(
+        self.register_http_web_routes(
             module='acme.appstub.http.routes.web.Web',
             prefix=self.package.config.web.prefix,
             #name_prefix=None,
         )
 
         # Define api routes
-        self.api_routes(
+        self.register_http_api_routes(
             module='acme.appstub.http.routes.api.Api',
             prefix=self.package.config.api.prefix,
             #name_prefix='api',
         )
 
-    def define_commands(self) -> None:
-        """Define CLI commands to be added to the ./uvicore command line interface"""
+    def register_commands(self) -> None:
+        """Register CLI commands to be added to the ./uvicore command line interface"""
 
         # You can define CLI groups and commands as a complete dictionary
         # self.commands({
@@ -141,7 +141,7 @@ class Appstub(Provider, Cli<provider-class>):
         # })
 
         # Or you can define commands as kwargs (multiple calls to self.commands() are appended)
-        self.commands(
+        self.register_cli_commands(
             group='appstub',
             help='Appstub Commands',
             commands={

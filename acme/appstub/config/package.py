@@ -63,6 +63,7 @@ config = {
         # 'api_routes': True,
         # 'middleware': True,
         # 'views': True,
+        # 'templates': True,
         # 'assets': True,
         # 'commands': True,
         # 'models': True,
@@ -105,7 +106,7 @@ config = {
     # --------------------------------------------------------------------------
     # Include All Other Package Level Configs
     #
-    # Broken out into multiple files for a better user experience
+    # Split out into multiple files for a better user experience
     # --------------------------------------------------------------------------
     'database': database,
     'redis': redis,

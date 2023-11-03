@@ -6,9 +6,9 @@ async def seed():
     """Run all database seeders in proper order"""
 
     # Import seeders
-    #from . import format, post, space
+    #from . import formats, posts, spaces
 
     # Run seeders. Order is critical for ForeignKey dependencies
-    #await format.seed()
-    #await space.seed()
-    #await post.seed()
+    #await formats.seed()
+    #await spaces.seed()
+    #await posts.seed()
