@@ -41,8 +41,8 @@ class Installer:
             ("<pyproject-uvicore>", self.template_pyproject_uvicore()),
 
             # Comment things based on extras
-            ("self.define_views()", 'self.define_views()' if self.extra_web else '#self.define_views()'),
-            ("self.define_routes()", 'self.define_routes()' if self.extra_web else '#self.define_routes()'),
+            ("self.register_views()", 'self.register_views()' if self.extra_web else '#self.register_views()'),
+            ("self.register_routes()", 'self.register_routes()' if self.extra_web else '#self.register_routes()'),
 
             # Basic replacements
             ("acme-appstub", self.package.replace(".", "-").replace("_", "-")),
