@@ -1,0 +1,21 @@
+" Press ? for help
+
+.. (up a dir)
+/home/mreschke/Code/uvicore/app/
+▸ .git/
+▸ .install/
+▸ .vscode/
+▸ acme/
+▸ bin/
+▸ tests/
+  .coverage
+  .editorconfig
+  .env
+  .env-example
+  .gitignore
+  .python-version
+  LICENSE
+  poetry.lock
+  pyproject.toml
+  README.md
+  uvicore*
