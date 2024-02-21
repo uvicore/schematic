@@ -11,7 +11,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.7,<4.0"
+python = ">=3.9,<4.0"
 uvicore = {path = "../framework", extras = ["database", "redis", "web"], develop = true}
 
 [tool.poetry.dev-dependencies]
