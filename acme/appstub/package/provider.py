@@ -23,11 +23,8 @@ class Appstub(Provider, Cli<provider-class>):
             {'key': self.name, 'value': self.package_config},
             #{'key': self.name, 'module': 'acme.appstub.config.package.config'},
 
-            # Example of splitting out the app config into multiple files per section
-            #{'key': self.name, 'module': 'acme.appstub.config.database.config'},
-
             # Example of how to override another packages config with your own.
-            #{'key': 'uvicore.auth', 'module': 'acme.appstub.config.overrides.auth.config'},
+            #{'key': 'uvicore.auth', 'module': 'acme.appstub.config.packages.auth.config'},
         ])
 
     def boot(self) -> None:
@@ -131,7 +128,7 @@ class Appstub(Provider, Cli<provider-class>):
         """Register CLI commands to be added to the ./uvicore command line interface"""
 
         # You can define CLI groups and commands as a complete dictionary
-        # self.commands({
+        # self.register_cli_commands({
         #     'appstub': {
         #         'help': 'Appstub Commands',
         #         'commands': {
