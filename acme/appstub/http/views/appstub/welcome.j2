@@ -38,13 +38,20 @@
                 font-size: 84px;
                 margin-bottom: 30px;
             }
+            .links {
+                color: black;
+                font-weight: bold;
+            }
         </style>
     </head>
     <body>
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title">
-                    Welcome to Uvicore
+                    Welcome to Uvicore {{uvicore_version}}
+                </div>
+                <div class="links">
+                    <b>Checkout your Uvicore Powered <a href="{{openapi_docs_url}}">OpenAPI Docs</a></b>
                 </div>
             </div>
         </div>
