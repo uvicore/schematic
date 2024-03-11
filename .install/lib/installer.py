@@ -280,21 +280,16 @@ class Installer:
             default=self.package.config.database.default
         )
 
-        # Define all tables or models
-        # The goal is to load up all SQLAlchemy tables for complete metedata definitions.
-        # If you separate tables vs models use self.register_db_tables(['myapp.database.tables])
-        # If you use models only, or models with inline tables then use self.register_db_models(['myapp.models])
+        # Define all tables, models and seeders
         # Order does not matter as they are sorted topologically for ForeignKey dependencies
         # If you don't have an __init__.py index in your tables or models you can use
-        # wildcard imports self.register_db_tables(['myapp.models.*])
+        # wildcard imports self.register_db_models(['acme.appstub.models.*])
+        self.register_db_models([
+            'acme.appstub.models',
+        ])
         self.register_db_tables([
             'acme.appstub.database.tables',
         ])
-        # self.register_db_models([
-        #     'acme.appstub.models',
-        # ])
-
-        # Define data seeders
         self.register_db_seeders([
             'acme.appstub.database.seeders.seed',
         ])

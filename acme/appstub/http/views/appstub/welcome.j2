@@ -35,11 +35,16 @@
                 text-align: center;
             }
             .title {
-                font-size: 84px;
+                font-size: 64px;
+                margin-bottom: 30px;
+            }
+            .powered {
+                font-size: 34px;
                 margin-bottom: 30px;
             }
             .links {
-                color: black;
+                font-size: 14px;
+                margin-bottom: 30px;
                 font-weight: bold;
             }
         </style>
@@ -48,7 +53,10 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title">
-                    Welcome to Uvicore {{uvicore_version}}
+                    Welcome to {{app_name}} {{app_version}}
+                </div>
+                <div class="powered">
+                    Powered by Uvicore {{uvicore_version}}
                 </div>
                 <div class="links">
                     <b>Checkout your Uvicore Powered <a href="{{openapi_docs_url}}">OpenAPI Docs</a></b>

@@ -41,10 +41,14 @@ class Welcome(Controller):
 
         @route.get('/', name='welcome')
         async def welcome(request: Request):
+            me = uvicore.app.package(main=True)
+            api_config = uvicore.config.app.api
             return await response.View('appstub/welcome.j2', {
                 'request': request,
+                'app_name': me.name,
+                'app_version': me.version,
                 'uvicore_version': uvicore.app.version,
-                'openapi_docs_url': uvicore.config.app.api.prefix + uvicore.config.app.api.openapi.docs.path,
+                'openapi_docs_url': api_config.prefix + api_config.openapi.docs.path
             })
 
 
