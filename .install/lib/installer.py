@@ -160,7 +160,8 @@ class Installer:
         full_path = ''
         for path in paths:
             full_path += "/" + path
-            os.mkdir(self.path + full_path)
+            if not os.path.exists(self.path + full_path):
+                os.mkdir(self.path + full_path)
         self.rename([("acme/appstub", self.package.replace('.', '/'))])
 
     def cleanup(self):
