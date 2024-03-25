@@ -167,7 +167,6 @@ class Installer:
     def cleanup(self):
         nl(); header("Cleaning up")
         self.delete([
-            "acme",
             ".install",
         ])
 
