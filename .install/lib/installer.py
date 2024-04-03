@@ -166,9 +166,8 @@ class Installer:
 
     def cleanup(self):
         nl(); header("Cleaning up")
-        self.delete([
-            ".install",
-        ])
+        self.delete([".install"])
+        if self.vendor != 'acme': self.delete(["acme"])
 
     def done(self):
         nl(2); line("#", LIGHTBLUE); nl(2)
