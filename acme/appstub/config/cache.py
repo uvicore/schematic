@@ -19,5 +19,10 @@ cache = {
             'prefix': env('CACHE_PREFIX', 'acme.appstub::cache/'),
             'seconds': env.int('CACHE_EXPIRE', 600),  # 0=forever
         },
+        'array': {
+            'driver': 'uvicore.cache.backends.array.Array',
+            'prefix': env('CACHE_PREFIX', 'dynatron.dreml::cache/'),
+            'seconds': env.int('CACHE_EXPIRE', 600),
+        },
     },
 }
