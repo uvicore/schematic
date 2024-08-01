@@ -37,7 +37,7 @@ def line(l="-", c1=GREEN, s=80):
 def nl(c=1):
     for x in range(0, c): print()
 
-def item(o, b="  *", c1=BLUE, c2=DARKGRAY):
+def item(o, b="  *", c1=BLUE, c2=WHITE):
     print("{}{} {}{}{}".format(c1, b, c2, o, DEFAULT))
 
 def message(o, w="MESSAGE", c1=BLUE, c2=WHITE):
