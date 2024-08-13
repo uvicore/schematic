@@ -31,6 +31,10 @@ database = {
             'username': env('DB_APPSTUB_USER', 'root'),
             'password': env('DB_APPSTUB_PASSWORD', 'techie'),
             'prefix': env('DB_APPSTUB_PREFIX', None),
+            # All options are passed directly to the specific dialects connector.
+            'options': {
+                'ssl': env.bool('DB_APPSTUB_SSL', False),
+            }
         },
 
         # Example of ORM over Remote Uvicore API
