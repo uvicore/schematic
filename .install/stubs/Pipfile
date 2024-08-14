@@ -4,12 +4,12 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [packages]
-uvicore = {version = "==0.1.*", extras = ["database", "redis", "web"]}
+<pipfile-uvicore>
 
 [dev-packages]
-pytest = "==6.2.*"
-pytest-cov = "==2.11.*"
-pytest-asyncio = "==0.14.*"
+pytest = "==8.0.*"
+pytest-cov = "==4.1.*"
+pytest-asyncio = "==0.18.*"
 
 [requires]
 python_version = "3.9"

@@ -16,34 +16,32 @@ database = {
     'connections': {
         # SQLite Example
         # 'appstub': {
-        #     'driver': 'sqlite',
+        #     'backend': 'sqlalchemy',
+        #     'dialect': 'sqlite',
+        #     'driver': 'aiosqlite',
         #     'database': ':memory',
         #     'prefix': None,
         # },
 
         # MySQL Example
         'appstub': {
-            'driver': env('DB_APPSTUB_DRIVER', 'mysql'),
-            'dialect': env('DB_APPSTUB_DIALECT', 'pymysql'),
+            'backend': 'sqlalchemy',
+            'dialect': env('DB_APPSTUB_DIALECT', 'mysql'),
+            'driver': env('DB_APPSTUB_DRIVER', 'pymysql'),
             'host': env('DB_APPSTUB_HOST', '127.0.0.1'),
             'port': env.int('DB_APPSTUB_PORT', 3306),
             'database': env('DB_APPSTUB_DB', 'appstub'),
             'username': env('DB_APPSTUB_USER', 'root'),
             'password': env('DB_APPSTUB_PASSWORD', 'techie'),
             'prefix': env('DB_APPSTUB_PREFIX', None),
-            # All options are passed directly to the specific dialects connector.
-            'options': {
-                'ssl': env.bool('DB_APPSTUB_SSL', False),
-            }
+            # All options passed directly as **kwargs to the backends connect, create_pool,
+            # create_engine or other backend specific create methods
+            # 'options': {
+            #     'connect_args': {
+            #         'ssl': {}
+            #     }
+            # },
         },
-
-        # Example of ORM over Remote Uvicore API
-        # 'appstub': {
-        #     'driver': 'api',
-        #     'dialect': 'uvicore',
-        #     'url': 'https://appstub.example.com/api',
-        #     'prefix': None
-        # },
     },
 }
 

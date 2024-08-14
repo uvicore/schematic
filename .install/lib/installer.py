@@ -39,6 +39,8 @@ class Installer:
             ("<provider-class>", self.template_provider_class()),
             ("<provider-db-connections>", self.template_provider_db_connections()),
             ("<pyproject-uvicore>", self.template_pyproject_uvicore()),
+            ("<pipfile-uvicore>", self.template_pipfile_uvicore()),
+            ("<requirements-uvicore>", self.template_requirements_uvicore()),
 
             # Comment things based on extras
             ("self.register_views()", 'self.register_views()' if self.extra_web else '#self.register_views()'),
@@ -354,8 +356,7 @@ class Installer:
         return results
 
     def template_pyproject_uvicore(self):
-        results = "uvicore = {version = \"0.2.*\""
-        # , extras = ["database", "redis", "web"]}
+        results = 'uvicore = {version = "0.3.*"'
         extra = []
         if (self.extra_db): extra.append("database")
         if (self.extra_redis): extra.append("redis")
@@ -366,4 +367,30 @@ class Installer:
         else:
             results += ', extras = []'
         results += "}"
+        return results
+
+    def template_pipfile_uvicore(self):
+        results = 'uvicore = {version = "==0.3.*"'
+        extra = []
+        if (self.extra_db): extra.append("database")
+        if (self.extra_redis): extra.append("redis")
+        if (self.extra_web): extra.append("web")
+        if (self.extra_themes): extra.append("themes")
+        if extra:
+            results += ', extras = ["' + '", "'.join(extra) + '"]'
+        else:
+            results += ', extras = []'
+        results += "}"
+        return results
+
+    def template_requirements_uvicore(self):
+        results = 'uvicore'
+        extra = []
+        if (self.extra_db): extra.append("database")
+        if (self.extra_redis): extra.append("redis")
+        if (self.extra_web): extra.append("web")
+        if (self.extra_themes): extra.append("themes")
+        if extra:
+            results += '["' + '", "'.join(extra) + '"]'
+        results += ' == 0.3.*'
         return results

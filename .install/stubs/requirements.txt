@@ -1,8 +1,12 @@
 # Production Dependencies
-uvicore[database,redis,web] == 0.1.*
+<requirements-uvicore>
 
 
 # Development Dependencies
+pytest == 8.0.*
+pytest-cov == 4.1.*
+pytest-asyncio == 0.18.*
+
 pytest == 6.2.*
 pytest-cov == 2.11.*
 pytest-asyncio == 0.14.*
