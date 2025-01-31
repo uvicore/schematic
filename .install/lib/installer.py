@@ -56,7 +56,7 @@ class Installer:
             ("APPSTUB", self.app.upper()),
             ("Acme Test App", self.friendly_name),
             ("Artisan Smith", self.your_name),
-            ("<smith@example.com>", "<" + self.your_email + ">"),
+            ("smith@example.com", self.your_email),
             ("<year>", str(datetime.now().year))
         ]
 
@@ -356,17 +356,16 @@ class Installer:
         return results
 
     def template_pyproject_uvicore(self):
-        results = 'uvicore = {version = "0.3.*"'
+        # New poetry 2.0 style of dependencies
+        results = '    "uvicore'
         extra = []
         if (self.extra_db): extra.append("database")
         if (self.extra_redis): extra.append("redis")
         if (self.extra_web): extra.append("web")
         if (self.extra_themes): extra.append("themes")
         if extra:
-            results += ', extras = ["' + '", "'.join(extra) + '"]'
-        else:
-            results += ', extras = []'
-        results += "}"
+            results += '["' + '","'.join(extra) + '"]'
+        results += "==0.3.*"
         return results
 
     def template_pipfile_uvicore(self):

@@ -1,6 +1,7 @@
 import pytest
 import asyncio
 import uvicore
+import pytest_asyncio
 from uvicore.support.dumper import dump, dd
 
 
@@ -11,7 +12,7 @@ def event_loop(request):
     loop.close()
 
 
-@pytest.fixture(scope="session")
+@pytest_asyncio.fixture(scope="session")
 async def appstub(event_loop):
 
     # Setup Tests

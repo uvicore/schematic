@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "acme-appstub"
+version = "0.1.0"
+license = "MIT"
+authors = ["Artisan Smith <smith@example.com>"]
+description = ""
+readme = "README.md"
+include = ["LICENSE"]
+packages = [
+    { include = "acme/appstub" },
+]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<4.0"
+<pyproject-uvicore>
+
+[tool.poetry.dev-dependencies]
+pytest = "8.0.*"
+pytest-cov = "4.1.*"
+pytest-asyncio = "0.18.*"
+
+[build-system]
+requires = ["poetry_core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+

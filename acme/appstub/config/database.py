@@ -15,33 +15,33 @@ database = {
     'default': env('DATABASE_DEFAULT', 'appstub'),
     'connections': {
         # SQLite Example
-        # 'appstub': {
-        #     'backend': 'sqlalchemy',
-        #     'dialect': 'sqlite',
-        #     'driver': 'aiosqlite',
-        #     'database': ':memory',
-        #     'prefix': None,
-        # },
+        'appstub': {
+            'backend': env('DB_APP1_BACKEND', 'sqlalchemy'),
+            'dialect': env('DB_APP1_DIALECT', 'sqlite'),
+            'driver': env('DB_APP1_DRIVER', 'aiosqlite'),
+            'database': env('DB_APP1_DB', ':memory:'),
+            'prefix': env('DB_APP1_PREFIX', None),
+        },
 
         # MySQL Example
-        'appstub': {
-            'backend': 'sqlalchemy',
-            'dialect': env('DB_APPSTUB_DIALECT', 'mysql'),
-            'driver': env('DB_APPSTUB_DRIVER', 'pymysql'),
-            'host': env('DB_APPSTUB_HOST', '127.0.0.1'),
-            'port': env.int('DB_APPSTUB_PORT', 3306),
-            'database': env('DB_APPSTUB_DB', 'appstub'),
-            'username': env('DB_APPSTUB_USER', 'root'),
-            'password': env('DB_APPSTUB_PASSWORD', 'techie'),
-            'prefix': env('DB_APPSTUB_PREFIX', None),
-            # All options passed directly as **kwargs to the backends connect, create_pool,
-            # create_engine or other backend specific create methods
-            # 'options': {
-            #     'connect_args': {
-            #         'ssl': {}
-            #     }
-            # },
-        },
+        # 'appstub': {
+        #     'backend': 'sqlalchemy',
+        #     'dialect': env('DB_APPSTUB_DIALECT', 'mysql'),
+        #     'driver': env('DB_APPSTUB_DRIVER', 'aiomysql'),
+        #     'host': env('DB_APPSTUB_HOST', '127.0.0.1'),
+        #     'port': env.int('DB_APPSTUB_PORT', 3306),
+        #     'database': env('DB_APPSTUB_DB', 'appstub'),
+        #     'username': env('DB_APPSTUB_USER', 'root'),
+        #     'password': env('DB_APPSTUB_PASSWORD', 'techie'),
+        #     'prefix': env('DB_APPSTUB_PREFIX', None),
+        #     # All options passed directly as **kwargs to the backends connect, create_pool,
+        #     # create_engine or other backend specific create methods
+        #     # 'options': {
+        #     #     'connect_args': {
+        #     #         'ssl': {}
+        #     #     }
+        #     # },
+        # },
     },
 }
 

@@ -1,25 +1,30 @@
-[tool.poetry]
+[project]
 name = "acme-appstub"
 version = "0.1.0"
+description = "Acme Test App"
+authors = [
+    {name = "Artisan Smith",email = "smith@example.com"}
+]
 license = "MIT"
-authors = ["Artisan Smith <smith@example.com>"]
-description = ""
 readme = "README.md"
-include = ["LICENSE"]
+requires-python = ">=3.10"
+
+# Required base dependencies
+dependencies = [
+<pyproject-uvicore>
+]
+
+[tool.poetry]
 packages = [
     { include = "acme/appstub" },
 ]
 
-[tool.poetry.dependencies]
-python = ">=3.9,<4.0"
-<pyproject-uvicore>
-
-[tool.poetry.dev-dependencies]
-pytest = "8.0.*"
-pytest-cov = "4.1.*"
-pytest-asyncio = "0.18.*"
+# poetry install --with test"
+[tool.poetry.group.test.dependencies]
+pytest = "8.3.*"
+pytest-cov = "6.0.*"
+pytest-asyncio = "0.25.*"
 
 [build-system]
-requires = ["poetry_core>=1.0.0"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
-
