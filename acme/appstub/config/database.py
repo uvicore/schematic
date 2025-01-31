@@ -16,11 +16,11 @@ database = {
     'connections': {
         # SQLite Example
         'appstub': {
-            'backend': env('DB_APP1_BACKEND', 'sqlalchemy'),
-            'dialect': env('DB_APP1_DIALECT', 'sqlite'),
-            'driver': env('DB_APP1_DRIVER', 'aiosqlite'),
-            'database': env('DB_APP1_DB', ':memory:'),
-            'prefix': env('DB_APP1_PREFIX', None),
+            'backend': env('DB_APPSTUB_BACKEND', 'sqlalchemy'),
+            'dialect': env('DB_APPSTUB_DIALECT', 'sqlite'),
+            'driver': env('DB_APPSTUB_DRIVER', 'aiosqlite'),
+            'database': env('DB_APPSTUB_DB', ':memory:'),
+            'prefix': env('DB_APPSTUB_PREFIX', None),
         },
 
         # MySQL Example

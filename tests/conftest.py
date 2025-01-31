@@ -26,14 +26,11 @@ async def appstub(event_loop):
     from uvicore.console.events import command as ConsoleEvents
     await ConsoleEvents.PytestStartup().codispatch()
 
-    # Drop/Create and Seed SQLite In-Memory Database
-    # from acme.appstub.database.seeders import seed
-    # engine = uvicore.db.engine()
-    # metadata = uvicore.db.metadata()
-    # metadata.drop_all(engine)
-    # metadata.create_all(engine)
-    # await seed()
-
+    # Drop/Create and Seed Database
+    # from uvicore.database.commands import db
+    # await db.drop_tables('appstub')
+    # await db.create_tables('appstub')
+    # await db.seed_tables('appstub')
 
     # Run ALL Tests
     ############################################################################
