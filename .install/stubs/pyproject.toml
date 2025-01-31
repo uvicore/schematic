@@ -8,18 +8,34 @@ authors = [
 license = "MIT"
 readme = "README.md"
 requires-python = ">=3.10"
-
-# Required base dependencies
-dependencies = [
-<pyproject-uvicore>
+classifiers = [
+    "License :: OSI Approved :: MIT License",
 ]
 
+# Project URLs
+[project.urls]
+homepage = "https://example.com"
+repository = "https://git.example.com"
+documentation = "https://docs.example.com"
+
+# Poetry tools
 [tool.poetry]
+# Include this package itself
 packages = [
     { include = "acme/appstub" },
 ]
+# Additional included/excluded files in the final package build
+include = ["LICENSE"]
 
-# poetry install --with test"
+# Required dependencies
+# If you want code uvicore framework locally, use a path based develop dependency
+# uvicore = {path = "../framework", develop = true, extras = []}
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0"
+<pyproject-uvicore>
+
+# Optional test dependencies (included by default)
+# poetry install --without test"
 [tool.poetry.group.test.dependencies]
 pytest = "8.3.*"
 pytest-cov = "6.0.*"
