@@ -7,7 +7,7 @@ def ucbreakup(value: str):
     delimiter = '_'
     uppers = re.compile(r'(?<!^)(?=[A-Z])')
     nonalphanumeric = re.compile('[^0-9a-zA-Z\\ _-]+')
-    dashes = re.compile('\ |_|-')
+    dashes = re.compile('\\ |_|-')
 
     #value = dashes.sub(delimiter, value)
     value = uppers.sub(' ', value)
