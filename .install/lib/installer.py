@@ -139,6 +139,7 @@ class Installer:
             "LICENSE",
             "serve-gunicorn",
             "serve-uvicorn",
+            "README.md",
         ])
         if self.env == "poetry": self.replace(["pyproject.toml"])
 
