@@ -45,7 +45,8 @@ if __name__ == "__main__":
         'extra_db': questions.extra_db(default=True),
         'extra_redis': questions.extra_redis(default=True),
         'extra_web': questions.extra_web(default=True),
-        'extra_themes': questions.extra_themes(default=True),
+        'extra_themes': False,
+        #'extra_themes': questions.extra_themes(default=True),
         'environment': questions.environment(default='Poetry'),
     }
 
