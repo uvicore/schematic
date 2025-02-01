@@ -1,0 +1,1 @@
+uvicorn --workers 8 --loop=uvloop --log-level=warning --host=127.0.0.1 --port=5000 acme.appstub.http.server:http

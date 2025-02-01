@@ -12,13 +12,14 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
 ]
 
-# Project URLs
+
 [project.urls]
+# Project URLs
 homepage = "https://example.com"
 repository = "https://git.example.com"
 documentation = "https://docs.example.com"
 
-# Poetry tools
+
 [tool.poetry]
 # Include this package itself
 packages = [
@@ -27,19 +28,22 @@ packages = [
 # Additional included/excluded files in the final package build
 include = ["LICENSE"]
 
+
+[tool.poetry.dependencies]
 # Required dependencies
 # If you want code uvicore framework locally, use a path based develop dependency
 # uvicore = {path = "../framework", develop = true, extras = []}
-[tool.poetry.dependencies]
 python = ">=3.10,<4.0"
 <pyproject-uvicore>
 
+
+[tool.poetry.group.test.dependencies]
 # Optional test dependencies (included by default)
 # poetry install --without test"
-[tool.poetry.group.test.dependencies]
 pytest = "8.3.*"
 pytest-cov = "6.0.*"
 pytest-asyncio = "0.25.*"
+
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
