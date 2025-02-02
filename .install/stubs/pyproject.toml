@@ -38,8 +38,8 @@ python = ">=3.10,<4.0"
 
 
 [tool.poetry.group.test.dependencies]
-# Optional test dependencies (included by default)
-# poetry install --without test"
+# Testing dependencies (included by default)
+# Run: `poetry install --without test` to exclude them
 pytest = "8.3.*"
 pytest-cov = "6.0.*"
 pytest-asyncio = "0.25.*"
