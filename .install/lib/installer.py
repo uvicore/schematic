@@ -140,6 +140,7 @@ class Installer:
             "serve-gunicorn",
             "serve-uvicorn",
             "README.md",
+            "acme/appstub/http/views/appstub/welcome.j2",
         ])
         if self.env == "poetry": self.replace(["pyproject.toml"])
 
