@@ -35,16 +35,16 @@ api = {
 
     # OpenAPI docs site configuration
     'openapi': {
-        'title': env('OPENAPI_TITLE', 'Wiki API Docs'),
+        'title': env('OPENAPI_TITLE', 'Appstub API Docs'),
         'path': '/openapi.json',
         'docs': {
             'path': '/docs',
             'expansion': 'list',  # list none full
             'favicon_url': 'data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=',
             # Swagger assets from Local
-            'js_url': '/assets/wiki/js/swagger-ui-bundle.min.js',
-            'css_url': '/assets/wiki/css/swagger-dark-ui.css', # Dark
-            #'css_url': '/assets/wiki/css/swagger-ui.min.css', # Light
+            'js_url': '/assets/appstub/js/swagger-ui-bundle.min.js',
+            'css_url': '/assets/appstub/css/swagger-dark-ui.css', # Dark
+            #'css_url': '/assets/appstub/css/swagger-ui.min.css', # Light
             # Swagger assets from CDN
             #'js_url': 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.2/swagger-ui-bundle.min.js',
             #'css_url': 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.2/swagger-ui.min.css',
