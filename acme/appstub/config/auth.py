@@ -27,6 +27,27 @@ auth = {
         'jwks_path': env('AUTH_OAUTH2_JWKS_PATH', '/.well-known/jwks.json'),
     },
 
+    # Api route authenticators and user providers
+    'api': {
+        # Default provider used for anonymous retrieval and for authenticators that do not specify their own
+        'default_provider': 'user_model',
+
+        # Authenticators, multiples allow many forms of authentication
+        'authenticators': {
+            'jwt': {
+                # Deep merge default options from 'options' Dictionary below.
+                # Can override any default options by specifying them here
+                'default_options': 'jwt',
+                #'provider': 'jwt',
+            },
+            # 'basic': {
+            #     # Deep merge default options from 'options' Dictionary below.
+            #     # Can override any default options by specifying them here
+            #     'default_options': 'basic',
+            # },
+        },
+    },
+
     # Web route authenticators and user providers
     'web': {
         # Default provider used for anonymous retrieval and for authenticators that do not specify their own
@@ -62,27 +83,6 @@ auth = {
                 # Can override any default options by specifying them here
                 'default_options': 'basic',
             },
-        },
-    },
-
-    # Api route authenticators and user providers
-    'api': {
-        # Default provider used for anonymous retrieval and for authenticators that do not specify their own
-        'default_provider': 'user_model',
-
-        # Authenticators, multiples allow many forms of authentication
-        'authenticators': {
-            'jwt': {
-                # Deep merge default options from 'options' Dictionary below.
-                # Can override any default options by specifying them here
-                'default_options': 'jwt',
-                #'provider': 'jwt',
-            },
-            # 'basic': {
-            #     # Deep merge default options from 'options' Dictionary below.
-            #     # Can override any default options by specifying them here
-            #     'default_options': 'basic',
-            # },
         },
     },
 
