@@ -36,11 +36,14 @@ database = {
         #     'prefix': env('DB_APPSTUB_PREFIX', None),
         #     # All options passed directly as **kwargs to the backends connect, create_pool,
         #     # create_engine or other backend specific create methods
+        #     # Example enable SSL using pymysql driver
         #     # 'options': {
-        #     #     'connect_args': {
-        #     #         'ssl': {}
-        #     #     }
+        #     #     'ssl_ca': '/etc/ssl/certs/ca-certificates.crt',
         #     # },
+        #     # Example enable SSL using aiomysql driver
+        #     # 'options': {
+        #     #     'ssl': True
+        #     # }
         # },
     },
 }

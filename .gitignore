@@ -53,9 +53,6 @@ develop-eggs/
 __pycache__/
 .pytest_cache/
 
-# The schematic doesn't need a poetry.lock
-poetry.lock
-
 # JavaScript Files
 npm-debug.log
 yarn-error.log
