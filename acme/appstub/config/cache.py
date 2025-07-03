@@ -21,7 +21,7 @@ cache = {
         },
         'array': {
             'driver': 'uvicore.cache.backends.array.Array',
-            'prefix': env('CACHE_PREFIX', 'dynatron.dreml::cache/'),
+            'prefix': env('CACHE_PREFIX', 'acme.appstub::cache/'),
             'seconds': env.int('CACHE_EXPIRE', 600),
         },
     },

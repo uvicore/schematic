@@ -21,6 +21,9 @@ database = {
             'driver': env('DB_APPSTUB_DRIVER', 'aiosqlite'),
             'database': env('DB_APPSTUB_DB', ':memory:'),
             'prefix': env('DB_APPSTUB_PREFIX', None),
+            # If 'url' is defined using sqlalchemy backend,
+            # it will be used instead of deriving one from the properties above.
+            # 'url': '',
         },
 
         # MySQL Example
@@ -34,6 +37,9 @@ database = {
         #     'username': env('DB_APPSTUB_USER', 'root'),
         #     'password': env('DB_APPSTUB_PASSWORD', 'techie'),
         #     'prefix': env('DB_APPSTUB_PREFIX', None),
+        #     # If 'url' is defined using sqlalchemy backend,
+        #     # it will be used instead of deriving one from the properties above.
+        #     'url': '',
         #     # All options passed directly as **kwargs to the backends connect, create_pool,
         #     # create_engine or other backend specific create methods
         #     # Example enable SSL using pymysql driver
