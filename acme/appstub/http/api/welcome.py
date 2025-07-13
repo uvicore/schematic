@@ -1,12 +1,15 @@
 import uvicore
+from uvicore.typing import Dict
 from uvicore.http import Request
+from uvicore.http.response import APIResponse
+from uvicore.typing import Dict, List, Optional
+from uvicore.http.exceptions import HTTPException
 from uvicore.http.routing import ApiRouter, Controller
 
 # Extra
 # from uvicore.auth import UserInfo
 # from uvicore.http.routing import Guard
 # from uvicore.typing import Dict, List, Optional
-# from uvicore.http.exceptions import HTTPException
 # from uvicore.http.params import Path, Query, Header, Cookie, Body, Form, File, Depends, Security
 
 
@@ -40,18 +43,69 @@ class Welcome(Controller):
     def register(self, route: ApiRouter):
 
         @route.get('/welcome', tags=['Welcome'])
-        async def welcome():
-            return {'welcome': 'to uvicore API!'}
+        async def welcome(request: Request) -> APIResponse[dict]:
+            # Begin response which start response timer
+            response = APIResponse.begin()
 
+            # Get User
+            user = request.scope['user']
+
+            # Do the work
+            data = {
+                'hello': 'World!',
+                'welcome': user.email,
+                'to': f'Uvicore {uvicore.app.version}',
+            }
+
+            # Return Response
+            return response(data)
 
 
         # ----------------------------------------------------------------------
-        # Example: Basic route responding with a view dict to JSON blob
+        # Example: Basic APIResponse
         # ----------------------------------------------------------------------
-        # @route.get('/example1', tags=['Examples'])
-        # async def example1() -> Dict:
+        # @route.get('/example1', tags=['Examples'], scopes=['authenticated'])
+        # async def example1(request: Request) -> APIResponse[List[Dict]]:
         #     """This docstring shows up in openapi"""
-        #     return {'welcome': 'to uvicore API!'}
+        #     try:
+        #         # Begin response which start response timer
+        #         response = APIResponse.begin()
+
+        #         # Get User
+        #         user = request.scope['user']
+
+        #         # Do the work
+        #         from asyncio import sleep
+        #         await sleep(1)
+        #         data = [
+        #             {
+        #                 'id': 1,
+        #                 'name': 'Foo',
+        #                 'user': user.email,
+        #             },
+        #             {
+        #                 'id': 1,
+        #                 'name': 'Bar',
+        #                 'user': user.email,
+        #             },
+        #         ]
+
+        #         # Simulate error
+        #         # a = b
+
+        #         # Raise own error
+        #         #raise HTTPException(404, message="Data is not found", detail="More detail here")
+
+        #         # Return Non Paged Response
+        #         return response(data)
+
+        #         # Return Paged Response
+        #         # Requires counting total records in DB with proper page and page_size query params...
+        #         #return response(data, total_count=2, page=1, page_size=25)
+
+        #     except Exception as e:
+        #         # This raises the standard APIErrorResponse
+        #         raise HTTPException(500, exception=e)
 
 
         # ----------------------------------------------------------------------
