@@ -51,6 +51,26 @@ database = {
         #     #     'ssl': True
         #     # }
         # },
+
+        # Snowflake Example
+        # 'appstub': {
+        #     'backend': 'sqlalchemy',
+        #     'dialect': env('DB_APPSTUB_DIALECT', 'snowflake'),
+        #     'account': env('DB_APPSTUB_ACCOUNBT', ''),
+        #     'database': env('DB_APPSTUB_DB', ''),
+        #     'schema': env('DB_APPSTUB_SCHEMA', ''),
+        #     'warehouse': env('DB_APPSTUB_WAREHOUSE', ''),
+        #     'username': env('DB_APPSTUB_USER', ''),
+        #     'password': env('DB_APPSTUB_PASSWORD', ''),
+        #     'role': env('DB_APPSTUB_ROLE', ''),
+        #     'options': {
+        #         # If using a Private Key, replace all new lines with blanks (all on one string)
+        #         # and remove -----BEGIN PRIVATE KEY----- and -----END PRIVATE KEY-----
+        #         # Or take the .pem file and run it through a DER base64 to get a single string like so
+        #         # openssl pkcs8 -in snowflake.pem -inform PEM -outform DER -nocrypt | base64 -w 0
+        #         'private_key': env('DB_APPSTUB_PRIVATE_KEY', ''),
+        #     }
+        # },
     },
 }
 
