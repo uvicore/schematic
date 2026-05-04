@@ -361,7 +361,7 @@ class Installer:
 
     def template_pyproject_uvicore(self):
         # Poetry 1.0 style using [tool.poetry.dependencies] section
-        results = 'uvicore = {version = "0.3.*"'
+        results = 'uvicore = {version = "0.4.*"'
         extra = []
         if (self.extra_db): extra.append("database")
         if (self.extra_redis): extra.append("redis")
@@ -385,11 +385,11 @@ class Installer:
         # if (self.extra_themes): extra.append("themes")
         # if extra:
         #     results += '["' + '","'.join(extra) + '"]'
-        # results += '==0.3.*"'
+        # results += '==0.4.*"'
         # return results
 
     def template_pipfile_uvicore(self):
-        results = 'uvicore = {version = "==0.3.*"'
+        results = 'uvicore = {version = "==0.4.*"'
         extra = []
         if (self.extra_db): extra.append("database")
         if (self.extra_redis): extra.append("redis")
@@ -411,5 +411,5 @@ class Installer:
         if (self.extra_themes): extra.append("themes")
         if extra:
             results += '["' + '", "'.join(extra) + '"]'
-        results += ' == 0.3.*'
+        results += ' == 0.4.*'
         return results
