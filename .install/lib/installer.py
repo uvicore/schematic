@@ -132,6 +132,13 @@ class Installer:
         # Replace all python files
         self.replace(files)
 
+        # Replace all Claude Code agent markdown files (CLAUDE.md + .claude/**/*.md)
+        # so the AI skills reference the new package namespace instead of acme.appstub
+        claude_files = []
+        for path in Path(self.path + "/.claude").rglob("*.md"):
+            claude_files.append(str(path)[len(self.path):])
+        self.replace(claude_files)
+
         # Replace additional files
         self.replace([
             "uvicore",
@@ -140,6 +147,7 @@ class Installer:
             "serve-gunicorn",
             "serve-uvicorn",
             "README.md",
+            "CLAUDE.md",
             "acme/appstub/http/views/appstub/welcome.j2",
         ])
         if self.env == "poetry": self.replace(["pyproject.toml"])
