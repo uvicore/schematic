@@ -28,14 +28,6 @@ if __name__ == "__main__":
 
     # Ask questions and record answers
     # Schema designers can customze this section to ask more questions
-    # answers = {
-    #     'path': path,
-    #     'package_name': questions.package_name(default='acme.appstub'),
-    #     'friendly_name': questions.friendly_name(default="Acme Test App"),
-    #     'your_name': questions.your_name(default="Artisan Smith"),
-    #     'your_email': questions.your_email(default="smith@example.com"),
-    #     'environment': questions.environment(default='Poetry'),
-    # }
     answers = {
         'path': path,
         'package_name': questions.package_name(default='mreschke.wiki'),
@@ -47,7 +39,7 @@ if __name__ == "__main__":
         'extra_web': questions.extra_web(default=True),
         'extra_themes': False,
         #'extra_themes': questions.extra_themes(default=True),
-        'environment': questions.environment(default='Poetry'),
+        'environment': questions.environment(default='Uv'),
     }
 
     # Confirm answers before install

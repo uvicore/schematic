@@ -1,12 +1,12 @@
 ---
 name: uvicore-framework-reference
-description: "Quick reference for the Uvicore framework that an app developer needs but cannot see (the framework is installed as a library in the Poetry virtualenv, not in this repo). Covers the import cheatsheet (where to import everything from), the uvicore.* globals, debugging with dump/dd, useful ./uvicore inspection commands, and how to read the installed framework source when a skill doesn't cover something."
+description: "Quick reference for the Uvicore framework that an app developer needs but cannot see (the framework is installed as a library in the uv virtualenv, not in this repo). Covers the import cheatsheet (where to import everything from), the uvicore.* globals, debugging with dump/dd, useful ./uvicore inspection commands, and how to read the installed framework source when a skill doesn't cover something."
 user-invocable: true
 ---
 
 # Uvicore Framework Reference (for App Developers)
 
-The `uvicore` framework is a PyPI library installed into your Poetry virtualenv — its source is
+The `uvicore` framework is a PyPI library installed into your uv virtualenv (`.venv/`) — its source is
 **not** in this app repo and not in your editor by default. This skill is the cheatsheet so you
 rarely need to go looking, plus how to look when you must.
 
@@ -86,10 +86,10 @@ request/query produced.
 The framework source is in your virtualenv. Find and grep it:
 ```bash
 # Where is uvicore installed?
-poetry run python -c "import uvicore, os; print(os.path.dirname(uvicore.__file__))"
+uv run python -c "import uvicore, os; print(os.path.dirname(uvicore.__file__))"
 
 # Then read/grep that path, e.g. the public API of a service:
-poetry run python -c "import uvicore, os; print(os.path.dirname(uvicore.__file__))"   # -> $UVICORE
+UVICORE=$(uv run python -c "import uvicore, os; print(os.path.dirname(uvicore.__file__))")
 grep -rn "def " $UVICORE/orm/query.py            # ORM query builder methods
 ls $UVICORE/contracts/                            # ABC interfaces = the documented public API
 ```

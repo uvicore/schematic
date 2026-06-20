@@ -39,6 +39,7 @@ class Installer:
             ("<provider-class>", self.template_provider_class()),
             ("<provider-db-connections>", self.template_provider_db_connections()),
             ("<pyproject-uvicore>", self.template_pyproject_uvicore()),
+            ("<pyproject-uv-uvicore>", self.template_pyproject_uv_uvicore()),
             ("<pipfile-uvicore>", self.template_pipfile_uvicore()),
             ("<requirements-uvicore>", self.template_requirements_uvicore()),
 
@@ -90,6 +91,8 @@ class Installer:
             ".env",
             ".coverage",
             "poetry.lock",
+            "uv.lock",
+            ".venv",
             "pyproject.toml",
             ".python-version",
             ".vscode",
@@ -99,7 +102,9 @@ class Installer:
         nl(); header("Copying stubbed files")
 
         # Copy virtual environment file
-        if self.env == "poetry":
+        if self.env == "uv":
+            self.copy([(".install/stubs/pyproject-uv.toml", "pyproject.toml")])
+        elif self.env == "poetry":
             self.copy([(".install/stubs/pyproject.toml", "pyproject.toml")])
         elif self.env == "pipenv":
             self.copy([(".install/stubs/Pipfile", "Pipfile")])
@@ -150,6 +155,7 @@ class Installer:
             "CLAUDE.md",
             "acme/appstub/http/views/appstub/welcome.j2",
         ])
+        if self.env == "uv": self.replace(["pyproject.toml"])
         if self.env == "poetry": self.replace(["pyproject.toml"])
         if self.env == "pipenv": self.replace(["Pipfile"])
         if self.env == "requirements.txt": self.replace(["requirements.txt"])
@@ -192,6 +198,12 @@ class Installer:
 
         item("cd {}".format(self.path), c2=WHITE)
 
+        # Uv
+        if self.env == "uv":
+            item("uv sync", c2=WHITE)
+            item("source .venv/bin/activate   # optional, or prefix commands with 'uv run'", c2=WHITE)
+            #info("    [OPTIONAL] If you need database and/or web and api support run: uv add 'uvicore[database,web]'", CYAN)
+
         # Poetry
         if self.env == "poetry":
             item("poetry shell", c2=WHITE)
@@ -216,7 +228,7 @@ class Installer:
         #item("Install dependencies in your environment provided by the uvicore installer")
 
         item("Modify the LICENSE file to your liking", c2=WHITE)
-        if self.env == "poetry": item("Modify the license listed in your pyproject.toml file", c2=WHITE)
+        if self.env in ("uv", "poetry"): item("Modify the license listed in your pyproject.toml file", c2=WHITE)
         item("Modify .gitignore and .editorconfig to your liking", c2=WHITE)
         item("Add code to git or other source control provider", c2=WHITE)
         item("Run ./uvicore", c2=WHITE)
@@ -384,6 +396,23 @@ class Installer:
         if extra:
             results += '[' + ','.join(extra) + ']'
         results += " (=={}.*)".format(self.version)
+        return results
+
+    def template_pyproject_uv_uvicore(self):
+        # Build dynamic PEP 508 dependency string for uv's [project.dependencies]:
+        # uvicore[database,redis,web]==0.1.*
+        # uvicore[database,redis]==0.1.*
+        # uvicore[database]==0.1.*
+        # uvicore==0.1.*
+        results = 'uvicore'
+        extra = []
+        if (self.extra_db): extra.append("database")
+        if (self.extra_redis): extra.append("redis")
+        if (self.extra_web): extra.append("web")
+        if (self.extra_themes): extra.append("themes")
+        if extra:
+            results += '[' + ','.join(extra) + ']'
+        results += "=={}.*".format(self.version)
         return results
 
     def template_pipfile_uvicore(self):

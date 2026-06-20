@@ -1,6 +1,6 @@
 ---
 name: uvicore-testing
-description: "Writing and running tests for a Uvicore application — the pytest layout in tests/, the appstub fixture in tests/conftest.py that boots the app, enabling DB drop/create/seed, async test patterns, testing HTTP routes with a client, and running via poetry run ./bin/test.sh. Use when adding or running tests in a Uvicore application."
+description: "Writing and running tests for a Uvicore application — the pytest layout in tests/, the appstub fixture in tests/conftest.py that boots the app, enabling DB drop/create/seed, async test patterns, testing HTTP routes with a client, and running via uv run ./bin/test.sh. Use when adding or running tests in a Uvicore application."
 user-invocable: true
 ---
 
@@ -10,10 +10,10 @@ Tests live in `tests/`. They boot the real app via the `appstub` fixture (your i
 from `appstub` to your app's short name) in `tests/conftest.py`, using pytest + pytest-asyncio.
 
 ## Running
-This is a **Poetry** project — run through `poetry run`:
-- All tests: `poetry run ./bin/test.sh`
-- Coverage: `poetry run ./bin/test-cov.sh` (HTML: `poetry run ./bin/test-cov-html.sh`)
-- A subset: `poetry run ./bin/test.sh tests/test_example.py`
+This is a **uv** project — run through `uv run`:
+- All tests: `uv run ./bin/test.sh`
+- Coverage: `uv run ./bin/test-cov.sh` (HTML: `uv run ./bin/test-cov-html.sh`)
+- A subset: `uv run ./bin/test.sh tests/test_example.py`
 
 ## The `appstub` fixture (`tests/conftest.py`)
 Session-scoped, async. It:

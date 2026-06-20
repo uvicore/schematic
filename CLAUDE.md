@@ -9,8 +9,8 @@ controllers, models, commands — not framework internals.
 > If you are reading this in the freshly-installed app, `acme`/`appstub`/`Appstub` below were
 > rewritten to your chosen names during install.
 
-> **The framework source is NOT in this repo** — `uvicore` lives in the Poetry virtualenv's
-> site-packages. These skills carry the framework knowledge you need; when you need an API that
+> **The framework source is NOT in this repo** — `uvicore` lives in the uv virtualenv's
+> (`.venv/`) site-packages. These skills carry the framework knowledge you need; when you need an API that
 > isn't here, use the `uvicore-framework-reference` skill (cheatsheet + how to read the installed
 > source) instead of guessing.
 
@@ -30,7 +30,7 @@ of feature** — each has the real patterns, the exact registration step, and th
 | `uvicore-services-events-jobs` | add your own IoC services, event listeners (incl. app lifecycle & model events), and background jobs. |
 | `uvicore-framework-services` | use built-in services: caching, email, rendering a template to a string (Templates), Redis, the logger, and the shared HTTP client. |
 | `uvicore-framework-reference` | the framework import cheatsheet, `uvicore.*` globals, `dump`/`dd` debugging, `./uvicore` inspection commands, and how to read the framework source in the venv. **The framework isn't in this repo — start here when you need an API you can't recall.** |
-| `uvicore-testing` | write and run tests for the app (`poetry run ./bin/test.sh`, the `appstub` fixture, DB seeding). |
+| `uvicore-testing` | write and run tests for the app (`uv run ./bin/test.sh`, the `appstub` fixture, DB seeding). |
 
 There are also legacy GitHub Copilot files in `.github/` (app conventions + a sample-app-review
 skill). They're good background; the `.claude/` skills above are the primary guide.
@@ -80,11 +80,14 @@ from `uvicore.configuration`. Edit `.env` (copied from `.env-example`) for envir
 values.
 
 ## Dev workflow
-- **Poetry** project. Install: `poetry install`. The `uvicore` dep is a local path dep to
-  `../framework` with `database,redis,web` extras during development.
+- **uv** project. Install: `uv sync` (creates `.venv/` and respects `uv.lock`). During development
+  the `uvicore` dep can be overridden to a local editable path dep (uncomment `[tool.uv.sources]` in
+  `pyproject.toml`, pointing at `../framework`) with `database,redis,web` extras; comment it back out
+  to fall back to the published versions pinned in `[project.dependencies]`. Add packages with
+  `uv add <pkg>`.
 - **Run the app**: `./uvicore` (CLI), `./uvicore http serve` (dev web server at
   http://127.0.0.1:5000, API docs at `/api/docs`).
-- **Tests**: `poetry run ./bin/test.sh` (and `poetry run ./bin/test-cov.sh`). See `uvicore-testing`.
+- **Tests**: `uv run ./bin/test.sh` (and `uv run ./bin/test-cov.sh`). See `uvicore-testing`.
 - **Generators**: `./uvicore gen <type> <name>` scaffolds commands/models/controllers/etc. into the
   folders defined by `config/package.py` `paths`.
 - **DB**: `./uvicore db create|seed|reseed <connection>` (needs the `database` extra + a connection

@@ -1,0 +1,67 @@
+[project]
+name = "acme-appstub"
+version = "0.1.0"
+description = "Acme Test App"
+authors = [
+    {name = "Artisan Smith", email = "smith@example.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.12,<4.0"
+classifiers = [
+    "Environment :: Web Environment",
+    "Environment :: Console",
+]
+
+# Standard PEP 621 dependencies — the version constraints you'd resolve from your index.
+dependencies = [
+    "<pyproject-uv-uvicore>",
+]
+
+
+[project.urls]
+# Project URLs
+homepage = "https://example.com"
+repository = "https://git.example.com"
+documentation = "https://docs.example.com"
+
+
+# Standard PEP 735 dependency groups. uv installs these by default on `uv sync`; we set
+# default-groups below so `test` is installed on a bare `uv sync`. Exclude it explicitly
+# with `uv sync --no-group test`.
+[dependency-groups]
+test = [
+    "pytest==9.1.1",
+    "pytest-cov==7.1.0",
+    "pytest-asyncio==1.4.0",
+]
+
+
+[tool.uv]
+# Groups installed by default on `uv sync` (mirrors poetry installing `test` by default).
+default-groups = ["test"]
+
+
+# ENRICHMENT: override the project.dependencies above with a local editable path for dev.
+# This is uv's equivalent of poetry's [tool.poetry.dependencies] path/develop block.
+# `editable = true` is uv's `develop = true`. Comment this out (or delete) to fall back
+# to the versions pinned in [project.dependencies].
+#[tool.uv.sources]
+#uvicore = {path = "../framework", editable = true}
+
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+
+[tool.hatch.build.targets.wheel]
+# Include this package itself (poetry's `packages = [{ include = "acme/appstub" }]`).
+packages = ["acme/appstub"]
+
+[tool.hatch.build.targets.sdist]
+# Additional files in the source distribution (poetry's top-level `include`).
+include = [
+    "acme/appstub",
+    "LICENSE",
+]

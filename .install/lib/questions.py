@@ -93,6 +93,7 @@ you but it will NOT actually create or activate any environments nor will it
 install any package dependencies.  The installer will leave that up to you.""")
     nl()
     options = OrderedDict({
+        "Uv": "Creates a pyproject.toml uv file (recommended)",
         "Poetry": "Creates a pyproject.toml poetry file",
         "Pipenv": "Creates a Pipfile pipenv file",
         "Requirements.txt": "Creates a simple requirements.txt file",
