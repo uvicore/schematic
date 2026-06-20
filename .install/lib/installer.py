@@ -151,6 +151,8 @@ class Installer:
             "acme/appstub/http/views/appstub/welcome.j2",
         ])
         if self.env == "poetry": self.replace(["pyproject.toml"])
+        if self.env == "pipenv": self.replace(["Pipfile"])
+        if self.env == "requirements.txt": self.replace(["requirements.txt"])
 
     def rename_files(self):
         nl(); header("Renaming files to new package name")
