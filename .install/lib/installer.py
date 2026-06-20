@@ -385,7 +385,8 @@ class Installer:
         return results
 
     def template_pipfile_uvicore(self):
-        results = 'uvicore = {version = "{}.*"'.format(self.version)
+        results = 'uvicore = {version = '
+        results += '"{}.*"'.format(self.version)
         extra = []
         if (self.extra_db): extra.append("database")
         if (self.extra_redis): extra.append("redis")
