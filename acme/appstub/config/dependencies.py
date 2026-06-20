@@ -19,7 +19,7 @@ dependencies = OrderedDict({
         'provider': 'uvicore.foundation.package.provider.Foundation',
     },
 
-    # HTTP async client based on aiohttp.
+    # HTTP async client based on httpx.
     'uvicore.http_client': {
         'provider': 'uvicore.http_client.package.provider.HttpClient',
     },
