@@ -41,6 +41,7 @@ pip-delete-this-directory.txt
 # Python Folders
 /instance/
 /venv/
+/.venv/
 /env/
 /htmlcov/
 /html/
