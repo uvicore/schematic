@@ -18,8 +18,8 @@ lib/installer.py to handle the new answers properly.
 # rsync -vaP --delete ~/Code/uvicore/app/ . && python .install/install.py
 
 
-# Uvicore Version of this appstub Branch
-__version__ = '0.1'
+# Uvicore Version of this appstub Branch (no .*, just 0.3 or 0.4)
+__version__ = '0.4'
 
 
 if __name__ == "__main__":

@@ -368,36 +368,24 @@ class Installer:
         return results
 
     def template_pyproject_uvicore(self):
-        # Poetry 1.0 style using [tool.poetry.dependencies] section
-        results = 'uvicore = {version = "0.4.*"'
+        # Build dynamic dependency string like this:
+        # uvicore[database,redis,web] (==0.1.*)
+        # uvicore[database,redis] (==0.1.*)
+        # uvicore[database] (==0.1.*)
+        # uvicore (==0.1.*)
+        results = 'uvicore'
         extra = []
         if (self.extra_db): extra.append("database")
         if (self.extra_redis): extra.append("redis")
         if (self.extra_web): extra.append("web")
         if (self.extra_themes): extra.append("themes")
         if extra:
-            results += ', extras = ["' + '", "'.join(extra) + '"]'
-        else:
-            results += ', extras = []'
-        results += "}"
+            results += '[' + ','.join(extra) + ']'
+        results += " (=={}.*)".format(self.version)
         return results
 
-        # Poetry 2.0 style using dependencies = [] section
-        # Downside of this is you can't specify path develop-true deps
-        # I will keep using 1.0 style (which works in 2.0) until it's deprecated by poetry
-        # results = '    "uvicore'
-        # extra = []
-        # if (self.extra_db): extra.append("database")
-        # if (self.extra_redis): extra.append("redis")
-        # if (self.extra_web): extra.append("web")
-        # if (self.extra_themes): extra.append("themes")
-        # if extra:
-        #     results += '["' + '","'.join(extra) + '"]'
-        # results += '==0.4.*"'
-        # return results
-
     def template_pipfile_uvicore(self):
-        results = 'uvicore = {version = "==0.4.*"'
+        results = 'uvicore = {version = "{}.*"'.format(self.version)
         extra = []
         if (self.extra_db): extra.append("database")
         if (self.extra_redis): extra.append("redis")
@@ -419,5 +407,5 @@ class Installer:
         if (self.extra_themes): extra.append("themes")
         if extra:
             results += '["' + '", "'.join(extra) + '"]'
-        results += ' == 0.4.*'
+        results += ' == {}.*'.format(self.version)
         return results

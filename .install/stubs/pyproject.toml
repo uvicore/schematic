@@ -3,13 +3,19 @@ name = "acme-appstub"
 version = "0.1.0"
 description = "Acme Test App"
 authors = [
-    {name = "Artisan Smith",email = "smith@example.com"}
+    {name = "Artisan Smith", email = "smith@example.com"}
 ]
 license = "MIT"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.12,<4.0"
 classifiers = [
-    "License :: OSI Approved :: MIT License",
+    "Environment :: Web Environment",
+    "Environment :: Console",
+]
+
+# Standard PEP 621 dependencies — the version constraints you'd resolve from Nexus.
+dependencies = [
+    "<pyproject-uvicore>",
 ]
 
 
@@ -18,6 +24,15 @@ classifiers = [
 homepage = "https://example.com"
 repository = "https://git.example.com"
 documentation = "https://docs.example.com"
+
+
+# Standard PEP 735 dependency group (installed by default; exclude with `poetry install --without test`)
+[dependency-groups]
+test = [
+    "pytest (==9.1.1)",
+    "pytest-cov (==7.1.0)",
+    "pytest-asyncio (==1.4.0)",
+]
 
 
 [tool.poetry]
@@ -29,22 +44,13 @@ packages = [
 include = ["LICENSE"]
 
 
-[tool.poetry.dependencies]
-# Required dependencies
-# If you want code uvicore framework locally, use a path based develop dependency
-# uvicore = {path = "../framework", develop = true, extras = []}
-python = ">=3.10,<4.0"
-<pyproject-uvicore>
-
-
-[tool.poetry.group.test.dependencies]
-# Testing dependencies (included by default)
-# Run: `poetry install --without test` to exclude them
-pytest = "8.3.*"
-pytest-cov = "6.0.*"
-pytest-asyncio = "0.25.*"
+# ENRICHMENT: override the project.dependencies above with local editable paths for dev.
+# `develop = true` lives here because PEP 508 (project.dependencies) can't express it.
+# Comment these two lines out (or delete) to fall back to the Nexus versions above.
+#[tool.poetry.dependencies]
+#uvicore = {path = "../framework", develop = true}
 
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
+requires = ["poetry-core>=2.1.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
