@@ -57,7 +57,12 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 # Include this package itself (poetry's `packages = [{ include = "acme/appstub" }]`).
-packages = ["acme/appstub"]
+# NOTE: hatchling's `packages = ["acme/appstub"]` shorthand also sets `sources = ["acme"]`,
+# which STRIPS the `acme/` prefix and breaks the `acme.*` PEP 420 namespace (module
+# becomes top-level `appstub`, and editable installs land one dir too deep at `.../acme`).
+# Use only-include (no `sources`, so nothing is stripped) to keep the full `acme/appstub`
+# dist path and let the `acme.*` namespace resolve across sibling editable packages.
+only-include = ["acme/appstub"]
 
 [tool.hatch.build.targets.sdist]
 # Additional files in the source distribution (poetry's top-level `include`).
