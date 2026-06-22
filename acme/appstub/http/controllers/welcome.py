@@ -5,7 +5,7 @@ from uvicore.http.routing import WebRouter, Controller
 # Extra
 # from uvicore.auth import UserInfo
 # from uvicore.http.routing import Guard
-# from typing import List, Optional
+# from typing import List
 # from uvicore.typing import Dict
 # from uvicore.http.exceptions import HTTPException
 # from uvicore.http.params import Path, Query, Header, Cookie, Body, Form, File, Depends, Security

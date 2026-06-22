@@ -2,14 +2,14 @@ import uvicore
 from uvicore.typing import Dict
 from uvicore.http import Request
 from uvicore.http.response import APIResponse
-from typing import List, Optional
+from typing import List
 from uvicore.http.exceptions import HTTPException
 from uvicore.http.routing import ApiRouter, Controller
 
 # Extra
 # from uvicore.auth import UserInfo
 # from uvicore.http.routing import Guard
-# from typing import List, Optional
+# from typing import List
 # from uvicore.typing import Dict
 # from uvicore.http.params import Path, Query, Header, Cookie, Body, Form, File, Depends, Security
 
@@ -147,7 +147,7 @@ class Welcome(Controller):
         # Also accepts an optional GET parameter (?name=matthew)
         # ----------------------------------------------------------------------
         # @route.get('/example6/{id}', tags=['Examples'])
-        # async def example6(id: int, name: Optional[str], user: UserInfo = Guard(['authenticated'])) -> models.Post:
+        # async def example6(id: int, name: str | None, user: UserInfo = Guard(['authenticated'])) -> models.Post:
         #     dump(name, user)
         #     return await models.Post.query().find(id)
 
@@ -161,7 +161,7 @@ class Welcome(Controller):
         #     Guard(['authenticated', 'manager']),
         #     # Any other route based middleware here
         # ], tags=['Examples'])
-        # async def example6a(request: Request, id: int, name: Optional[str]) -> models.Post:
+        # async def example6a(request: Request, id: int, name: str | None) -> models.Post:
         #     user = request.scope['user']
         #     dump(name, user)
         #     return await models.Post.query().find(id)

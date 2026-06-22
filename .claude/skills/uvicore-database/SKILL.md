@@ -49,7 +49,7 @@ via `__tableclass__`.
 
 ```python
 from __future__ import annotations
-from typing import List, Optional
+from typing import List
 import uvicore
 from uvicore.orm import Model, ModelMetaclass, Field, BelongsTo, HasMany, BelongsToMany
 from acme.appstub.database.tables import post as table
@@ -59,16 +59,16 @@ class Post(Model['Post'], metaclass=ModelMetaclass):
     """App Posts"""
     __tableclass__ = table.Posts
 
-    id: Optional[int] = Field('id', primary=True, read_only=True)
+    id: int | None    = Field('id', primary=True, read_only=True)
     slug: str          = Field('slug', max_length=255, description='URL slug')
     title: str         = Field('title')
     creator_id: int    = Field('creator_id')
 
     # Relations (field name is yours; the string is the related model's module path):
-    creator: Optional[User] = Field(None, relation=BelongsTo('uvicore.auth.models.user.User'))
-    comments: Optional[List[Comment]] = Field(None,
+    creator: User | None = Field(None, relation=BelongsTo('uvicore.auth.models.user.User'))
+    comments: List[Comment] | None = Field(None,
         relation=HasMany('acme.appstub.models.comment.Comment', foreign_key='post_id'))
-    tags: Optional[List[Tag]] = Field(None,
+    tags: List[Tag] | None = Field(None,
         relation=BelongsToMany('acme.appstub.models.tag.Tag',
                                join_tablename='post_tags', left_key='post_id', right_key='tag_id'))
 
