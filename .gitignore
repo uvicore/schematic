@@ -1,4 +1,6 @@
-# Uvicore Framework .gitignore
+# mReschke Python .gitignore file standard
+# Latest Version https://gist.mreschke.net/mreschke/5b20c8b75bf5407785c8a35d7bdbe17a
+# mReschke 2020-11-17
 
 # NOTES:
 # Folders should be denoted with a trailing /
@@ -41,7 +43,7 @@ pip-delete-this-directory.txt
 # Python Folders
 /instance/
 /venv/
-/.venv/
+/.venv
 /env/
 /htmlcov/
 /html/
@@ -53,6 +55,12 @@ eggs/
 develop-eggs/
 __pycache__/
 .pytest_cache/
+
+# Django Files
+#
+
+# Django Folders
+/static/
 
 # JavaScript Files
 npm-debug.log
