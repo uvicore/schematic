@@ -54,7 +54,8 @@ from uvicore.auth import UserInfo
 
 # Config / typing / debug
 from uvicore.configuration import env, Env
-from uvicore.typing import Dict, OrderedDict, List, Optional, Any, Union   # SuperDict + typing
+from typing import List, Any                    # stdlib typing — use `X | Y` / `X | None` (not Union/Optional)
+from uvicore.typing import Dict, OrderedDict     # SuperDict
 from uvicore.support.dumper import dump, dd                                 # debugging
 ```
 
