@@ -11,7 +11,7 @@ from uvicore.support.dumper import dump, dd
 
 
 @pytest_asyncio.fixture(loop_scope="session", scope="session")
-async def appstub():
+async def app():
 
     # Setup Tests
     ############################################################################
@@ -54,9 +54,9 @@ async def appstub():
 # uvicore.app.http).  It yields an httpx AsyncClient you can use to hit both
 # your web routes (GET '/') and your api routes (GET '/api/welcome') end to end.
 #
-# Depends on `appstub` so the application is fully booted first.
+# Depends on `app` so the application is fully booted first.
 @pytest_asyncio.fixture(loop_scope="session", scope="session")
-async def client(appstub):
+async def client(app):
     from httpx import ASGITransport, AsyncClient
     from uvicore.http.package.bootstrap import Http
     from uvicore.foundation.events.app import Booted

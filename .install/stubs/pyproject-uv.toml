@@ -37,6 +37,20 @@ test = [
 ]
 
 
+# Pytest / pytest-asyncio configuration.
+# The async fixtures in tests/conftest.py (`app`, `client`) are session scoped and pinned
+# to a single session-wide event loop (loop_scope="session").  We must make the TESTS run
+# on that same session loop, otherwise each test gets its own function-scoped loop while the
+# shared singletons (e.g. the httpx `http_client` bound in the IoC) open their connections on
+# that per-test loop.  When the session-scoped `app` fixture later tears down and closes the
+# http_client (PytestShutdown), the per-test loop is already gone -> "RuntimeError: Event loop
+# is closed".  Defaulting both fixtures and tests to the session loop keeps everything on one
+# loop for the whole run.
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
+
+
 [tool.uv]
 # Groups installed by default on `uv sync` (mirrors poetry installing `test` by default).
 default-groups = ["test"]
