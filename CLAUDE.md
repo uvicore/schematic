@@ -119,7 +119,9 @@ file is heavily commented with more patterns.
 2. **`register()` = config only; `boot()` = real work.**
 3. **Routes/controllers must `return route`** — the whole router is one recursive nested structure.
 4. **Web views need `request` piped through** the context dict; reference routes by **name**
-   (`{{ url('acme.appstub.welcome') }}`) and assets via `{{ asset('appstub/...') }}`, never raw
-   paths (paths change; names don't).
+   (`{{ url('appstub.welcome') }}` — names use the package *short* name; API routes also get an
+   `api` segment, e.g. `appstub.api.welcome`) and assets via `{{ asset('appstub/...') }}`, never
+   raw paths (paths change; names don't). Resolve a name in code with
+   `uvicore.app.http.url_path_for('appstub.api.welcome')`.
 5. Use `env()` for anything environment-specific; keep it in the right concern config file.
 6. Use your package namespace (`acme.appstub`) consistently in module paths.
