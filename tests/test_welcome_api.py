@@ -6,19 +6,27 @@ from uvicore.support.dumper import dump, dd
 # ------------------------------------------------------------------------------
 # Example: testing an API route
 #
-# This hits the stock welcome API endpoint registered in http/routes/api.py,
-# which includes the api controller at http/api/welcome.py serving GET '/welcome'.
+# Best practice (and what the docs recommend): reference a route by its NAME, not
+# a hardcoded URL.  Paths change when another app mounts your package under a
+# different api prefix, but the route name is stable.
 #
-# Full path = your api 'prefix' (config/http.py, defaults to '/api')
-#           + the route path ('/welcome')
-#           = '/api/welcome'
+# Every route is auto-named with your package's short name ('appstub').  Api
+# routes also get an 'api' segment (from the name_prefix='api' default of
+# register_http_api_routes() in your provider), so the welcome endpoint at
+# GET /api/welcome is named 'appstub.api.welcome'.
+# Tip: list every route's name + path with:  ./uvicore http routes
 #
-# The `client` fixture (tests/conftest.py) gives you an httpx AsyncClient wired
-# straight to your ASGI app - no running server needed.
+# To turn a route name into its URL FROM CODE, call url_path_for(name) on the
+# built ASGI app (uvicore.app.http).  That's the very same Starlette name
+# registry the Jinja `url()` template helper resolves against - so your tests
+# and templates stay in sync with the real, prefix-aware paths.
 # ------------------------------------------------------------------------------
 @pytest.mark.asyncio
 async def test_welcome_api_endpoint(client):
-    res = await client.get('/api/welcome')
+    # Resolve the route name to its path ('/api/welcome') - no hardcoded URL
+    url = uvicore.app.http.url_path_for('appstub.api.welcome')
+
+    res = await client.get(url)
 
     # The stock welcome endpoint is public, so it returns 200
     assert res.status_code == 200, res.text
