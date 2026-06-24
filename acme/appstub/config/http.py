@@ -55,6 +55,21 @@ api = {
             # bottom of the docs.  -1 hides it entirely (keeps the UI responsive
             # when the model graph is large), 0 collapses, 1+ expands.
             'models_expansion': env.int('OPENAPI_MODELS_EXPANSION', -1),
+
+            # Swagger defaultModelExpandDepth for the per-operation request/response
+            # model tree.  0 keeps it collapsed so endpoints with deeply relational
+            # models expand instantly; the default of 1 pre-renders one level.
+            'model_expansion': env.int('OPENAPI_MODEL_EXPANSION', 1),
+
+            # Arbitrary extra SwaggerUIBundle parameters merged into the docs UI.
+            # If the per-operation lag is the example-value computation rather than
+            # the model tree, default the operation to the (cheaper) Schema tab:
+            # 'parameters': {
+            #     'defaultModelRendering': 'model',   # show the Schema tab, not a computed Example Value
+            #     'tryItOutEnabled': True,
+            #     'deepLinking': True,
+            # },
+
             'favicon_url': 'data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=',
             # Swagger assets from Local
             'js_url': '/assets/appstub/js/swagger-ui-bundle.min.js',
