@@ -40,9 +40,21 @@ api = {
     'openapi': {
         'title': env('OPENAPI_TITLE', 'Appstub API Docs'),
         'path': '/openapi.json',
+
+        # Collapse FastAPIs separate Input/Output schemas into a single schema
+        # per model.  FastAPI splits every model into Foo-Input + Foo-Output
+        # (even when identical), doubling the schema count and bloating the
+        # OpenAPI doc.  False = one schema per model (recommended).
+        'separate_schemas': env.bool('OPENAPI_SEPARATE_SCHEMAS', False),
+
         'docs': {
             'path': '/docs',
             'expansion': 'list',  # list none full
+
+            # Swagger defaultModelsExpandDepth for the "Schemas" section at the
+            # bottom of the docs.  -1 hides it entirely (keeps the UI responsive
+            # when the model graph is large), 0 collapses, 1+ expands.
+            'models_expansion': env.int('OPENAPI_MODELS_EXPANSION', -1),
             'favicon_url': 'data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=',
             # Swagger assets from Local
             'js_url': '/assets/appstub/js/swagger-ui-bundle.min.js',
