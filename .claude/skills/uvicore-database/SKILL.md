@@ -72,9 +72,10 @@ class Post(Model['Post'], metaclass=ModelMetaclass):
         relation=BelongsToMany('acme.appstub.models.tag.Tag',
                                join_tablename='post_tags', left_key='post_id', right_key='tag_id'))
 
-# If relations use forward refs (quoted/late types), resolve them at the bottom of the file:
+# If relations use forward refs (quoted/late types), import them at the bottom of the file
+# (keep `from __future__ import annotations` at the top). No model_rebuild()/update_forward_refs()
+# call needed — Uvicore rebuilds every registered model centrally at boot (Pydantic v2):
 from acme.appstub.models.comment import Comment   # isort:skip
-Post.update_forward_refs()
 ```
 
 `Field(column, *, primary, description, default, sortable, searchable, read_only, write_only,
@@ -158,7 +159,7 @@ connections.
 ## Checklist
 - [ ] Table in `database/tables/`, decorated `@uvicore.table()`, `name`/`connection`/`schema` set.
 - [ ] Model in `models/`, `@uvicore.model()` + `metaclass=ModelMetaclass`, `__tableclass__` linked.
-- [ ] Forward-ref relations resolved with `Model.update_forward_refs()`.
+- [ ] Forward-ref relation types imported at the bottom of the file (no `update_forward_refs()`/`model_rebuild()` call — Uvicore rebuilds models centrally at boot).
 - [ ] Models/tables/seeders folders registered in the provider (stub already does this).
 - [ ] Want CRUD endpoints for free? Register the model → it appears in the auto-API (`uvicore-api`).
 - [ ] Test queries with the `appstub` fixture (enable DB drop/create/seed in conftest) — see `uvicore-testing`.

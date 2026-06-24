@@ -6,6 +6,21 @@ with your real `vendor.package`, e.g. `mreschke.wiki`). It is built **on top of*
 (`uvicore` with the `database`/`redis`/`web` extras). You write *application* code here — routes,
 controllers, models, commands — not framework internals.
 
+## Where knowledge lives (repo vs. machine-local)
+
+These repos are worked on by **dozens of team members across many machines**. All shared/durable
+knowledge — conventions, decisions, gotchas, repeatable workflows — **goes in the repo**
+(`CLAUDE.md`, `.claude/skills/`, `.claude/settings.json`), so everyone gets it on every machine.
+Claude's `~/.claude/.../memory/` is **per-machine and per-user** (not committed, not synced): fine
+for Claude's own internal working notes, but never the home for anything a teammate or another
+machine would need — promote anything broadly useful into the repo.
+
+### Journal & decision records
+A dated technical narrative lives in **`journal/`** (`journal/YYYY-MM-DD.md`, H2 entries) and durable
+scaffold decisions in **`adr/`**. Append a journal entry at the end of any substantive task (note the
+framework change it follows); write an ADR for a significant scaffold decision. See
+`journal/README.md` and `adr/README.md`.
+
 > If you are reading this in the freshly-installed app, `acme`/`appstub`/`Appstub` below were
 > rewritten to your chosen names during install.
 
