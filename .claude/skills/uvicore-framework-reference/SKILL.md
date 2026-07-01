@@ -105,5 +105,5 @@ modules: `orm/`, `database/`, `http/`, `console/`, `events/`, `jobs/`, `cache/`,
 
 ## Don't guess
 If you can't confirm an API from this cheatsheet, the other skills, or the stub examples, **inspect
-the installed source** (above) rather than inventing a method name. Pydantic is pinned to v1.10 in
-the framework — use v1 idioms in models.
+the installed source** (above) rather than inventing a method name. The framework uses **Pydantic
+v2** — use v2 idioms in models (and pipe-style typing `X | None`, not `Optional[...]`).

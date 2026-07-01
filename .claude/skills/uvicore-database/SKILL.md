@@ -44,8 +44,8 @@ class Posts(Table):
 Generate one with `./uvicore gen table post`.
 
 ## 2. Define a model (`models/post.py`)
-Models are Pydantic-v1-backed (the framework pins Pydantic 1.10 — no v2 idioms) and link to a table
-via `__tableclass__`.
+Models are Pydantic-v2-backed (use v2 idioms; pipe typing `X | None`, not `Optional[...]`) and link
+to a table via `__tableclass__`.
 
 ```python
 from __future__ import annotations

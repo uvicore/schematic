@@ -76,8 +76,9 @@ middleware=None, auth=None, scopes=None)`. Usable as a decorator (above) or dire
 ## 4. Views / templates (`http/views/appstub/*.j2`)
 Jinja2 templates. The provider registers the view path with `register_http_views(['acme.appstub.
 http.views'])`, so reference templates as `'appstub/welcome.j2'`. In templates:
-- **Link by route name, not path**: `{{ url('acme.appstub.welcome') }}` — paths change when the app
-  is mounted under a prefix; names are stable.
+- **Link by route name, not path**: `{{ url('appstub.welcome') }}` — names use the package *short*
+  name (not the full `acme.appstub`); paths change when the app is mounted under a prefix, names are
+  stable. API routes also get an `api` segment, e.g. `appstub.api.welcome`.
 - **Static assets**: `{{ asset('appstub/images/uvicore.jpg') }}` and `{{ public('...') }}`.
 - View composers (shared context for matching views) are registered with
   `register_http_view_composers(...)`; generate one with `./uvicore gen composer <name>`.
@@ -90,8 +91,9 @@ http.views'])`, so reference templates as `'appstub/welcome.j2'`. In templates:
   reference them.
 
 ## 6. Route naming & groups
-- **Autoprefix**: a route named `welcome` becomes `acme.appstub.welcome` automatically; the URL path
-  gets the package's `web.prefix`. To set a fully custom name, pass `autoprefix=False`.
+- **Autoprefix**: a route named `welcome` becomes `appstub.welcome` automatically (the package
+  *short* name); the URL path gets the package's `web.prefix`. To set a fully custom name, pass
+  `autoprefix=False`.
 - **Groups** (shared prefix/scopes/tags):
   ```python
   @route.group('/admin', scopes=['authenticated'])

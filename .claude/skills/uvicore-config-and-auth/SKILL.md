@@ -9,17 +9,14 @@ user-invocable: true
 ## Configuration
 
 ### The two-file split
-- **`config/package.py`** — ALWAYS loaded (whether your package is the running app or imported as a
-  library). Holds `version`, `web`/`api` prefixes, the `registers` gate, generator `paths`, and the
-  `database`/`redis`/`dependencies` modules. Read at `uvicore.config['acme.appstub']` or, inside the
-  provider, `self.package.config`.
-- **`config/app.py`** — ONLY when this package is the running app. Holds `name`, `debug`,
-  `main.{package,provider}`, and the `server`/`web`/`api`/`auth`/`mail`/`cache`/`logger`/`overrides`
-  modules. Read at `uvicore.config.app.*`.
-
-Both aggregate smaller **concern files** (`http.py`, `database.py`, `auth.py`, `mail.py`,
-`cache.py`, `logger.py`, `overrides.py`, `dependencies.py`). Keep the split — put new settings in the
-matching concern file, not inline in code.
+The package-vs-app split (`config/package.py` = always loaded; `config/app.py` = only when this
+package is the running app) is covered field-by-field in `CLAUDE.md` and `uvicore-app-structure`.
+Two things to carry into config work here:
+- **Runtime access**: package config at `uvicore.config['acme.appstub']` (or `self.package.config`
+  inside the provider); app config at `uvicore.config.app.*`.
+- Both aggregate smaller **concern files** (`http.py`, `database.py`, `auth.py`, `mail.py`,
+  `cache.py`, `logger.py`, `overrides.py`, `dependencies.py`). Put new settings in the matching
+  concern file, not inline in code.
 
 ### env() — environment values
 ```python
