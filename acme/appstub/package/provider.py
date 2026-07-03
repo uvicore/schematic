@@ -54,14 +54,14 @@ class Appstub(Provider, Cli<provider-class>):
         # Define view paths
         self.register_http_views(['acme.appstub.http.views'])
 
-        # Define view composers - multiple calls to self.composers() are appended
+        # Define view composers (pass append=True to add views to an existing composer)
         #self.register_http_view_composers('acme.appstub.http.composers.layout.Layout', 'appstub/*')
         #self.register_http_view_composers('acme.appstub.http.composers.layout.Layout', ['appstub/home', 'appstub/about'])
 
-        # You can also define view composers as a dict
+        # You can also define multiple view composers as a dict
         # self.register_http_view_composers({
         #     'acme.appstub.http.composers.layout.Layout': 'appstub/*',
-        #     'acme.appstub.http.composers.layout.Layout': ['appstub/home', 'appstub/about'],
+        #     'acme.appstub.http.composers.sidebar.Sidebar': ['appstub/home', 'appstub/about'],
         # })
 
         # Define public paths
