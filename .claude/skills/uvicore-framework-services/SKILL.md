@@ -90,9 +90,26 @@ uvicore.log.warning('careful'); uvicore.log.error('bad'); uvicore.log.debug('det
 uvicore.log.header('Section');  uvicore.log.header2('Sub'); uvicore.log.header3('...')
 uvicore.log.item('bullet');     uvicore.log.item2('nested')      # indented bullets
 uvicore.log.line();  uvicore.log.nl();  uvicore.log.separator()
-uvicore.log.name('mylogger').info('scoped')                       # named sub-logger
+uvicore.log.name('mylogger').info('scoped')                       # named sub-logger (filter scope)
+uvicore.log.dump({'a': 1})                                        # works in the request pipeline
 ```
 Great inside CLI commands and seeders. Configured in `config/logger.py` (handlers, levels, filters).
+
+**Multiple log files (channels).** Declare them under `logger['channels']` in `config/logger.py`, then:
+```python
+uvicore.log.channel('Processor').info('batch complete')
+uvicore.log.channel('Processor').nl().header('Batch 7')
+
+# Immutable and cached - safe to hold across awaits, unlike name()
+self.log = uvicore.log.channel('Importer')
+```
+Each channel gets its own log file and never double-writes into the default log. A channel inherits
+the `console`/`file` config (so `{}` is enough) except `filters`/`exclude`; names cannot contain a dot.
+
+**Date-stamped log files.** Put strftime tokens in `logger['file']['file']` -
+`/var/log/acme/%Y-%m-%d_{channel}.log` - and the date becomes part of the filename, rolling to the
+next day's file on its own with nothing renamed (safe for long-running loops and `--workers N`). Set
+`retention` (days) to prune; `backup_count` only applies to non-dated paths.
 
 ## HTTP client — shared aiohttp session
 The `uvicore.http_client` package (a default dependency) opens one shared `aiohttp.ClientSession`
