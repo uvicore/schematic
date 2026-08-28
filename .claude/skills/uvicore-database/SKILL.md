@@ -151,6 +151,18 @@ database = {
 ```
 A model's `connection` attribute (via its table) names which connection it uses.
 
+Two optional per-connection dicts:
+- **`options`** → the DRIVER (`connect_args`), e.g. `ssl`, or snowflake's `private_key`.
+- **`pool`** → the ENGINE's connection pool: `pre_ping` (default `True`), `recycle`, `size`,
+  `max_overflow`, `timeout`, `use_lifo`, `reset_on_return`. Unprefixed names; an unknown key
+  raises at bootstrap. Don't set `size`/`max_overflow` on a sqlite `':memory:'` connection —
+  SQLAlchemy's StaticPool/NullPool reject them.
+
+**Snowflake is handled for you.** Uvicore defaults every `snowflake` connection to
+`client_session_keep_alive` (+ a 900s heartbeat) and treats expired-token codes as disconnects,
+so a long-running process no longer dies ~4h in with `390114: Authentication token has expired`
+and stay dead until restarted. Override by setting those connect options explicitly.
+
 ## 6. `./uvicore db` CLI commands
 `./uvicore db create <conn>` (build tables), `db drop <conn>`, `db recreate <conn>`,
 `db seed <conn>`, `db reseed <conn>` (drop+create+seed), `db connections`. Comma-separate multiple

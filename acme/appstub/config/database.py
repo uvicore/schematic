@@ -50,6 +50,17 @@ database = {
         #     # 'options': {
         #     #     'ssl': True
         #     # }
+        #     # Where 'options' configures the DRIVER (connect_args), 'pool' configures the
+        #     # ENGINE's connection pool (SQLAlchemy's pool_* create_engine args).  Keys:
+        #     # pre_ping, recycle, size, max_overflow, timeout, use_lifo, reset_on_return.
+        #     # Only pre_ping is defaulted (True); an unknown key raises at bootstrap.
+        #     # 'pool': {
+        #     #     'pre_ping': True,       # ping a pooled conn before use (recovers from
+        #     #                             # a connection the server closed while idle)
+        #     #     'recycle': 3600,        # rebuild connections older than N seconds
+        #     #     'size': 5,
+        #     #     'max_overflow': 10,
+        #     # },
         # },
 
         # Snowflake Example
@@ -69,6 +80,19 @@ database = {
         #         # Or take the .pem file and run it through a DER base64 to get a single string like so
         #         # openssl pkcs8 -in snowflake.pem -inform PEM -outform DER -nocrypt | base64 -w 0
         #         'private_key': env('DB_APPSTUB_PRIVATE_KEY', ''),
+        #
+        #         # Uvicore DEFAULTS these two on every snowflake connection - you do not
+        #         # need to set them.  A Snowflake session's MASTER token expires after ~4h
+        #         # and the connector does NOT renew it, so without a heartbeat any
+        #         # long-running process starts failing every query with
+        #         # '390114: Authentication token has expired'.  A heartbeat is a token-only
+        #         # REST call: no query, no warehouse credits.  Uvicore also teaches the
+        #         # engine that the terminal token codes are DISCONNECTS, so a token that
+        #         # dies anyway invalidates the pool instead of being handed back out
+        #         # forever.  Set either key here only to OVERRIDE the default (ex:
+        #         # keep_alive False for a short-lived CLI).
+        #         # 'client_session_keep_alive': True,
+        #         # 'client_session_keep_alive_heartbeat_frequency': 900,
         #     }
         # },
     },
