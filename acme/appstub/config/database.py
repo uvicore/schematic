@@ -50,6 +50,25 @@ database = {
         #     # 'options': {
         #     #     'ssl': True
         #     # }
+        #     # Example PlanetScale (Vitess).  PlanetScale requires ssl, and as of their
+        #     # 2026-09-01 Vitess change you should also pin autocommit explicitly.  Vitess
+        #     # used to report the WRONG autocommit value in the initial handshake packet, so
+        #     # pymysql/aiomysql/asyncmy connections ran autocommit-ON even though the driver
+        #     # intended OFF.  Once Vitess reports it correctly those connections become
+        #     # autocommit=False, leaving an implicit transaction open on every connection --
+        #     # which Vitess aborts after 20 seconds.  'autocommit': True keeps the behavior
+        #     # a PlanetScale connection has TODAY.
+        #     # https://planetscale.com/docs/vitess/connecting/pymysql-handshake-autocommit
+        #     # 'options': {
+        #     #     'ssl': True,
+        #     #     'autocommit': True,
+        #     # },
+        #     #
+        #     # DO NOT copy 'autocommit': True onto a non-PlanetScale connection "just to be
+        #     # safe".  It is NOT the driver default -- pymysql and aiomysql both default to
+        #     # autocommit=False, and a plain MySQL session reports @@autocommit=0 with no
+        #     # kwarg.  Forcing it True silently disables rollback: an INSERT followed by
+        #     # conn.rollback() stays committed.  Set it only where Vitess makes it necessary.
         #     # Where 'options' configures the DRIVER (connect_args), 'pool' configures the
         #     # ENGINE's connection pool (SQLAlchemy's pool_* create_engine args).  Keys:
         #     # pre_ping, recycle, size, max_overflow, timeout, use_lifo, reset_on_return.
