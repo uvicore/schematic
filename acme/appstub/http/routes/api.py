@@ -1,5 +1,11 @@
 import uvicore
-from uvicore.http.routing import Routes, ApiRouter, ModelRouter
+from uvicore.http.routing import Routes, ApiRouter
+
+# ModelRouter (the auto model CRUD API) only exists if the 'database' extra is installed
+try:
+    from uvicore.http.routing import ModelRouter
+except ImportError:
+    ModelRouter = None
 
 # Extra
 # from uvicore.auth import UserInfo
@@ -48,7 +54,8 @@ class Api(Routes):
 
         # Include dynamic model CRUD API endpoints (the "auto API")!
         # These routes are automatically protected by model.crud style permissions.
-        route.include(ModelRouter, options=uvicore.config.app.api.auto_api)
+        if ModelRouter:
+            route.include(ModelRouter, options=uvicore.config.app.api.auto_api)
 
 
 

@@ -39,6 +39,11 @@ logger = {
         # sharing one log (uvicorn --workers N).  {channel} becomes 'default' here
         # and the channel name for each named channel below.
         #
+        # Several MACHINES logging to one shared NFS/EFS folder?  Add {hostname}
+        # (ex: /mnt/shared/logs/%Y-%m-%d_{channel}_{hostname}.log) so each machine
+        # writes its own file.  NFS has no atomic append across machines, so hosts
+        # sharing one file tear and lose lines.  In docker set hostname: "${HOSTNAME}".
+        #
         # Prefer a plain filename with no % tokens and you get the legacy
         # rename-based time rotation (when/interval/backup_count) instead.
         'file': env('LOG_FILE_PATH', '/tmp/%Y-%m-%d_acme.appstub_{channel}.log'),
